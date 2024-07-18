@@ -12,35 +12,41 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 
 export const mainListItems = (
   <React.Fragment>
+  <ListItemButton>
+      <ListItemIcon>
+        <DashboardIcon />
+      </ListItemIcon>
+      <ListItemText primary="Home" />
+    </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Bill Analyzer" />
+      <ListItemText primary="Liabilities" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="Orders" />
+      <ListItemText primary="Investments" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="Customers" />
+      <ListItemText primary="Saving(PF+Bank)" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="Reports" />
+      <ListItemText primary="Money OutFlow" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
-      <ListItemText primary="Integrations" />
+      <ListItemText primary="Money Inflows" />
     </ListItemButton>
   </React.Fragment>
 );

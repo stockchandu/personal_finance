@@ -4,7 +4,9 @@ import { ThemeProvider } from "./ThemeProvider";
 export const RootProvider = ({ children }) => {
   return (
     <ThemeProvider>
-      <ReduxProvider>{children}</ReduxProvider>
+      <ReduxProvider>
+        {children}
+      </ReduxProvider>
     </ThemeProvider>
   );
 };
