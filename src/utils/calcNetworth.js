@@ -7,7 +7,7 @@ const constant = {
 };
 
 const getSection = (data, sName) => {
-  return data.find((sec) => sec.sectionName === sName);
+  return data && data.find((sec) => sec.sectionName === sName);
 };
 
 export const calculateNetworth = (data) => {
