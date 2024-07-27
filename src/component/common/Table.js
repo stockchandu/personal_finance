@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
-  TextField, Button, IconButton
+  TextField, IconButton
 } from '@mui/material';
 import { Edit, Save } from '@mui/icons-material';
 
 const MPFTable = (tableData) => {
-    console.log(tableData)
     const row = tableData
   const [rows, setRows] = useState([
     { 
@@ -56,7 +55,6 @@ const MPFTable = (tableData) => {
       <Table>
         <TableHead>
           <TableRow>
-          {/* <TableCell>ID</TableCell> */}
             <TableCell>Loan amount</TableCell>
             <TableCell>EMI</TableCell>
             <TableCell>Paid</TableCell>
@@ -69,7 +67,6 @@ const MPFTable = (tableData) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {/* {rows.map((row) => ( */}
             <TableRow key={row.id}>
               <TableCell>
                 {editRowId === row.id ? (
@@ -175,7 +172,6 @@ const MPFTable = (tableData) => {
                 )}
               </TableCell>
             </TableRow>
-          {/* ))} */}
         </TableBody>
       </Table>
     </TableContainer>
