@@ -1,15 +1,27 @@
-import { configureStore } from "@reduxjs/toolkit";
-import billEstimateReducers from "./billEstimateForm/estimateFormSlice";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import mpfSlicer from "./mpfData/mpfSlicer";
+import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
 
-const reducers = {
-  estimateForm: billEstimateReducers,
-};
+const persistConfig = {
+  key : 'root',
+  storage,
+  whitelist: ['mpfData']
+}
+
+const rootReducers = combineReducers({
+  mpfData: mpfSlicer,
+});
+
+const persistedReducer  = persistReducer(persistConfig,rootReducers)
 
 export const store = configureStore({
-  reducer: reducers,
+  reducer: persistedReducer ,
 //   to disable enable and check middle ware things
 //   middleware: (getDefaultMiddleware) =>
 //     getDefaultMiddleware({
 //       serializableCheck: false,
 //     }),
 });
+
+export const persistor = persistStore(store)

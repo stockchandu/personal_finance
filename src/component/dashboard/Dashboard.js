@@ -8,12 +8,10 @@ import Divider from "@mui/material/Divider";
 import Container from "@mui/material/Container";
 import { Drawer } from "../common/Drawer";
 import { AppBar } from "../common/AppBar";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { SidebarItems } from "../common/Sidebar";
 import { global } from "../../constant/global";
 import { usePush } from "../../hooks/usePush";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import { Upload } from "../common/Upload";
 
 export const Dashboard = () => {
