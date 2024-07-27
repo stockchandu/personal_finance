@@ -6,6 +6,8 @@ import { apiConfig } from "../../api/axios";
 import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { usePush } from "../../hooks/usePush";
+import { data } from "../../constant/apiMockData";
+
 
 const StyledButton = styled(Button)(({ theme, text }) => ({
   backgroundColor: "#4F81BD",
@@ -185,7 +187,7 @@ const initialData = [
   ]
 export const Home = ()=>{
   const navigation = usePush();
-  const [section, setSection] = useState(initialData);
+  const [section, setSection] = useState(data);
 
     useEffect(() => {
       const fetchList = async () => {
