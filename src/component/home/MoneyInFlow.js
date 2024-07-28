@@ -23,7 +23,7 @@ export const MoneyInflow = (
       </Typography>
       <DetailsButton
         text="Check Details"
-        onClick={() => handleNavigation("Liabilities")}
+        onClick={() => handleNavigation("Money Inflows")}
       >
         Check Details
       </DetailsButton>

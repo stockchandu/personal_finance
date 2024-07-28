@@ -18,7 +18,7 @@ export const Saving = (section, typoStyle, formatNumber, handleNavigation) => {
       </Typography>
       <DetailsButton
         text="Check Details"
-        onClick={() => handleNavigation("Liabilities")}
+        onClick={() => handleNavigation("Saving(PF+Bank)")}
       >
         Check Details
       </DetailsButton>

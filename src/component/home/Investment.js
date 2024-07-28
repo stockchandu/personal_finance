@@ -23,7 +23,7 @@ export const Investment = (
       </Typography>
       <DetailsButton
         text="Check Details"
-        onClick={() => handleNavigation("Liabilities")}
+        onClick={() => handleNavigation("Investments")}
       >
         Check Details
       </DetailsButton>

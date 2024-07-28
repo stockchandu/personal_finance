@@ -1,184 +1,28 @@
 import MPFAccordion from "../common/Accordion";
 import MPFTable from "../common/Table";
-
-const initialData = [
-  {
-    id: "1",
-    sectionName: "Liabilities",
-    paidAmount: "530881",
-    totalAmount: "2070000",
-    remainMonth: "180",
-    remainAmount: "1539119",
-    extraAmount: "",
-    investAmount: "",
-    currentInvestAmount: "",
-    paidMonth: "48",
-    totalMonth: "228",
-    profit: "",
-    year: "2024",
-    endYear: "",
-    section: "",
-    emi: "",
-  },
-  {
-    id: "2",
-    sectionName: "Investment",
-    paidAmount: "",
-    totalAmount: "",
-    remainMonth: "",
-    remainAmount: "",
-    extraAmount: "",
-    investAmount: "100980",
-    currentInvestAmount: "",
-    paidMonth: "",
-    totalMonth: "",
-    profit: "",
-    year: "2024",
-    endYear: "",
-    section: "",
-    emi: "",
-  },
-  {
-    id: "3",
-    sectionName: "Savings",
-    paidAmount: "",
-    totalAmount: "0",
-    remainMonth: "",
-    remainAmount: "",
-    extraAmount: "",
-    investAmount: "",
-    currentInvestAmount: "",
-    paidMonth: "",
-    totalMonth: "",
-    profit: "",
-    year: "2024",
-    endYear: "",
-    section: "",
-    emi: "",
-  },
-  {
-    id: "4",
-    sectionName: "Money Outflows",
-    paidAmount: "",
-    totalAmount: "83500",
-    remainMonth: "",
-    remainAmount: "",
-    extraAmount: "",
-    investAmount: "",
-    currentInvestAmount: "",
-    paidMonth: "",
-    totalMonth: "",
-    profit: "",
-    year: "2024",
-    endYear: "",
-    section: "",
-    emi: "",
-  },
-  {
-    id: "5",
-    sectionName: "Money Inflows",
-    paidAmount: "",
-    totalAmount: "8000",
-    remainMonth: "",
-    remainAmount: "",
-    extraAmount: "",
-    investAmount: "",
-    currentInvestAmount: "",
-    paidMonth: "",
-    totalMonth: "",
-    profit: "",
-    year: "2024",
-    endYear: "",
-    section: "",
-    emi: "",
-  },
-  {
-    id: "6",
-    sectionName: "Hdfc",
-    paidAmount: "230916",
-    totalAmount: "750000",
-    remainMonth: "46",
-    remainAmount: "519084",
-    extraAmount: "239640",
-    investAmount: "",
-    currentInvestAmount: "",
-    paidMonth: "14",
-    totalMonth: "60",
-    profit: "",
-    year: "",
-    endYear: "May 2028",
-    section: "Liabilities",
-    emi: "16494",
-  },
-  {
-    id: "7",
-    sectionName: "Icici",
-    paidAmount: "67140",
-    totalAmount: "150000",
-    remainMonth: "40",
-    remainAmount: "82860",
-    extraAmount: "51420",
-    investAmount: "",
-    currentInvestAmount: "",
-    paidMonth: "20",
-    totalMonth: "60",
-    profit: "",
-    year: "",
-    endYear: "Nov 2027",
-    section: "Liabilities",
-    emi: "3357",
-  },
-  {
-    id: "8",
-    sectionName: "Navi",
-    paidAmount: "125600",
-    totalAmount: "420000",
-    remainMonth: "40",
-    remainAmount: "294400",
-    extraAmount: "33600",
-    investAmount: "",
-    currentInvestAmount: "",
-    paidMonth: "8",
-    totalMonth: "48",
-    profit: "",
-    year: "",
-    endYear: "Oct 2027",
-    section: "Liabilities",
-    emi: "15700",
-  },
-  {
-    id: "9",
-    sectionName: "Hdfc jumbo",
-    paidAmount: "107225",
-    totalAmount: "750000",
-    remainMonth: "54",
-    remainAmount: "642775",
-    extraAmount: "295200",
-    investAmount: "",
-    currentInvestAmount: "",
-    paidMonth: "6",
-    totalMonth: "60",
-    profit: "",
-    year: "",
-    endYear: "Dec 2028",
-    section: "Liabilities",
-    emi: "17420",
-  },
-];
+import { useMPFData } from "../../hooks/useSelector";
+import { filterMPFData } from "../../utils/filterMpfData";
+import { tableCellLiability } from "../../constant/tableSectionData";
+import { mpfKey } from "../../constant/global";
 
 export const Liability = () => {
-  const filterLiability = initialData.filter(
-    (item) => item.section === "Liabilities"
-  );
+  const { mpfData, isMPFData } = useMPFData();
+  const liability = filterMPFData(isMPFData, mpfData, mpfKey.LIABILITY);
+
   return (
     <>
-      {filterLiability.map((liability) => {
-        return (
-          <MPFAccordion title={liability.sectionName}>
-            <MPFTable {...liability}/>
-          </MPFAccordion>
-        );
-      })}
+      {isMPFData &&
+        liability.map((liability) => {
+          return (
+            <MPFAccordion title={liability.sectionName}>
+              <MPFTable
+                tableData={liability}
+                tableHeader={tableCellLiability}
+                section={mpfKey.LIABILITY}
+              />
+            </MPFAccordion>
+          );
+        })}
     </>
   );
 };
