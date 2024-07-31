@@ -27,6 +27,8 @@ export const Dashboard = () => {
         <Toolbar
           sx={{
             pr: "24px",
+            display:"flex",
+            justifyContent:"space-between"
           }}
         >
           <Typography
@@ -38,7 +40,7 @@ export const Dashboard = () => {
           >
             {global.appTitle}
           </Typography>
-          <Upload/>
+          <Upload />
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={true}>
@@ -57,7 +59,7 @@ export const Dashboard = () => {
             handleNavigation(e);
           }}
         >
-          {SidebarItems}
+          <SidebarItems />
         </List>
       </Drawer>
       <Box

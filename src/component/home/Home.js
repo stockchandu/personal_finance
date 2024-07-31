@@ -12,6 +12,7 @@ import { Typography } from "@mui/material";
 import { MyNetworth } from "./MyNetworth";
 import ArticleIcon from '@mui/icons-material/Article';
 import { formatNumber } from "../../utils/formatNumber";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 export const Home = () => {
   const { mpfData, isMPFData } = useMPFData();
@@ -96,7 +97,7 @@ export const Home = () => {
         <Typography
           sx={{ fontSize: "24px", fontWeight: "500"}}
         >
-          Please UPLOAD Excel File For Updated Data <ArticleIcon/>
+          Please Upload Excel File  <CloudUploadIcon/>
         </Typography>
       </Grid>
     );

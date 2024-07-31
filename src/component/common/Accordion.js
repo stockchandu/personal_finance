@@ -14,7 +14,7 @@ export default function MPFAccordion({children,title}) {
         aria-controls="panel1-content"
         id="panel1-header"
       >
-        <Typography sx={{fontSize:"1.3rem" , fontWeight:"600"}}>{title}</Typography>
+        <Typography sx={{fontSize:"1.2rem" , fontWeight:"600"}}>{title.toUpperCase()}</Typography>
       </AccordionSummary>
       <AccordionDetails>
         {children}

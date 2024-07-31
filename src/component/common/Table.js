@@ -11,9 +11,7 @@ import {
 import { formatNumber } from "../../utils/formatNumber";
 
 const MPFTable = ({ tableData, tableHeader ,section}) => {
-  console.log(tableData);
   const row = tableData;
- 
   const getValueBySection = (row, name) => {
     switch (name) {
       case "Liabilities":

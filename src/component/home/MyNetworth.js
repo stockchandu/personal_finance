@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 import { calculateNetworth } from "../../utils/calcNetworth";
 import { formatNumber } from "../../utils/formatNumber";
 
-
 export const MyNetworth = ({section}) =>{
     const myNetworthTitle = "My Networth";
     const netWorthFormulaTitle = "All Oustanding Liabilities - Cash in Hand + Savings + Investment";
+    const colorBasedNW = () => {
+      return calculateNetworth(section) > 1 ? "green" : "red";
+    };
     return (
         <Grid item xs={12} md={4} lg={4} mb={2}>
         <Paper
@@ -21,12 +23,12 @@ export const MyNetworth = ({section}) =>{
           }}
         >
           <Typography
-            sx={{ fontSize: "18px", fontWeight: "500"}}
+            sx={{ fontSize: "18px", fontWeight: "700"}}
           >
             {myNetworthTitle}
           </Typography>
           <Typography
-            sx={{ fontSize: "20px", fontWeight: "600"}}
+            sx={{ fontSize: "20px", fontWeight: "600" ,color:colorBasedNW()}}
           >
             {formatNumber(calculateNetworth(section))}
           </Typography>
