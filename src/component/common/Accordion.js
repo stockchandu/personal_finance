@@ -26,7 +26,7 @@ export default function MPFAccordion({ children, title,edit }) {
           id="panel1-header"
         >
           <Typography sx={{ fontSize: "1.2rem", fontWeight: "600" }}>
-            {title.toUpperCase()}
+            {title && title.toUpperCase()}
           </Typography>
         </AccordionSummary>
         <AccordionDetails>{children}</AccordionDetails>

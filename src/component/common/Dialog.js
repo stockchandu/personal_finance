@@ -1,5 +1,4 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -7,10 +6,15 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import Typography from "@mui/material/Typography";
 import { useDialogData } from "../../hooks/useSelector";
 import { openDialog } from "../../store/dialog/dialogSlicer";
 import { useDispatch } from "react-redux";
+import MPFTextField from "./TextField";
+import Grid from "@mui/material/Grid";
+import { MpfButton } from "./Button";
+import { db } from "../../config/db";
+import { saveMpfData } from "../../store/mpfData/mpfSlicer";
+
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -23,15 +27,35 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 export default function MPFDialog() {
   const dispatch = useDispatch();
-  const { isDialog ,dialogData} = useDialogData();
-  const [open, setOpen] = React.useState(false);
+  const { isDialog, dialogData } = useDialogData();
+  const [formValue, setFormValue] = useState("");
 
-  console.log(dialogData)
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    dispatch(openDialog({ isDialog: false }));
+  const handleClose = async () => {
+    dispatch(openDialog({ isDialog: false, dialogData: dialogData }));
+    if (formValue && Object.keys(formValue).length > 0) {
+      const entryObj = Object.entries(formValue);
+      const key = entryObj[0][0];
+      const value = parseInt(entryObj[0][1]);
+      const updateData = {
+        [key]: value,
+      };
+      try {
+        const { data, error } = await db
+          .from("my_personal_finance")
+          .update(updateData)
+          .eq("id", dialogData.id)
+          .select();
+        if (error) {
+          console.error("Error updating data:", error);
+        } else {
+          const { data } = await db.from("my_personal_finance").select();
+          dispatch(saveMpfData(data));
+          console.log("Update successful:", data, dialogData);
+        }
+      } catch (err) {
+        console.error("Unexpected error:", err);
+      }
+    }
   };
 
   return (
@@ -57,26 +81,27 @@ export default function MPFDialog() {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros.
-          </Typography>
-          <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
-            auctor.
-          </Typography>
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo
-            cursus magna, vel scelerisque nisl consectetur et. Donec sed odio
-            dui. Donec ullamcorper nulla non metus auctor fringilla.
-          </Typography>
+          <Grid container spacing={3}>
+            {Object.entries(dialogData).map(([key, value]) => {
+              if (value) {
+                return (
+                  <MPFTextField
+                    label={key}
+                    value={value}
+                    setFormValue={setFormValue}
+                    formValue={formValue}
+                  />
+                );
+              }
+            })}
+          </Grid>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Save changes
-          </Button>
+          <MpfButton
+            label="Update"
+            sx={{ backgroundColor: "#3A87B3" }}
+            click={handleClose}
+          />
         </DialogActions>
       </BootstrapDialog>
     </>

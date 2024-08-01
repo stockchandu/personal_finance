@@ -30,7 +30,7 @@ export const Dashboard = () => {
   }, []);
 
   async function getAllMPFData() {
-    const { data } = await db.from("Mpf_personal").select();
+    const { data } = await db.from("my_personal_finance").select();
     dispatch(saveMpfData(data));
   }
 

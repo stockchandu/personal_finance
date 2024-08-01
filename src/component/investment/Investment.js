@@ -4,15 +4,12 @@ import { useMPFData } from "../../hooks/useSelector";
 import { filterMPFData } from "../../utils/filterMpfData";
 import { tableCellInvestment } from "../../constant/tableSectionData";
 import { mpfKey } from "../../constant/global";
-import { openDialog } from "../../store/dialog/dialogSlicer";
-import { useDispatch } from "react-redux";
+import { useEdit } from "../../hooks/useEdit";
+
 export const Investment = () => {
-  const dispatch = useDispatch();
+  const edit = useEdit();
   const { mpfData, isMPFData } = useMPFData();
   const investment = filterMPFData(isMPFData, mpfData, mpfKey.INVESTMENT);
-  const handleOpenDialog = (investment) => {
-    dispatch(openDialog({ isDialog: true ,dialogData:investment}));
-  };
   return (
     <>
       {isMPFData &&
@@ -20,7 +17,7 @@ export const Investment = () => {
           return (
             <MPFAccordion
               title={investment.sectionName}
-              edit={() => handleOpenDialog(investment)}
+              edit={() => edit(investment)}
             >
               <MPFTable
                 tableData={investment}
