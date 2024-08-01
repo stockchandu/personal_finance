@@ -12,12 +12,13 @@ export default function MPFTextField({ label, value, formValue, setFormValue }) 
 
   return (
     <Grid item xs={12} md={4} sm={6}>
-      <label>{label}</label>
       <TextField
         id="outlined-basic"
+        label={label}
         variant="outlined"
         value={formVal}
         name={label}
+        fullWidth
         sx={{
           '& .MuiOutlinedInput-input::placeholder': {
             color: 'black',
