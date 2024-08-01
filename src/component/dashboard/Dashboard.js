@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,22 +13,37 @@ import { SidebarItems } from "../common/Sidebar";
 import { global } from "../../constant/global";
 import { usePush } from "../../hooks/usePush";
 import { Upload } from "../common/Upload";
+import { db } from "../../config/db";
+import { saveMpfData } from "../../store/mpfData/mpfSlicer";
+import { useDispatch } from "react-redux";
+import MPFDialog from "../common/Dialog";
 
 export const Dashboard = () => {
+  const dispatch = useDispatch();
   const navigation = usePush();
   const handleNavigation = (evt) => {
     navigation(evt.target.innerText);
   };
 
+  useEffect(() => {
+    getAllMPFData();
+  }, []);
+
+  async function getAllMPFData() {
+    const { data } = await db.from("Mpf_personal").select();
+    dispatch(saveMpfData(data));
+  }
+
   return (
     <Box sx={{ display: "flex" }}>
+      <MPFDialog />
       <CssBaseline />
       <AppBar position="absolute" open={true}>
         <Toolbar
           sx={{
             pr: "24px",
-            display:"flex",
-            justifyContent:"space-between"
+            display: "flex",
+            justifyContent: "space-between",
           }}
         >
           <Typography

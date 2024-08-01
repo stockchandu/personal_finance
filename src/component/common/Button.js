@@ -1,7 +1,7 @@
 import { Button } from "@mui/material"
 
 
-export const ElectryButton =({label,click,bgColor,color})=>{
-    return <Button variant="contained" onClick={click}>{label}</Button>
+export const MpfButton =({label,click,sx,color})=>{
+    return <Button variant="contained" onClick={click} sx={{...sx}}>{label}</Button>
 }
 
