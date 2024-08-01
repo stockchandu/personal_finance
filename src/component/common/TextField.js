@@ -11,7 +11,7 @@ export default function MPFTextField({ label, value, formValue, setFormValue }) 
   };
 
   return (
-    <Grid item xs={12} md={4}>
+    <Grid item xs={12} md={4} sm={6}>
       <label>{label}</label>
       <TextField
         id="outlined-basic"
