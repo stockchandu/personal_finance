@@ -15,6 +15,8 @@ import { MpfButton } from "./Button";
 import { db } from "../../config/db";
 import { saveMpfData } from "../../store/mpfData/mpfSlicer";
 import { openLoader } from "../../store/loader/loaderSlicer";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -29,10 +31,12 @@ export default function MPFDialog() {
   const dispatch = useDispatch();
   const { isDialog, dialogData } = useDialogData();
   const [formValue, setFormValue] = useState("");
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleEdit = async () => {
     dispatch(saveDialogData({ dialogData: dialogData }));
-    dispatch(openLoader(true))
+    dispatch(openLoader(true));
     if (formValue && Object.keys(formValue).length > 0) {
       const entryObj = Object.entries(formValue);
       const key = entryObj[0][0];
@@ -56,8 +60,8 @@ export default function MPFDialog() {
         }
       } catch (err) {
         console.error("Unexpected error:", err);
-      }finally{
-        dispatch(openLoader(false))
+      } finally {
+        dispatch(openLoader(false));
       }
     }
   };
@@ -73,6 +77,9 @@ export default function MPFDialog() {
           onClose={handleClose}
           aria-labelledby="customized-dialog-title"
           open={isDialog}
+          fullScreen={fullScreen}
+          maxWidth="md"
+          fullWidth
         >
           <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
             {dialogData?.section}
@@ -90,12 +97,13 @@ export default function MPFDialog() {
             <CloseIcon />
           </IconButton>
           <DialogContent dividers>
-            <Grid container spacing={2}>
+            <Grid container spacing={1}>
               {dialogData &&
                 Object.entries(dialogData).map(([key, value]) => {
                   if (value) {
                     return (
                       <MPFTextField
+                        key={key}
                         label={key}
                         value={value}
                         setFormValue={setFormValue}
@@ -103,6 +111,7 @@ export default function MPFDialog() {
                       />
                     );
                   }
+                  return null;
                 })}
             </Grid>
           </DialogContent>
