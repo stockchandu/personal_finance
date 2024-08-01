@@ -3,6 +3,8 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore,FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import mpfSlicer from "./mpfData/mpfSlicer";
 import dialogSlicer from "./dialog/dialogSlicer";
+import loaderSlicer from "./loader/loaderSlicer";
+
 
 const persistConfig = {
   key : 'root',
@@ -13,7 +15,8 @@ const persistConfig = {
 
 const rootReducers = combineReducers({
   mpfData: mpfSlicer,
-  dialogData : dialogSlicer
+  dialogData : dialogSlicer,
+  loaderData : loaderSlicer
 });
 
 const persistedReducer  = persistReducer(persistConfig,rootReducers)

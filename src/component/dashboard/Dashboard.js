@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -17,6 +17,8 @@ import { db } from "../../config/db";
 import { saveMpfData } from "../../store/mpfData/mpfSlicer";
 import { useDispatch } from "react-redux";
 import MPFDialog from "../common/Dialog";
+import Loader from "../common/Loader";
+import { openLoader } from "../../store/loader/loaderSlicer";
 
 export const Dashboard = () => {
   const dispatch = useDispatch();
@@ -26,17 +28,30 @@ export const Dashboard = () => {
   };
 
   useEffect(() => {
+    dispatch(openLoader(true))
     getAllMPFData();
   }, []);
 
   async function getAllMPFData() {
-    const { data } = await db.from("my_personal_finance").select();
-    dispatch(saveMpfData(data));
+    try {
+      const { data,error } = await db.from("my_personal_finance").select();
+      dispatch(saveMpfData(data));
+      if (error) {
+        console.error("Error updating data:");
+      } else {
+        console.log("Update successful:", data, );
+      }
+    } catch (err) {
+      console.error("Unexpected error:");
+    }finally{
+      dispatch(openLoader(false))
+    }
   }
 
   return (
     <Box sx={{ display: "flex" }}>
       <MPFDialog />
+      <Loader/>
       <CssBaseline />
       <AppBar position="absolute" open={true}>
         <Toolbar

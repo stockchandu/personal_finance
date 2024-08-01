@@ -10,7 +10,6 @@ import { MoneyOutFlow } from "./MoneyOutFlow";
 import { MoneyInflow } from "./MoneyInFlow";
 import { Typography } from "@mui/material";
 import { MyNetworth } from "./MyNetworth";
-import ArticleIcon from '@mui/icons-material/Article';
 import { formatNumber } from "../../utils/formatNumber";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
@@ -97,7 +96,7 @@ export const Home = () => {
         <Typography
           sx={{ fontSize: "24px", fontWeight: "500"}}
         >
-          Please Upload Excel File  <CloudUploadIcon/>
+          Something Went Wrong ! . Please Upload Excel File  <CloudUploadIcon/> , Refresh Page
         </Typography>
       </Grid>
     );

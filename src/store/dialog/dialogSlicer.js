@@ -10,13 +10,10 @@ const dialogSlicer = createSlice({
   initialState,
   reducers: {
     saveDialogData(state, action) {
-    // state.isDialog = action.payload;
-    // TODO : check how to store dialog content data to the db asyn use redux thunk
+      state.dialogData = action.payload.dialogData;
     },
     openDialog(state,action){
-        console.log(action)
         state.isDialog = action.payload.isDialog;
-        state.dialogData = action.payload.dialogData;
     }
   },
 });

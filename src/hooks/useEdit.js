@@ -1,9 +1,11 @@
 import { useDispatch } from "react-redux";
-import { openDialog } from "../store/dialog/dialogSlicer";
+import { openDialog ,saveDialogData} from "../store/dialog/dialogSlicer";
 
 export const useEdit = () => {
   const dispatch = useDispatch();
-  return (investment) => {
-    dispatch(openDialog({ isDialog: true, dialogData: investment }));
+  return (data) => {
+    console.log(data)
+    dispatch(openDialog({ isDialog: true}));
+    dispatch(saveDialogData({ dialogData: data }));
   };
 };
