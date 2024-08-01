@@ -97,7 +97,7 @@ export default function MPFDialog() {
             <CloseIcon />
           </IconButton>
           <DialogContent dividers>
-            <Grid container spacing={1}>
+            <Grid container spacing={2}>
               {dialogData &&
                 Object.entries(dialogData).map(([key, value]) => {
                   if (value) {
