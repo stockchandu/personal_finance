@@ -11,7 +11,7 @@ import { MoneyInflow } from "./MoneyInFlow";
 import { Typography } from "@mui/material";
 import { MyNetworth } from "./MyNetworth";
 import { formatNumber } from "../../utils/formatNumber";
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 export const Home = () => {
   const { mpfData, isMPFData } = useMPFData();
@@ -24,7 +24,7 @@ export const Home = () => {
 
   const typoStyle = {
     fontSize: "15px",
-    fontWeight: "600",
+    fontWeight: "500",
     marginBottom: 1,
   };
 
@@ -35,43 +35,85 @@ export const Home = () => {
   const renderSection = (section) => {
     switch (section.sectionName) {
       case "Liabilities":
-        return Liabilities(section, typoStyle, formatNumber, handleNavigation);
+        return Liabilities(
+          section,
+          typoStyle,
+          formatNumber,
+          handleNavigation,
+          mpfData
+        );
       case "Investment":
-        return Investment(section, typoStyle, formatNumber, handleNavigation);
+        return Investment(
+          section,
+          typoStyle,
+          formatNumber,
+          handleNavigation,
+          mpfData
+        );
       case "Savings(PF+Bank)":
-        return Saving(section, typoStyle, formatNumber, handleNavigation);
+        return Saving(
+          section,
+          typoStyle,
+          formatNumber,
+          handleNavigation,
+          mpfData
+        );
       case "Money Outflows":
-        return MoneyOutFlow(section, typoStyle, formatNumber, handleNavigation);
+        return MoneyOutFlow(
+          section,
+          typoStyle,
+          formatNumber,
+          handleNavigation,
+          mpfData
+        );
       case "Money Inflows":
-        return MoneyInflow(section, typoStyle, formatNumber, handleNavigation);
+        return MoneyInflow(
+          section,
+          typoStyle,
+          formatNumber,
+          handleNavigation,
+          mpfData
+        );
       default:
         break;
     }
   };
+
+  const sortList = [
+    "Liabilities",
+    "Money Inflows",
+    "Investment",
+    "Savings(PF+Bank)",
+    "Money Outflows",
+  ];
+
+  const sortedSection = [...section].sort((a, b) => {
+    return sortList.indexOf(a.sectionName) - sortList.indexOf(b.sectionName);
+  });
 
   const netWorthDetailsTile = () => {
     return (
       <>
         <MyNetworth section={section} />
         <Grid container spacing={3}>
-          {section.map((section, index) => {
-            if (index < 5)
-              return (
-                <>
-                  <Grid item xs={12} md={4} lg={4} key={section.id}>
-                    <Paper
-                      sx={{
-                        p: 2,
-                        display: "flex",
-                        flexDirection: "column",
-                        height: 290,
-                      }}
-                    >
-                      {renderSection(section)}
-                    </Paper>
-                  </Grid>
-                </>
-              );
+          {sortedSection.map((section) => {
+              if (section.sectionParent)
+                return (
+                  <>
+                    <Grid item xs={12} md={4} lg={4} key={section.id}>
+                      <Paper
+                        sx={{
+                          p: 2,
+                          display: "flex",
+                          flexDirection: "column",
+                          height: 350,
+                        }}
+                      >
+                        {renderSection(section)}
+                      </Paper>
+                    </Grid>
+                  </>
+                );
           })}
         </Grid>
       </>
@@ -93,10 +135,9 @@ export const Home = () => {
           height: 290,
         }}
       >
-        <Typography
-          sx={{ fontSize: "24px", fontWeight: "500"}}
-        >
-          Something Went Wrong ! . Please Upload Excel File  <CloudUploadIcon/> , Refresh Page
+        <Typography sx={{ fontSize: "24px", fontWeight: "500" }}>
+          Something Went Wrong ! . Please Upload Excel File <CloudUploadIcon />{" "}
+          , Refresh Page
         </Typography>
       </Grid>
     );

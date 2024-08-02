@@ -6,55 +6,87 @@ export const Liabilities = (
   section,
   typoStyle,
   formatNumber,
-  handleNavigation
+  handleNavigation,
+  mpfData
 ) => {
   const investStyle = {
     display: "flex",
     justifyContent: "space-between",
   };
+
+  const getLiabilityData=(data)=> data?.filter(
+    (item) => item.section === "Liabilities"
+  );
+  const calculateLiability = (data, key) => {
+    const filterLiability = getLiabilityData(data)
+    return filterLiability.reduce((init, item) => init + item[key], 0);
+  };
+
+  const calculateTotaPrincipal =(data)=>{
+    const filterLiability = getLiabilityData(data)
+    return filterLiability.reduce((init, loan) => init + (loan.emi * loan.totalMonth), 0);
+  }
+  const calculateTotalPaid =(data)=>{
+    const filterLiability = getLiabilityData(data)
+    return filterLiability.reduce((init, loan) => init + (loan.paidMonth * loan.emi), 0);
+  }
+  const loanInterest = calculateTotaPrincipal(mpfData) - calculateLiability(mpfData, "totalAmount");
+  const remainPI = calculateTotaPrincipal(mpfData) - calculateTotalPaid(mpfData);
+  const remainEMI = calculateLiability(mpfData, "totalMonth") - calculateLiability(mpfData, "paidMonth");
   return (
     <>
       <Typography sx={{ height: 260 }}>
-        <Typography
-          sx={{ fontSize: "24px", fontWeight: "600"}}
-        >
+        <Typography sx={{ fontSize: "24px", fontWeight: "600" }}>
           {section?.sectionName}
         </Typography>
-        <Divider sx={{marginBottom:1}}/>
+        <Divider sx={{ marginBottom: 1 }} />
         <Typography sx={investStyle}>
-          <Typography sx={typoStyle}>Total Amount </Typography>
+          <Typography sx={typoStyle}>Fixed Loan Principal </Typography>
           <Typography sx={{ ...typoStyle, color: "red" }}>
-            {formatNumber(section?.totalAmount)}
+            {formatNumber(calculateLiability(mpfData, "totalAmount"))}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
-          <Typography sx={typoStyle}>Total Amount Paid</Typography>
+          <Typography sx={typoStyle}>Fixed Loan Interest </Typography>
+          <Typography sx={{ ...typoStyle, color: "red" }}>
+            {formatNumber(loanInterest)}
+          </Typography>
+        </Typography>
+
+        <Typography sx={investStyle}>
+          <Typography sx={typoStyle}>Principal + Interest Paid</Typography>
           <Typography sx={{ ...typoStyle, color: "green" }}>
-            {formatNumber(section?.paidAmount)}
+            {formatNumber(calculateTotalPaid(mpfData))}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
-          <Typography sx={typoStyle}>Remain Amount</Typography>
+          <Typography sx={typoStyle}>Remain Principal + Interest</Typography>
           <Typography sx={{ ...typoStyle, color: "red" }}>
-            {formatNumber(section?.remainAmount)}
+            {formatNumber(remainPI)}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
-          <Typography sx={typoStyle}>Total Months</Typography>
-          <Typography sx={typoStyle}>{section?.totalMonth}</Typography>
+          <Typography sx={typoStyle}>Total EMI</Typography>
+          <Typography sx={typoStyle}>
+            {calculateLiability(mpfData, "totalMonth")}
+          </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
-          <Typography sx={typoStyle}>Completed Months</Typography>
-          <Typography sx={typoStyle}>{section?.paidMonth}</Typography>
+          <Typography sx={typoStyle}>Paid EMI</Typography>
+          <Typography sx={typoStyle}>
+            {calculateLiability(mpfData, "paidMonth")}
+          </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
-          <Typography sx={typoStyle}>Remain Months</Typography>
-          <Typography sx={typoStyle}>{section?.totalMonth}</Typography>
+          <Typography sx={typoStyle}>Remain EMI</Typography>
+          <Typography sx={typoStyle}>
+            {remainEMI}
+          </Typography>
         </Typography>
       </Typography>
 

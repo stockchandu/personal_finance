@@ -34,7 +34,7 @@ export const Dashboard = () => {
 
   async function getAllMPFData() {
     try {
-      const { data,error } = await db.from("my_personal_finance").select();
+      const { data,error } = await db.from("my_personal_finance").select("*").order('sectionName', { ascending: true });
       dispatch(saveMpfData(data));
       if (error) {
         console.error("Error updating data:");

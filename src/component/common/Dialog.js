@@ -53,7 +53,7 @@ export default function MPFDialog() {
         if (error) {
           console.error("Error updating data:", error);
         } else {
-          const { data } = await db.from("my_personal_finance").select();
+          const { data } = await db.from("my_personal_finance").select("*").order('sectionName', { ascending: true });
           dispatch(saveMpfData(data));
           dispatch(openDialog({ isDialog: false }));
           console.log("Update successful:", data, dialogData);
