@@ -15,8 +15,8 @@ import { MpfButton } from "./Button";
 import { db } from "../../config/db";
 import { saveMpfData } from "../../store/mpfData/mpfSlicer";
 import { openLoader } from "../../store/loader/loaderSlicer";
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -30,38 +30,42 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 export default function MPFDialog() {
   const dispatch = useDispatch();
   const { isDialog, dialogData } = useDialogData();
-  const [formValue, setFormValue] = useState("");
+  const [formValue, setFormValue] = useState({});
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isFormValue = formValue && Object.keys(formValue).length > 0 
+  const isBtnDisable = isFormValue ? false : true
   const handleEdit = async () => {
     dispatch(saveDialogData({ dialogData: dialogData }));
     dispatch(openLoader(true));
-    if (formValue && Object.keys(formValue).length > 0) {
-      const entryObj = Object.entries(formValue);
-      const key = entryObj[0][0];
-      const value = parseInt(entryObj[0][1]);
-      const updateData = {
-        [key]: value,
-      };
-      try {
-        const { error } = await db
-          .from("my_personal_finance")
-          .update(updateData)
-          .eq("id", dialogData.id)
-          .select();
-        if (error) {
-          console.error("Error updating data:", error);
-        } else {
-          const { data } = await db.from("my_personal_finance").select("*").order('sectionName', { ascending: true });
-          dispatch(saveMpfData(data));
-          dispatch(openDialog({ isDialog: false }));
-          console.log("Update successful:", data, dialogData);
+    if (isFormValue) {
+      const updateData = Object.fromEntries(
+        Object.entries(formValue).map(([key, value]) => [key, parseInt(value)])
+      );
+
+      if (updateData && Object.keys(updateData).length > 0) {
+        try {
+          const tableName = process.env.REACT_APP_PERSONAL_FINANCE_TABLE_NAME;
+          const { error } = await db
+            .from(tableName)
+            .update(updateData)
+            .eq("id", dialogData.id)
+            .select();
+          if (error) {
+            console.error("Error updating data:", error);
+          } else {
+            const { data } = await db
+              .from(tableName)
+              .select("*")
+              .order("sectionName", { ascending: true });
+            dispatch(saveMpfData(data));
+            dispatch(openDialog({ isDialog: false }));
+          }
+        } catch (err) {
+          console.error("Unexpected error:", err);
+        } finally {
+          dispatch(openLoader(false));
         }
-      } catch (err) {
-        console.error("Unexpected error:", err);
-      } finally {
-        dispatch(openLoader(false));
       }
     }
   };
@@ -120,6 +124,7 @@ export default function MPFDialog() {
               label="Update"
               sx={{ backgroundColor: "#3A87B3" }}
               click={handleEdit}
+              disable={isBtnDisable}
             />
           </DialogActions>
         </BootstrapDialog>

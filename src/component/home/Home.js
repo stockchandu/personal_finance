@@ -12,6 +12,7 @@ import { Typography } from "@mui/material";
 import { MyNetworth } from "./MyNetworth";
 import { formatNumber } from "../../utils/formatNumber";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { Welcome } from "./Welcome";
 
 export const Home = () => {
   const { mpfData, isMPFData } = useMPFData();
@@ -94,26 +95,27 @@ export const Home = () => {
   const netWorthDetailsTile = () => {
     return (
       <>
+        <Welcome />
         <MyNetworth section={section} />
         <Grid container spacing={3}>
           {sortedSection.map((section) => {
-              if (section.sectionParent)
-                return (
-                  <>
-                    <Grid item xs={12} md={4} lg={4} key={section.id}>
-                      <Paper
-                        sx={{
-                          p: 2,
-                          display: "flex",
-                          flexDirection: "column",
-                          height: 350,
-                        }}
-                      >
-                        {renderSection(section)}
-                      </Paper>
-                    </Grid>
-                  </>
-                );
+            if (section.sectionParent)
+              return (
+                <>
+                  <Grid item xs={12} md={4} lg={4} key={section.id}>
+                    <Paper
+                      sx={{
+                        p: 2,
+                        display: "flex",
+                        flexDirection: "column",
+                        height: 350,
+                      }}
+                    >
+                      {renderSection(section)}
+                    </Paper>
+                  </Grid>
+                </>
+              );
           })}
         </Grid>
       </>

@@ -17,41 +17,52 @@ import { db } from "../../config/db";
 import { saveMpfData } from "../../store/mpfData/mpfSlicer";
 import { useDispatch } from "react-redux";
 import MPFDialog from "../common/Dialog";
-import Loader from "../common/Loader";
 import { openLoader } from "../../store/loader/loaderSlicer";
-
+import { MpfButton } from "../common/Button";
+import { useLoginData } from "../../hooks/useSelector";
+import { useNavigate } from "react-router-dom";
 export const Dashboard = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useLoginData();
   const navigation = usePush();
   const handleNavigation = (evt) => {
     navigation(evt.target.innerText);
   };
 
   useEffect(() => {
-    dispatch(openLoader(true))
+    dispatch(openLoader(true));
     getAllMPFData();
   }, []);
 
   async function getAllMPFData() {
     try {
-      const { data,error } = await db.from("my_personal_finance").select("*").order('sectionName', { ascending: true });
+      const tableName = process.env.REACT_APP_PERSONAL_FINANCE_TABLE_NAME;
+      const { data, error } = await db
+        .from(tableName)
+        .select("*")
+        .order("sectionName", { ascending: true });
       dispatch(saveMpfData(data));
       if (error) {
         console.error("Error updating data:");
-      } else {
-        console.log("Update successful:", data, );
-      }
+      } 
     } catch (err) {
       console.error("Unexpected error:");
-    }finally{
-      dispatch(openLoader(false))
+    } finally {
+      dispatch(openLoader(false));
     }
   }
+
+  const handleLogout = () => {
+    localStorage.removeItem('persist:root')
+    if (!localStorage.getItem('persist:root')) {
+      navigate("/login");
+    }
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
       <MPFDialog />
-      <Loader/>
       <CssBaseline />
       <AppBar position="absolute" open={true}>
         <Toolbar
@@ -71,6 +82,16 @@ export const Dashboard = () => {
             {global.appTitle}
           </Typography>
           <Upload />
+          {isAuthenticated && (
+            <MpfButton
+              label="Logout"
+              disable={false}
+              sx={{ backgroundColor: "#2364AD" }}
+              click={() => {
+                handleLogout();
+              }}
+            />
+          )}
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={true}>

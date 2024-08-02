@@ -31,7 +31,7 @@ export default function MPFAccordion({ children, title,edit }) {
         </AccordionSummary>
         <AccordionDetails>{children}</AccordionDetails>
         <AccordionDetails sx={{ display: "flex", justifyContent: "end" }}>
-          <MpfButton label="Edit" sx={{ backgroundColor: "#3A87B3" }} click={edit}/>
+          <MpfButton label="Edit" sx={{ backgroundColor: "#3A87B3" }} click={edit} disable={false}/>
         </AccordionDetails>
       </Accordion>
     </Box>

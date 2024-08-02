@@ -4,19 +4,20 @@ import { persistReducer, persistStore,FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, R
 import mpfSlicer from "./mpfData/mpfSlicer";
 import dialogSlicer from "./dialog/dialogSlicer";
 import loaderSlicer from "./loader/loaderSlicer";
-
+import loginSlicer from "./login/loginSlicer";
 
 const persistConfig = {
   key : 'root',
   storage,
-  whitelist: ['mpfData'],
+  whitelist: ['mpfData','loginData'],
   blacklist:['dialogData']
 }
 
 const rootReducers = combineReducers({
   mpfData: mpfSlicer,
   dialogData : dialogSlicer,
-  loaderData : loaderSlicer
+  loaderData : loaderSlicer,
+  loginData : loginSlicer
 });
 
 const persistedReducer  = persistReducer(persistConfig,rootReducers)

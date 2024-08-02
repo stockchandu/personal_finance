@@ -6,36 +6,70 @@ import { Investment } from "../component/investment/Investment";
 import { Saving } from "../component/saving/Saving";
 import { MoneyIn } from "../component/moneyin/MoneyIn";
 import { MoneyOut } from "../component/moneyout/MoneyOut";
+import { RouteGuard } from "./routeGuard";
+import Login from "../component/login/Login";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Dashboard />,
+    element: (
+      <RouteGuard>
+        <Dashboard />
+      </RouteGuard>
+    ),
     children: [
       {
-        path: "/",
-        element: <Home />,
+        path: "",
+        element: (
+          <RouteGuard>
+            <Home />
+          </RouteGuard>
+        ),
       },
       {
-        path: "/liability",
-        element: <Liability />,
+        path: "liability",
+        element: (
+          <RouteGuard>
+            <Liability />
+          </RouteGuard>
+        ),
       },
       {
-        path: "/invest",
-        element: <Investment />,
+        path: "invest",
+        element: (
+          <RouteGuard>
+            <Investment />
+          </RouteGuard>
+        ),
       },
       {
-        path: "/saving",
-        element: <Saving />,
+        path: "saving",
+        element: (
+          <RouteGuard>
+            <Saving />
+          </RouteGuard>
+        ),
       },
       {
-        path: "/money-in",
-        element: <MoneyIn />,
+        path: "money-in",
+        element: (
+          <RouteGuard>
+            <MoneyIn />
+          </RouteGuard>
+        ),
       },
       {
-        path: "/money-out",
-        element: <MoneyOut />,
+        path: "money-out",
+        element: (
+          <RouteGuard>
+            <MoneyOut />
+          </RouteGuard>
+        ),
       },
     ],
-  }
+  },
+  {
+    path: "/login",
+    element: <Login/>,
+  },
 ]);
