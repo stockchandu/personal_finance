@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 export const usePush = () => {
   const navigation = useNavigate();
   const goToPath = (path) => {
+    console.log('path: ', path);
     switch (path) {
       case "Home":
         navigation("/");
@@ -10,13 +11,13 @@ export const usePush = () => {
       case "Liabilities":
         navigation("/liability");
         break;
-      case "Investments":
+      case "Investment":
         navigation("/invest");
         break;
-      case "Saving(PF+Bank)":
+      case "Savings(PF+Bank)":
         navigation("/saving");
         break;
-      case "Money OutFlow":
+      case "Money Outflows":
         navigation("/money-out");
         break;
       case "Money Inflows":

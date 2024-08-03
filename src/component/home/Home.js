@@ -97,12 +97,27 @@ export const Home = () => {
       <>
         <Welcome />
         <MyNetworth section={section} />
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           {sortedSection.map((section) => {
+            console.log('section: ', section);
             if (section.sectionParent)
               return (
                 <>
-                  <Grid item xs={12} md={4} lg={4} key={section.id}>
+                  <Grid
+                    item
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    key={section.id}
+                    onClick={() => {
+                      handleNavigation(section?.sectionName);
+                    }}
+                    sx={{
+                      "&:hover": {
+                        cursor: "pointer", 
+                      },
+                    }}
+                  >
                     <Paper
                       sx={{
                         p: 2,

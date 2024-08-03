@@ -49,13 +49,14 @@ export const MoneyOutFlow = (
             {formatNumber(remainMO)}
           </Typography>
         </Typography>
+
+        <Typography sx={investStyle}>
+          <Typography sx={typoStyle}>Total No of MoneyOutflow </Typography>
+          <Typography sx={{ ...typoStyle }}>
+            {getMOData(mpfData).length}
+          </Typography>
+        </Typography>
       </Typography>
-      <DetailsButton
-        text="Check Details"
-        onClick={() => handleNavigation("Money OutFlow")}
-      >
-        Check Details
-      </DetailsButton>
     </>
   );
 };

@@ -10,7 +10,6 @@ export const MoneyInflow = (
   handleNavigation,
   mpfData
 ) => {
-
   const investStyle = {
     display: "flex",
     justifyContent: "space-between",
@@ -22,27 +21,27 @@ export const MoneyInflow = (
     const filterMI = getMIData(data);
     return filterMI.reduce((init, item) => init + item[key], 0);
   };
-const remainMI = calculateMI(mpfData,"inReceiveAmount") - calculateMI(mpfData,"inPaidAmount")
+  const remainMI =
+    calculateMI(mpfData, "inReceiveAmount") -
+    calculateMI(mpfData, "inPaidAmount");
   return (
     <>
       <Typography sx={{ height: 260 }}>
-        <Typography
-          sx={{ fontSize: "24px", fontWeight: "600" }}
-        >
+        <Typography sx={{ fontSize: "24px", fontWeight: "600" }}>
           {section?.sectionName}
         </Typography>
-        <Divider sx={{marginBottom:1}}/>
+        <Divider sx={{ marginBottom: 1 }} />
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total Inflow Amount</Typography>
           <Typography sx={{ ...typoStyle, color: "red" }}>
-            {formatNumber(calculateMI(mpfData,"inReceiveAmount"))}
+            {formatNumber(calculateMI(mpfData, "inReceiveAmount"))}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total Inflow Paid</Typography>
           <Typography sx={{ ...typoStyle, color: "green" }}>
-            {formatNumber(calculateMI(mpfData,"inPaidAmount"))}
+            {formatNumber(calculateMI(mpfData, "inPaidAmount"))}
           </Typography>
         </Typography>
 
@@ -52,13 +51,14 @@ const remainMI = calculateMI(mpfData,"inReceiveAmount") - calculateMI(mpfData,"i
             {formatNumber(remainMI)}
           </Typography>
         </Typography>
+
+        <Typography sx={investStyle}>
+          <Typography sx={typoStyle}>Total No of MoneyInflow</Typography>
+          <Typography sx={{ ...typoStyle }}>
+            {getMIData(mpfData).length}
+          </Typography>
+        </Typography>
       </Typography>
-      <DetailsButton
-        text="Check Details"
-        onClick={() => handleNavigation("Money Inflows")}
-      >
-        Check Details
-      </DetailsButton>
     </>
   );
 };

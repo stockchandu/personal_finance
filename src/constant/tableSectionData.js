@@ -1,12 +1,14 @@
 export const tableCellLiability = [
-  { name: "Loan amount", id: "LI_1" },
+  { name: "Loan Principal", id: "LI_1" },
   { name: "EMI", id: "LI_2" },
-  { name: "Paid", id: "LI_3" },
-  { name: "Extra amount", id: "LI_4" },
-  { name: "Total tenure", id: "LI_5" },
-  { name: "Completed tenure", id: "LI_6" },
-  { name: "Remaining tenure", id: "LI_7" },
-  { name: "End tenure date", id: "LI_8" },
+  { name: "Total Paid ", id: "LI_3" },
+  { name: "Total Interest", id: "LI_4" },
+  { name: "O/S Principal", id: "LI_10" },
+  { name: "Interest Rate", id: "LI_9" },
+  { name: "Total EMI", id: "LI_5" },
+  { name: "Paid EMI", id: "LI_6" },
+  { name: "O/S EMI", id: "LI_7" },
+  { name: "EMI End", id: "LI_8" },
 ];
 
 export const tableCellInvestment = [

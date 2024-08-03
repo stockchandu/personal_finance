@@ -7,23 +7,68 @@ const constant = {
 };
 
 const getSection = (data, sName) => {
-  return data && data.find((sec) => sec.sectionName === sName);
+  return data && data.filter((sec) => sec.section === sName);
+};
+
+const calculateTotaLoanPrincipal = (data) => {
+  return data.reduce((init, loan) => init + loan.emi * loan.totalMonth, 0);
+};
+
+const calculateTotalLoanPaid = (data) => {
+  return data.reduce((init, loan) => init + loan.paidMonth * loan.emi, 0);
+};
+
+const calculateSum = (data, key) => {
+  return data.reduce((init, item) => init + item[key], 0);
+};
+
+const allLiability = (sectionData) => {
+  const liability = getSection(sectionData, constant.LIABILITY);
+  const totalLoanAmt = calculateTotaLoanPrincipal(liability);
+  const totalPaid = calculateTotalLoanPaid(liability);
+  const outstanding = totalLoanAmt - totalPaid;
+  return outstanding;
+};
+
+const allInvestment = (sectionData) => {
+  const investment = getSection(sectionData, constant.INVESTMENT);
+  const currentInvest = calculateSum(investment, "currentInvest");
+  return currentInvest;
+};
+
+const allSaving = (sectionData) => {
+  const saving = getSection(sectionData, constant.SAVING);
+  const totalSave = calculateSum(saving, "totalAmount");
+  const redeemSave = calculateSum(saving, "redeem");
+  return totalSave - redeemSave;
+};
+
+const allMoneyInflow = (sectionData) => {
+  const moneyInflow = getSection(sectionData, constant.MI);
+  const totalMI = calculateSum(moneyInflow, "inReceiveAmount");
+  const paidMI = calculateSum(moneyInflow, "inPaidAmount");
+  return totalMI - paidMI
+};
+
+const allMoneyOutflow = (sectionData) => {
+  const moneyOutflow = getSection(sectionData, constant.MO);
+  const totalMO = calculateSum(moneyOutflow, "outMoney");
+  const receivedMO = calculateSum(moneyOutflow, "outPaidMoney");
+  return totalMO - receivedMO
 };
 
 export const calculateNetworth = (data) => {
   const isData = data && data?.length > 0;
-  const filteredData = isData && data.slice(0, 5);
-  const liabilityValue = getSection(filteredData, constant.LIABILITY);
-  const investValue = getSection(filteredData, constant.INVESTMENT);
-  const savingValue = getSection(filteredData, constant.SAVING);
-  const moValue = getSection(filteredData, constant.MO);
-  const miValue = getSection(filteredData, constant.MI);
-  const liability =
-    parseInt(liabilityValue.remainAmount) + parseInt(miValue.totalAmount);
-  const saving =
-    parseInt(investValue.investAmount) +
-    parseInt(savingValue.remainAmount) +
-    parseInt(moValue.totalAmount);
-  const myNetWorth = saving - liability;
-  return myNetWorth
+  if (isData) {
+    const sectionData = data;
+    const liabilityValue = allLiability(sectionData);
+    const investValue = allInvestment(sectionData);
+    const savingValue = allSaving(sectionData);
+    const miValue = allMoneyInflow(sectionData);
+    const moValue = allMoneyOutflow(sectionData);
+    const totalLiabilities = liabilityValue + miValue;
+    const totalSaving = investValue + savingValue + moValue
+    const myNetWorth = totalLiabilities - totalSaving
+    return [totalSaving,totalLiabilities,myNetWorth]
+  }
 };

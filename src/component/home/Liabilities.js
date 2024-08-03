@@ -30,7 +30,7 @@ export const Liabilities = (
     const filterLiability = getLiabilityData(data)
     return filterLiability.reduce((init, loan) => init + (loan.paidMonth * loan.emi), 0);
   }
-  const loanInterest = calculateTotaPrincipal(mpfData) - calculateLiability(mpfData, "totalAmount");
+  const loanInterest = calculateTotaPrincipal(mpfData) - calculateLiability(mpfData, "loanPrincipal");
   const remainPI = calculateTotaPrincipal(mpfData) - calculateTotalPaid(mpfData);
   const remainEMI = calculateLiability(mpfData, "totalMonth") - calculateLiability(mpfData, "paidMonth");
   return (
@@ -43,7 +43,7 @@ export const Liabilities = (
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Fixed Loan Principal </Typography>
           <Typography sx={{ ...typoStyle, color: "red" }}>
-            {formatNumber(calculateLiability(mpfData, "totalAmount"))}
+            {formatNumber(calculateLiability(mpfData, "loanPrincipal"))}
           </Typography>
         </Typography>
 
@@ -88,14 +88,14 @@ export const Liabilities = (
             {remainEMI}
           </Typography>
         </Typography>
-      </Typography>
 
-      <DetailsButton
-        text="Check Details"
-        onClick={() => handleNavigation("Liabilities")}
-      >
-        Check Details
-      </DetailsButton>
+        <Typography sx={investStyle}>
+          <Typography sx={typoStyle}>Total No of Liabilities </Typography>
+          <Typography sx={typoStyle}>
+            {getLiabilityData(mpfData).length}
+          </Typography>
+        </Typography>
+      </Typography>
     </>
   );
 };

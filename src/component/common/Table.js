@@ -17,10 +17,12 @@ const MPFTable = ({ tableData, tableHeader ,section}) => {
       case "Liabilities":
         return (
           <>
-            <TableCell>{formatNumber(row.totalAmount)}</TableCell>
+            <TableCell>{formatNumber(row.loanPrincipal)}</TableCell>
             <TableCell>{formatNumber(row.emi)}</TableCell>
-            <TableCell>{formatNumber(row.paidAmount)}</TableCell>
-            <TableCell>{formatNumber(row.extraAmount)}</TableCell>
+            <TableCell>{formatNumber(row.totalLoanPaid)}</TableCell>
+            <TableCell>{formatNumber(row.totalInterest)}</TableCell>
+            <TableCell>{formatNumber(row.remainPrincipal)}</TableCell>
+            <TableCell>{row.rateOfInterest}</TableCell>
             <TableCell>{row.totalMonth}</TableCell>
             <TableCell>{row.paidMonth}</TableCell>
             <TableCell>{row.remainMonth}</TableCell>
@@ -34,7 +36,7 @@ const MPFTable = ({ tableData, tableHeader ,section}) => {
             <TableCell>{formatNumber(row.investAmount)}</TableCell>
             <TableCell>{formatNumber(row.currentInvest)}</TableCell>
             <TableCell>{formatNumber(row.profit)}</TableCell>
-            <TableCell>{formatNumber(row.redeem)}</TableCell>
+            <TableCell>{formatNumber(row.investRedeem)}</TableCell>
           </>
         );
       case "Savings(PF+Bank)":

@@ -31,6 +31,9 @@ export const Investment = (
     calculateInvestment(mpfData, "currentInvest") -
     calculateInvestment(mpfData, "investAmount");
 
+  const totalROI =
+    ( totalPL/calculateInvestment(mpfData, "investAmount")) * 100;
+
   return (
     <>
       <Typography sx={{ height: 260 }}>
@@ -57,13 +60,22 @@ export const Investment = (
             {formatNumber(totalPL)}
           </Typography>
         </Typography>
+
+        <Typography sx={investStyle}>
+          <Typography sx={typoStyle}>Total ROI </Typography>
+          <Typography sx={{ ...typoStyle, color: colorBasedPL() }}>
+            {totalROI.toFixed(2)}%
+          </Typography>
+        </Typography>
+
+        <Typography sx={investStyle}>
+          <Typography sx={typoStyle}>Total No of Investment </Typography>
+          <Typography sx={{ ...typoStyle }}>
+            {getInvestData(mpfData).length}
+          </Typography>
+        </Typography>
       </Typography>
-      <DetailsButton
-        text="Check Details"
-        onClick={() => handleNavigation("Investments")}
-      >
-        Check Details
-      </DetailsButton>
+     
     </>
   );
 };

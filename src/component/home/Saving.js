@@ -49,13 +49,14 @@ export const Saving = (
             {formatNumber(remainSaving)}
           </Typography>
         </Typography>
+
+        <Typography sx={investStyle}>
+          <Typography sx={typoStyle}>Total No of Savings </Typography>
+          <Typography sx={{ ...typoStyle, color: "green" }}>
+            {getSavingData(mpfData).length}
+          </Typography>
+        </Typography>
       </Typography>
-      <DetailsButton
-        text="Check Details"
-        onClick={() => handleNavigation("Saving(PF+Bank)")}
-      >
-        Check Details
-      </DetailsButton>
     </>
   );
 };

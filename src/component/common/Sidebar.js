@@ -30,33 +30,34 @@ const sideBarConfig = [
     bg: redColor,
   },
   {
-    name: "Investments",
-    id: 3,
-    icon: <ShowChartIcon />,
-    path: "/invest",
-    bg: greenColor,
-  },
-  {
-    name: "Saving(PF+Bank)",
-    id: 4,
-    icon: <SavingsIcon />,
-    path: "/saving",
-    bg: greenColor,
-  },
-  {
-    name: "Money OutFlow",
-    id: 5,
-    icon: <MoneyOffIcon />,
-    path: "/money-out",
-    bg: redColor,
-  },
-  {
     name: "Money Inflows",
     id: 6,
     icon: <AttachMoneyIcon />,
     path: "/money-in",
     bg: greenColor,
   },
+  {
+    name: "Investment",
+    id: 3,
+    icon: <ShowChartIcon />,
+    path: "/invest",
+    bg: greenColor,
+  },
+  {
+    name: "Savings(PF+Bank)",
+    id: 4,
+    icon: <SavingsIcon />,
+    path: "/saving",
+    bg: greenColor,
+  },
+  {
+    name: "Money Outflows",
+    id: 5,
+    icon: <MoneyOffIcon />,
+    path: "/money-out",
+    bg: redColor,
+  },
+
 ];
 
 export const SidebarItems = () => {

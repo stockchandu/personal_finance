@@ -6,10 +6,11 @@ import { calculateNetworth } from "../../utils/calcNetworth";
 import { formatNumber } from "../../utils/formatNumber";
 
 export const MyNetworth = ({section}) =>{
+    const [totalSaving , totalLiabilities,myNetWorth] = calculateNetworth(section);
     const myNetworthTitle = "My Networth";
     const netWorthFormulaTitle = "All Oustanding Liabilities - Cash in Hand + Savings + Investment";
     const colorBasedNW = () => {
-      return true ? "green" : "red";
+      return totalSaving > totalLiabilities ? "green" : "red";
     };
     return (
         <Grid item xs={12} md={4} lg={4} mb={2}>
@@ -30,7 +31,7 @@ export const MyNetworth = ({section}) =>{
           <Typography
             sx={{ fontSize: "20px", fontWeight: "600" ,color:colorBasedNW()}}
           >
-            {/* {formatNumber(calculateNetworth(section))} */}
+            {formatNumber(myNetWorth)}
           </Typography>
           <Typography
             sx={{ fontSize: "10px", fontWeight: "600"}}

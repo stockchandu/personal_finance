@@ -1,31 +1,40 @@
-
 // all the static conetnt
 
 export const global = {
-    appTitle : "My Personal Finance"
-}
+  appTitle: "My Personal Finance",
+};
 
 export const mpfKey = {
-    LIABILITY : "Liabilities",
-    INVESTMENT : "Investment",
-    SAVING : "Savings(PF+Bank)",
-    MONEYOUT : "Money Outflows",
-    MONEYIN : "Money Inflows"
-}
+  LIABILITY: "Liabilities",
+  INVESTMENT: "Investment",
+  SAVING: "Savings(PF+Bank)",
+  MONEYOUT: "Money Outflows",
+  MONEYIN: "Money Inflows",
+};
 
-export const  disabledFields = [
-    "id",
-    "sectionName",
-    "section",
-    "created_at",
-    "paidAmount",
-    "emi",
-    "totalMonth",
-    "endYear",
-    "remainMonth",
-    // "totalAmount",
-    // "remainAmount",
-    "extraAmount",
-    "outMoneyDate",
-    "inDate"
-  ];
+export const disabledFields = [
+  "id",
+  "sectionName",
+  "section",
+  "created_at",
+  "paidAmount",
+  "emi",
+  "totalMonth",
+  "endYear",
+  "remainMonth",
+  // "totalAmount",
+  // "remainAmount",
+  "extraAmount",
+  "outMoneyDate",
+  "inDate",
+  "loanPrincipal",
+  "totalInterest",
+  "remainPrincipal",
+  "totalLoanPaid",
+  "rateOfInterest",
+//   TODO : ENABLE after talk with bank how part payment works
+  "partPayment",
+  "profit"
+];
+
+export const removeFields = ["id", "created_at", "section"];
