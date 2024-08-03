@@ -2,7 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isDialog: false,
-  dialogData : {}
+  dialogData: {},
+  pageSource: {
+    sectionName: "",
+    operation: "", // create , update and edit
+  },
+  deleteData:[]
 };
 
 const dialogSlicer = createSlice({
@@ -12,11 +17,17 @@ const dialogSlicer = createSlice({
     saveDialogData(state, action) {
       state.dialogData = action.payload.dialogData;
     },
-    openDialog(state,action){
-        state.isDialog = action.payload.isDialog;
+    openDialog(state, action) {
+      state.isDialog = action.payload.isDialog;
+    },
+    pageSource(state, action) {
+      state.pageSource = action.payload.pageSource;
+    },
+    saveDeleteData(state, action){
+      state.deleteData = action.payload.deleteData;
     }
   },
 });
 
-export const { saveDialogData ,openDialog} = dialogSlicer.actions;
+export const { saveDialogData, openDialog, pageSource,saveDeleteData } = dialogSlicer.actions;
 export default dialogSlicer.reducer;

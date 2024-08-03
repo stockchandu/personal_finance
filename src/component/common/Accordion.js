@@ -13,8 +13,8 @@ export default function MPFAccordion({ children, title,edit }) {
   return (
     <Box
       sx={{
-        // border: "1px solid",
-        // borderColor: "grey.400",
+        border: "1px solid",
+        borderColor: "grey.300",
         margin: 2,
         borderRadius: 1,
       }}

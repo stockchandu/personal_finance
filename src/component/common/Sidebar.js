@@ -61,7 +61,7 @@ const sideBarConfig = [
 ];
 
 export const SidebarItems = () => {
-  const { mpfData, isMPFData } = useMPFData();
+  const { isMPFData } = useMPFData();
   const location = useLocation();
   const bgColorBasedRoutes = (route) => {
     switch (route) {

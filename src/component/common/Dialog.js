@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -9,7 +9,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useDialogData } from "../../hooks/useSelector";
 import { openDialog, saveDialogData } from "../../store/dialog/dialogSlicer";
 import { useDispatch } from "react-redux";
-import MPFTextField from "./TextField";
 import Grid from "@mui/material/Grid";
 import { MpfButton } from "./Button";
 import { db } from "../../config/db";
@@ -17,7 +16,18 @@ import { saveMpfData } from "../../store/mpfData/mpfSlicer";
 import { openLoader } from "../../store/loader/loaderSlicer";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import { removeFields } from "../../constant/global";
+import { CreateData } from "./CreateData";
+import {
+  liabilityformFields,
+  investmentformFields,
+  moneyInflowformFields,
+  moneyOutflowformFields,
+  savingformFields,
+} from "../../constant/configForm";
+import { UpdateData } from "./UpdateData";
+import { DeleteData } from "./DeleteData";
+
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
@@ -29,12 +39,14 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 export default function MPFDialog() {
   const dispatch = useDispatch();
-  const { isDialog, dialogData } = useDialogData();
+  const { isDialog, dialogData, pageSource,deleteData } = useDialogData();
   const [formValue, setFormValue] = useState({});
+  const [section, setSection] = useState({});
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const isFormValue = formValue && Object.keys(formValue).length > 0;
   const isBtnDisable = isFormValue ? false : true;
+  const { sectionName, operation } = pageSource || {};
 
   const lia = {
     id: 11,
@@ -75,6 +87,14 @@ export default function MPFDialog() {
     partPayment: null,
   };
 
+  useEffect(() => {
+    if (operation === "create" || operation === "delete") {
+      setSection(sectionName);
+    } else {
+      setSection(dialogData?.section);
+    }
+  }, [sectionName, dialogData, operation]);
+
   const updateFormBasedSection = (data, formValue) => {
     switch (data?.section) {
       case "Liabilities":
@@ -102,10 +122,10 @@ export default function MPFDialog() {
         if (formValue?.investAmount) {
           const prevInvestAmt = formValue?.investAmount - data?.investAmount;
           const newCurrInvest = prevInvestAmt + data?.currentInvest;
-          const profit = newCurrInvest - formValue?.investAmount
+          const profit = newCurrInvest - formValue?.investAmount;
           return {
-            investAmount : formValue?.investAmount,
-            currentInvest : newCurrInvest,
+            investAmount: formValue?.investAmount,
+            currentInvest: newCurrInvest,
             profit,
           };
         } else if (formValue?.currentInvest) {
@@ -189,35 +209,111 @@ export default function MPFDialog() {
     dispatch(openDialog({ isDialog: false }));
   };
 
+  const getCreateForm = (formdata) => {
+    return (
+      <CreateData
+        formData={formdata}
+        setFormValue={setFormValue}
+        formValue={formValue}
+      />
+    );
+  };
+  const getUpdateForm = (formdata) => {
+    return (
+      <UpdateData
+        formData={formdata}
+        setFormValue={setFormValue}
+        formValue={formValue}
+      />
+    );
+  };
+  const getDeleteForm = (formdata) => {
+    return (
+      <DeleteData
+        formData={formdata}
+        setFormValue={setFormValue}
+        formValue={formValue}
+      />
+    );
+  };
+  const renderForm = (pageSource) => {
+    const { sectionName, operation } = pageSource || {};
+    const mapperObject = {
+      Liabilities: {
+        create: getCreateForm(liabilityformFields),
+        update: getUpdateForm(dialogData),
+        delete: getDeleteForm(deleteData),
+      },
+      Investment: {
+        create: getCreateForm(investmentformFields),
+        update: getUpdateForm(dialogData),
+        delete: getDeleteForm(deleteData),
+      },
+      MoneyInflow: {
+        create: getCreateForm(moneyInflowformFields),
+        update: getUpdateForm(dialogData),
+        delete: getDeleteForm(deleteData),
+      },
+      MoneyOutflow: {
+        create: getCreateForm(moneyOutflowformFields),
+        update: getUpdateForm(dialogData),
+        delete: getDeleteForm(deleteData),
+      },
+      Savings: {
+        create: getCreateForm(savingformFields),
+        update: getUpdateForm(dialogData),
+        delete: getDeleteForm(deleteData),
+      },
+    };
+
+    if (sectionName && operation) {
+      return mapperObject[sectionName][operation];
+    } else {
+      return null;
+    }
+  };
+
+  const btnBgColor = (operation) => {
+    switch (operation) {
+      case "create":
+        return "#6AA84F";
+      case "update":
+        return "#3A87B3";
+      case "delete":
+        return "#D12F2E";
+      default:
+        break;
+    }
+  };
+
   return (
     <>
-      {dialogData && Object.keys(dialogData).length > 0 && (
-        <BootstrapDialog
-          onClose={handleClose}
-          aria-labelledby="customized-dialog-title"
-          open={isDialog}
-          fullScreen={fullScreen}
-          maxWidth="md"
-          fullWidth
+      <BootstrapDialog
+        onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        open={isDialog}
+        fullScreen={fullScreen}
+        maxWidth="md"
+        fullWidth
+      >
+        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+          {section}
+        </DialogTitle>
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
         >
-          <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-            {dialogData?.section}
-          </DialogTitle>
-          <IconButton
-            aria-label="close"
-            onClick={handleClose}
-            sx={{
-              position: "absolute",
-              right: 8,
-              top: 8,
-              color: (theme) => theme.palette.grey[500],
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-          <DialogContent dividers>
-            <Grid container spacing={2}>
-              {dialogData &&
+          <CloseIcon />
+        </IconButton>
+        <DialogContent dividers>
+          <Grid container spacing={2}>
+            {/* {dialogData &&
                 Object.entries(dialogData).map(([key, value]) => {
                   if (!removeFields.includes(key)) {
                     if (value) {
@@ -233,19 +329,21 @@ export default function MPFDialog() {
                     }
                   }
                   return null;
-                })}
-            </Grid>
-          </DialogContent>
-          <DialogActions>
-            <MpfButton
-              label="Update"
-              sx={{ backgroundColor: "#3A87B3" }}
-              click={handleEdit}
-              // disable={isBtnDisable}
-            />
-          </DialogActions>
-        </BootstrapDialog>
-      )}
+                })} */}
+
+            { operation !=="delete" && renderForm(pageSource)}
+          </Grid>
+          { operation ==="delete" && renderForm(pageSource)}
+        </DialogContent>
+        <DialogActions>
+          <MpfButton
+            label={operation}
+            sx={{ backgroundColor: btnBgColor(operation) }}
+            click={handleEdit}
+            // disable={isBtnDisable}
+          />
+        </DialogActions>
+      </BootstrapDialog>
     </>
   );
 }
