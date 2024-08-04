@@ -1,83 +1,28 @@
-import * as React from "react";
+import React from "react";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import HomeIcon from "@mui/icons-material/Home";
-import CreditScoreIcon from "@mui/icons-material/CreditScore";
-import SavingsIcon from "@mui/icons-material/Savings";
-import ShowChartIcon from "@mui/icons-material/ShowChart";
-import MoneyOffIcon from "@mui/icons-material/MoneyOff";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { useLocation } from "react-router-dom";
 import { useMPFData } from "../../hooks/useSelector";
+import { color } from "../../constant/global";
 
-// TODO : MOVE TO GLOBAL FILE
-const greenColor = "#086908";
-const redColor = "#D12F2E";
-const appColor = "#2364AD";
-
-const sideBarConfig = [
-  {
-    name: "Home",
-    id: 1,
-    icon: <HomeIcon />,
-    path: "/",
-    bg: appColor,
-  },
-  {
-    name: "Liabilities",
-    id: 2,
-    icon: <CreditScoreIcon />,
-    path: "/liability",
-    bg: redColor,
-  },
-  {
-    name: "Money Inflows",
-    id: 6,
-    icon: <AttachMoneyIcon />,
-    path: "/money-in",
-    bg: greenColor,
-  },
-  {
-    name: "Investment",
-    id: 3,
-    icon: <ShowChartIcon />,
-    path: "/invest",
-    bg: greenColor,
-  },
-  {
-    name: "Savings(PF+Bank)",
-    id: 4,
-    icon: <SavingsIcon />,
-    path: "/saving",
-    bg: greenColor,
-  },
-  {
-    name: "Money Outflows",
-    id: 5,
-    icon: <MoneyOffIcon />,
-    path: "/money-out",
-    bg: redColor,
-  },
-];
-
-export const SidebarItems = () => {
+export const SidebarItems = ({ sideBarConfig }) => {
   const { isMPFData } = useMPFData();
   const location = useLocation();
   const bgColorBasedRoutes = (route) => {
     switch (route) {
       case "/":
-        return appColor;
+        return color.TOP_SIDEBAR;
       case "/liability":
-        return redColor;
+        return color.RED;
       case "/invest":
-        return greenColor;
+        return color.GREEN;
       case "/saving":
-        return greenColor;
+        return color.GREEN;
       case "/money-out":
-        return greenColor;
+        return color.GREEN;
       case "/money-in":
-        return redColor;
+        return color.RED;
       default:
         break;
     }
@@ -85,16 +30,17 @@ export const SidebarItems = () => {
 
   const isSameRoute = (sidebar) => location.pathname === sidebar.path;
   const sideBarStyle = (sidebar) => {
-    return {
-      backgroundColor:
-        isSameRoute(sidebar) && bgColorBasedRoutes(location.pathname),
-      color: isSameRoute(sidebar) && "white",
-      "&:hover": {
-        backgroundColor:
-          isSameRoute(sidebar) && bgColorBasedRoutes(location.pathname),
-        color: isSameRoute(sidebar) && "white",
-      },
-    };
+    if (isSameRoute(sidebar)) {
+      const bgStyle = bgColorBasedRoutes(location.pathname);
+      return {
+        backgroundColor: bgStyle,
+        color: "white",
+        "&:hover": {
+          backgroundColor: bgStyle,
+          color: "white",
+        },
+      };
+    }
   };
 
   return (

@@ -15,8 +15,8 @@ export const Welcome = () => {
   const userName = JSON.parse(decrypt);
   const welcome = `Hi ${userName.name} , Here is your Personal Finance Overview`;
   return (
-    <Grid item xs={12} md={4} lg={4} mb={2}>
-      <Typography sx={welcomeStyle}>{welcome}</Typography>
-    </Grid>
+    // <Grid item xs={12} md={4} lg={4} mb={2}>
+      <Typography >{welcome}</Typography>
+    // </Grid>
   );
 };

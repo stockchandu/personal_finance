@@ -21,6 +21,9 @@ import { MpfButton } from "../common/Button";
 import { useLoginData } from "../../hooks/useSelector";
 import { useNavigate } from "react-router-dom";
 import { apiService } from "../../api/apiService";
+import { Welcome } from "../home/Welcome";
+import { Sidebar } from "./Sidebar";
+
 
 export const Dashboard = () => {
   const dispatch = useDispatch();
@@ -36,7 +39,7 @@ export const Dashboard = () => {
     getAllMPFData();
   }, []);
 
-  async function getAllMPFData() {
+  const getAllMPFData = async () => {
     try {
       const { data, error } = await apiService.getMPFData();
       dispatch(saveMpfData(data));
@@ -48,7 +51,7 @@ export const Dashboard = () => {
     } finally {
       dispatch(openLoader(false));
     }
-  }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("persist:root");
@@ -74,9 +77,9 @@ export const Dashboard = () => {
             variant="h6"
             color="inherit"
             noWrap
-            sx={{ flexGrow: 1 }}
+            sx={{ flexGrow: 1, textTransform: "capitalize" }}
           >
-            {global.appTitle}
+            <Welcome />
           </Typography>
           <Upload />
           {isAuthenticated && (
@@ -91,25 +94,7 @@ export const Dashboard = () => {
           )}
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={true}>
-        <Toolbar
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            px: [1],
-          }}
-        ></Toolbar>
-        <Divider />
-        <List
-          component="nav"
-          onClick={(e) => {
-            handleNavigation(e);
-          }}
-        >
-          <SidebarItems />
-        </List>
-      </Drawer>
+      <Sidebar handleNavigation={handleNavigation}/>
       <Box
         component="main"
         sx={{

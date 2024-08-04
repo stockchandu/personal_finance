@@ -73,7 +73,7 @@ export const Home = () => {
   const netWorthDetailsTile = () => {
     return (
       <>
-        <Welcome />
+        {/* <Welcome /> */}
         <MyNetworth section={mpfData} />
         <Grid container spacing={2}>
           {sortedSection.map((section) => {
