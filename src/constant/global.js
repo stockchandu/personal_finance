@@ -40,6 +40,8 @@ export const disabledFields = [
   //   TODO : ENABLE after talk with bank how part payment works
   "partPayment",
   "profit",
+  "outRemain",
+  "inRemainAmount"
 ];
 
 // Textfiled remove

@@ -121,7 +121,7 @@ export default function MPFDialog() {
           return formValue;
         }
 
-      // TODO : check how to handle both scenario
+      //  TODO : check how to handle both scenario
 
       // if (formValue?.investRedeem && formValue?.currentInvest) {
       //   const currentInvest = formValue?.currentInvest - formValue?.investRedeem;
@@ -134,6 +134,30 @@ export default function MPFDialog() {
       // if(!formValue?.currentInvest || !formValue?.investRedeem){
       //   return formValue;
       // }
+
+      case "Money Inflows":
+        if (formValue?.inPaidAmount) {
+          const inRemainAmount =
+            data?.inReceiveAmount - formValue?.inPaidAmount;
+          return {
+            inRemainAmount,
+            inPaidAmount: formValue?.inPaidAmount,
+          };
+        } else {
+          return formValue;
+        }
+
+      case "Money Outflows":
+        if (formValue?.outPaidMoney) {
+          const outRemain = data?.outMoney - formValue?.outPaidMoney;
+          return {
+            outRemain,
+            outPaidMoney: formValue?.outPaidMoney,
+          };
+        } else {
+          return formValue;
+        }
+
       default:
         break;
     }
