@@ -22,11 +22,20 @@ export const usePush = () => {
       case "Money Inflows":
         navigation("/money-in");
         break;
+      case "Total Earned Money":
+        navigation("/earned-money");
+        break;
+      case "Insurance":
+        navigation("/insurance");
+        break;
+      case "Money Rules":
+        navigation("/money-rule");
+        break;
       default:
         console.warn(`Unknown path: ${path}`);
         break;
     }
   };
 
-  return goToPath
+  return goToPath;
 };

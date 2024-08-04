@@ -23,7 +23,6 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
             width: theme.spacing(9),
           },
         }),
-        // border:"2px solid #2364AD"
       },
     }),
   );

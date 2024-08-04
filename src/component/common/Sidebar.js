@@ -23,6 +23,12 @@ export const SidebarItems = ({ sideBarConfig }) => {
         return color.GREEN;
       case "/money-in":
         return color.RED;
+      case "/earned-money":
+        return color.GREEN;
+      case "/insurance":
+        return color.GREEN;
+      case "/money-rule":
+        return color.GREEN;
       default:
         break;
     }

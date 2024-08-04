@@ -66,6 +66,30 @@ export const router = createBrowserRouter([
           </RouteGuard>
         ),
       },
+      {
+        path: "earned-money",
+        element: (
+          <RouteGuard>
+             <h1>Earned money</h1>
+          </RouteGuard>
+        ),
+      },
+      {
+        path: "insurance",
+        element: (
+          <RouteGuard>
+             <h1>insurance</h1>
+          </RouteGuard>
+        ),
+      },
+      {
+        path: "money-rule",
+        element: (
+          <RouteGuard>
+            <h1>Money rule</h1>
+          </RouteGuard>
+        ),
+      },
     ],
   },
   {

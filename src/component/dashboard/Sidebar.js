@@ -90,12 +90,13 @@ export const Sidebar = ({handleNavigation}) => {
       >
         <h3>{global.appTitle}</h3>
       </Toolbar>
-      <Divider />
       <List
         component="nav"
         onClick={(e) => {
           handleNavigation(e);
         }}
+        sx={{padding:0}}
+
       >
         <SidebarItems sideBarConfig={sideMainList}/>
       </List>
