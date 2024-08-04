@@ -7,10 +7,7 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDialogData } from "../../hooks/useSelector";
-import {
-  openDialog,
-  saveDialogData,
-} from "../../store/dialog/dialogSlicer";
+import { openDialog, saveDialogData } from "../../store/dialog/dialogSlicer";
 import { useDispatch } from "react-redux";
 import Grid from "@mui/material/Grid";
 import { MpfButton } from "./Button";
@@ -72,6 +69,7 @@ export default function MPFDialog() {
   }, [formValue, isCheckedValue]);
 
   const updateFormBasedSection = (data, formValue) => {
+    // TODO : think how to handle mutiple edit values Object.entries([])
     switch (data?.section) {
       case "Liabilities":
         if (formValue?.paidMonth) {
@@ -143,6 +141,13 @@ export default function MPFDialog() {
             inRemainAmount,
             inPaidAmount: formValue?.inPaidAmount,
           };
+        } else if (formValue?.inReceiveAmount) {
+          const inRemainAmount =
+            formValue?.inReceiveAmount - data?.inPaidAmount;
+          return {
+            inRemainAmount,
+            inReceiveAmount: formValue?.inReceiveAmount,
+          };
         } else {
           return formValue;
         }
@@ -153,6 +158,12 @@ export default function MPFDialog() {
           return {
             outRemain,
             outPaidMoney: formValue?.outPaidMoney,
+          };
+        } else if (formValue?.outMoney) {
+          const outRemain = formValue?.outMoney - data?.outPaidMoney;
+          return {
+            outRemain,
+            outMoney: formValue?.outMoney,
           };
         } else {
           return formValue;
@@ -213,7 +224,7 @@ export default function MPFDialog() {
     dispatch(saveDialogData({ dialogData: dialogData }));
     if (sectionUpdateData && Object.keys(sectionUpdateData).length > 0) {
       try {
-        const { error } =  await apiService.updateMPFData(
+        const { error } = await apiService.updateMPFData(
           sectionUpdateData,
           dialogData.id
         );
@@ -301,7 +312,7 @@ export default function MPFDialog() {
   const handleClose = () => {
     dispatch(openDialog({ isDialog: false }));
     setFormValue({});
-    setCheckedItems([])
+    setCheckedItems([]);
   };
 
   const getCreateForm = (formdata) => {
