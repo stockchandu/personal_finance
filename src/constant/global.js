@@ -1,9 +1,8 @@
-// all the static conetnt
-
 export const global = {
   appTitle: "My Personal Finance",
 };
 
+// All key that match to DB section name
 export const mpfKey = {
   LIABILITY: "Liabilities",
   INVESTMENT: "Investment",
@@ -32,9 +31,19 @@ export const disabledFields = [
   "remainPrincipal",
   "totalLoanPaid",
   "rateOfInterest",
-//   TODO : ENABLE after talk with bank how part payment works
+  //   TODO : ENABLE after talk with bank how part payment works
   "partPayment",
-  "profit"
+  "profit",
 ];
 
+// Textfiled remove
 export const removeFields = ["id", "created_at", "section"];
+
+// sorting home page tiles
+export const sortHomeTiles = [
+  "Liabilities",
+  "Money Inflows",
+  "Investment",
+  "Savings(PF+Bank)",
+  "Money Outflows",
+];

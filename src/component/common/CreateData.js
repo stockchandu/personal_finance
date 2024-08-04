@@ -7,7 +7,7 @@ export const CreateData = ({formData, setFormValue, formValue}) => {
         return (
           <MPFTextField
             key={form.id}
-            label={form.label}
+            label={form.name}
             value={form.value}
             setFormValue={setFormValue}
             formValue={formValue}

@@ -7,11 +7,13 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDialogData } from "../../hooks/useSelector";
-import { openDialog, saveDialogData } from "../../store/dialog/dialogSlicer";
+import {
+  openDialog,
+  saveDialogData,
+} from "../../store/dialog/dialogSlicer";
 import { useDispatch } from "react-redux";
 import Grid from "@mui/material/Grid";
 import { MpfButton } from "./Button";
-import { db } from "../../config/db";
 import { saveMpfData } from "../../store/mpfData/mpfSlicer";
 import { openLoader } from "../../store/loader/loaderSlicer";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -26,7 +28,7 @@ import {
 } from "../../constant/configForm";
 import { UpdateData } from "./UpdateData";
 import { DeleteData } from "./DeleteData";
-
+import { apiService } from "../../api/apiService";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -39,52 +41,20 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 export default function MPFDialog() {
   const dispatch = useDispatch();
-  const { isDialog, dialogData, pageSource,deleteData } = useDialogData();
+  const { isDialog, dialogData, pageSource, deleteData } = useDialogData();
   const [formValue, setFormValue] = useState({});
   const [section, setSection] = useState({});
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const isFormValue = formValue && Object.keys(formValue).length > 0;
-  const isBtnDisable = isFormValue ? false : true;
   const { sectionName, operation } = pageSource || {};
+  const [checkedItems, setCheckedItems] = useState([]);
+  const [isBtnDisable, setIsBtnDisable] = useState(true);
+  const isCheckedValue = checkedItems && checkedItems.length > 0;
 
-  const lia = {
-    id: 11,
-    created_at: "2024-08-01T17:30:39.174335+00:00",
-    sectionName: "Aditya",
-    paidAmount: null,
-    totalAmount: null,
-    remainMonth: null,
-    remainAmount: null,
-    extraAmount: null,
-    investAmount: 45998,
-    currentInvest: 47213,
-    redeem: 0,
-    paidMonth: null,
-    totalMonth: null,
-    profit: 1215,
-    year: "19/07/24",
-    endYear: null,
-    section: "Investment",
-    emi: null,
-    outMoneyDate: null,
-    outMoney: null,
-    outPaidMoney: null,
-    outRemain: null,
-    inMoney: null,
-    myPFShare: null,
-    companyPFShare: null,
-    inReceiveAmount: null,
-    inPaidAmount: null,
-    inDate: null,
-    inRemainAmount: null,
-    sectionParent: null,
-    loanPrincipal: null,
-    remainPrincipal: null,
-    totalInterest: null,
-    totalLoanPaid: null,
-    rateOfInterest: null,
-    partPayment: null,
+  // TODO : MOVE TO UTILS
+  const hasNonNullValue = (obj) => {
+    return Object.values(obj).some((value) => value !== null && value !== "");
   };
 
   useEffect(() => {
@@ -93,7 +63,13 @@ export default function MPFDialog() {
     } else {
       setSection(dialogData?.section);
     }
-  }, [sectionName, dialogData, operation]);
+  }, [sectionName, dialogData, operation, isDialog]);
+
+  useEffect(() => {
+    const isFormNonEmpty = hasNonNullValue(formValue);
+    const isBtnDisable = !(isFormNonEmpty || isCheckedValue);
+    setIsBtnDisable(isBtnDisable);
+  }, [formValue, isCheckedValue]);
 
   const updateFormBasedSection = (data, formValue) => {
     switch (data?.section) {
@@ -130,13 +106,11 @@ export default function MPFDialog() {
           };
         } else if (formValue?.currentInvest) {
           const profit = formValue?.currentInvest - data?.investAmount;
-          console.log("data?.investAmount;: ", data?.investAmount);
           return {
             currentInvest: formValue?.currentInvest,
             profit,
           };
         } else if (formValue?.investRedeem) {
-          console.log("formValue?.investRedeem: ", formValue?.investRedeem);
           const currentInvest = data?.currentInvest - formValue?.investRedeem;
           return {
             currentInvest,
@@ -165,48 +139,145 @@ export default function MPFDialog() {
     }
   };
 
-  const handleEdit = async () => {
+  // TODO : check why 2 column created in DB
+  const createDataDB = async (formData) => {
+    // dispatch(openDialog({ isDialog: true }));
+
+    const insertData = {
+      // id:nanoid(),
+      section: sectionName,
+      ...formData,
+    };
+
+    // const a = [
+    //   {
+    //     section: "Liabilities",
+    //     sectionName: "bank",
+    //     year: "3",
+    //     loanPrincipal: 2000,
+    //     rateOfInterest: 22,
+    //     emi: 22,
+    //     totalMonth: 45,
+    //     loanCategory: "Personal"
+    //   }
+    // ]
+    // try {
+    //   const { data, error } = await db
+    //   .from(tableName)
+    //   .insert(a)
+    //   .select();
+    //   console.log('data: ', data);
+    //   if (error) {
+    //     console.error("Error updating data:", error);
+    //   } else {
+    //     const { data } = await db
+    //       .from(tableName)
+    //       .select("*")
+    //       .order("sectionName", { ascending: true });
+    //     dispatch(saveMpfData(data));
+    //     dispatch(openDialog({ isDialog: false }));
+    //     setFormValue({});
+    //   }
+    // } catch (err) {
+    //   console.error("Unexpected error:", err);
+    // } finally {
+    //   dispatch(openLoader(false));
+    // }
+  };
+
+  const updateDataDB = async (sectionUpdateData) => {
     dispatch(saveDialogData({ dialogData: dialogData }));
-    // dispatch(openLoader(true));
-    console.log("dialogData: ", dialogData);
-    if (isFormValue) {
+    if (sectionUpdateData && Object.keys(sectionUpdateData).length > 0) {
+      try {
+        const { error } =  await apiService.updateMPFData(
+          sectionUpdateData,
+          dialogData.id
+        );
+        if (error) {
+          console.error("Error updating data:", error);
+        } else {
+          const { data } = await apiService.getMPFData();
+          dispatch(saveMpfData(data));
+          dispatch(openDialog({ isDialog: false }));
+          setFormValue({});
+        }
+      } catch (err) {
+        console.error("Unexpected error:", err);
+      } finally {
+        dispatch(openLoader(false));
+      }
+    }
+  };
+
+  const deleteDataDB = async (checkedItems) => {
+    if (checkedItems && checkedItems.length > 0) {
+      try {
+        const { error } = await apiService.deleteMPFData(checkedItems);
+        if (error) {
+          console.error("Error updating data:", error);
+        } else {
+          const { data } = await apiService.getMPFData();
+          dispatch(saveMpfData(data));
+          dispatch(openDialog({ isDialog: false }));
+          setFormValue({});
+        }
+      } catch (err) {
+        console.error("Unexpected error:", err);
+      } finally {
+        dispatch(openLoader(false));
+      }
+    }
+  };
+
+  const handleEdit = async () => {
+    dispatch(openLoader(true));
+    if (isFormValue || checkedItems) {
       const updateData = Object.fromEntries(
         Object.entries(formValue).map(([key, value]) => [key, parseInt(value)])
       );
-
       const sectionUpdateData = updateFormBasedSection(dialogData, updateData);
-      console.log("sectionData: ", sectionUpdateData);
-
-      // if (sectionUpdateData && Object.keys(sectionUpdateData).length > 0) {
-      //   try {
-      //     const tableName = process.env.REACT_APP_PERSONAL_FINANCE_TABLE_NAME;
-      //     const { error } = await db
-      //       .from(tableName)
-      //       .update(sectionUpdateData)
-      //       .eq("id", dialogData.id)
-      //       .select();
-      //     if (error) {
-      //       console.error("Error updating data:", error);
-      //     } else {
-      //       const { data } = await db
-      //         .from(tableName)
-      //         .select("*")
-      //         .order("sectionName", { ascending: true });
-      //       dispatch(saveMpfData(data));
-      //       dispatch(openDialog({ isDialog: false }));
-      //       setFormValue({});
-      //     }
-      //   } catch (err) {
-      //     console.error("Unexpected error:", err);
-      //   } finally {
-      //     dispatch(openLoader(false));
-      //   }
-      // }
+      const mapperObject = {
+        Liabilities: {
+          create: () => createDataDB(formValue),
+          update: () => updateDataDB(sectionUpdateData),
+          delete: () => deleteDataDB(checkedItems),
+        },
+        Investment: {
+          create: () => createDataDB(formValue),
+          update: () => updateDataDB(sectionUpdateData),
+          delete: () => deleteDataDB(checkedItems),
+        },
+        MoneyInflow: {
+          create: () => createDataDB(formValue),
+          update: () => updateDataDB(sectionUpdateData),
+          delete: () => deleteDataDB(checkedItems),
+        },
+        MoneyOutflow: {
+          create: () => createDataDB(formValue),
+          update: () => updateDataDB(sectionUpdateData),
+          delete: () => deleteDataDB(checkedItems),
+        },
+        Savings: {
+          create: createDataDB(formValue),
+          update: updateDataDB(sectionUpdateData),
+          delete: deleteDataDB(checkedItems),
+        },
+      };
+      if (
+        sectionName &&
+        operation &&
+        mapperObject[sectionName] &&
+        mapperObject[sectionName][operation]
+      ) {
+        mapperObject[sectionName][operation]();
+      }
     }
   };
 
   const handleClose = () => {
     dispatch(openDialog({ isDialog: false }));
+    setFormValue({});
+    setCheckedItems([])
   };
 
   const getCreateForm = (formdata) => {
@@ -227,12 +298,14 @@ export default function MPFDialog() {
       />
     );
   };
-  const getDeleteForm = (formdata) => {
+  const getDeleteForm = (formdata, setCheckedItems, checkedItems) => {
     return (
       <DeleteData
         formData={formdata}
         setFormValue={setFormValue}
         formValue={formValue}
+        setCheckedItems={setCheckedItems}
+        checkedItems={checkedItems}
       />
     );
   };
@@ -242,27 +315,27 @@ export default function MPFDialog() {
       Liabilities: {
         create: getCreateForm(liabilityformFields),
         update: getUpdateForm(dialogData),
-        delete: getDeleteForm(deleteData),
+        delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
       },
       Investment: {
         create: getCreateForm(investmentformFields),
         update: getUpdateForm(dialogData),
-        delete: getDeleteForm(deleteData),
+        delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
       },
       MoneyInflow: {
         create: getCreateForm(moneyInflowformFields),
         update: getUpdateForm(dialogData),
-        delete: getDeleteForm(deleteData),
+        delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
       },
       MoneyOutflow: {
         create: getCreateForm(moneyOutflowformFields),
         update: getUpdateForm(dialogData),
-        delete: getDeleteForm(deleteData),
+        delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
       },
       Savings: {
         create: getCreateForm(savingformFields),
         update: getUpdateForm(dialogData),
-        delete: getDeleteForm(deleteData),
+        delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
       },
     };
 
@@ -313,34 +386,16 @@ export default function MPFDialog() {
         </IconButton>
         <DialogContent dividers>
           <Grid container spacing={2}>
-            {/* {dialogData &&
-                Object.entries(dialogData).map(([key, value]) => {
-                  if (!removeFields.includes(key)) {
-                    if (value) {
-                      return (
-                        <MPFTextField
-                          key={key}
-                          label={key}
-                          value={value}
-                          setFormValue={setFormValue}
-                          formValue={formValue}
-                        />
-                      );
-                    }
-                  }
-                  return null;
-                })} */}
-
-            { operation !=="delete" && renderForm(pageSource)}
+            {operation !== "delete" && renderForm(pageSource)}
           </Grid>
-          { operation ==="delete" && renderForm(pageSource)}
+          {operation === "delete" && renderForm(pageSource)}
         </DialogContent>
         <DialogActions>
           <MpfButton
             label={operation}
             sx={{ backgroundColor: btnBgColor(operation) }}
             click={handleEdit}
-            // disable={isBtnDisable}
+            disable={isBtnDisable}
           />
         </DialogActions>
       </BootstrapDialog>

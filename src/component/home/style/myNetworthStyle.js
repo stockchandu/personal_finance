@@ -1,4 +1,4 @@
-export const myNetworthParent = {
+export const myNetworthParentStyle = {
     p: 2,
     display: "flex",
     flexDirection: "column",

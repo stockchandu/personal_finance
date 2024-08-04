@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { usePush } from "../../hooks/usePush";
@@ -11,36 +11,26 @@ import { MoneyInflow } from "./MoneyInFlow";
 import { Typography } from "@mui/material";
 import { MyNetworth } from "./MyNetworth";
 import { formatNumber } from "../../utils/formatNumber";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Welcome } from "./Welcome";
+import { checkData } from "../../utils/checkData";
+import { typoStyle } from "./style/home";
+import { sortHomeTiles } from "../../constant/global";
+
 
 export const Home = () => {
   const { mpfData, isMPFData } = useMPFData();
   const navigation = usePush();
-  const [section, setSection] = useState(mpfData);
-
-  useEffect(() => {
-    setSection(mpfData);
-  }, [mpfData]);
-
-  const typoStyle = {
-    fontSize: "15px",
-    fontWeight: "500",
-    marginBottom: 1,
-  };
-
   const handleNavigation = (path) => {
     navigation(path);
   };
 
-  const renderSection = (section) => {
+  const renderSection = (section,mpfData) => {
     switch (section.sectionName) {
       case "Liabilities":
         return Liabilities(
           section,
           typoStyle,
           formatNumber,
-          handleNavigation,
           mpfData
         );
       case "Investment":
@@ -48,7 +38,6 @@ export const Home = () => {
           section,
           typoStyle,
           formatNumber,
-          handleNavigation,
           mpfData
         );
       case "Savings(PF+Bank)":
@@ -56,7 +45,6 @@ export const Home = () => {
           section,
           typoStyle,
           formatNumber,
-          handleNavigation,
           mpfData
         );
       case "Money Outflows":
@@ -64,7 +52,6 @@ export const Home = () => {
           section,
           typoStyle,
           formatNumber,
-          handleNavigation,
           mpfData
         );
       case "Money Inflows":
@@ -72,7 +59,6 @@ export const Home = () => {
           section,
           typoStyle,
           formatNumber,
-          handleNavigation,
           mpfData
         );
       default:
@@ -80,26 +66,17 @@ export const Home = () => {
     }
   };
 
-  const sortList = [
-    "Liabilities",
-    "Money Inflows",
-    "Investment",
-    "Savings(PF+Bank)",
-    "Money Outflows",
-  ];
-
-  const sortedSection = [...section].sort((a, b) => {
-    return sortList.indexOf(a.sectionName) - sortList.indexOf(b.sectionName);
+  const sortedSection = checkData(mpfData) && [...mpfData].sort((a, b) => {
+    return sortHomeTiles.indexOf(a.sectionName) - sortHomeTiles.indexOf(b.sectionName);
   });
 
   const netWorthDetailsTile = () => {
     return (
       <>
         <Welcome />
-        <MyNetworth section={section} />
+        <MyNetworth section={mpfData} />
         <Grid container spacing={2}>
           {sortedSection.map((section) => {
-            console.log('section: ', section);
             if (section.sectionParent)
               return (
                 <>
@@ -126,7 +103,7 @@ export const Home = () => {
                         height: 350,
                       }}
                     >
-                      {renderSection(section)}
+                      {renderSection(section , mpfData)}
                     </Paper>
                   </Grid>
                 </>
@@ -153,7 +130,7 @@ export const Home = () => {
         }}
       >
         <Typography sx={{ fontSize: "24px", fontWeight: "500" }}>
-          Something Went Wrong ! . Please Upload Excel File <CloudUploadIcon />{" "}
+          Something Went Wrong ! . Please Upload Excel File 
           , Refresh Page
         </Typography>
       </Grid>

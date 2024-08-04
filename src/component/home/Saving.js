@@ -1,12 +1,10 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
-import { DetailsButton } from "./common/DetailsButton";
 import Divider from "@mui/material/Divider";
 export const Saving = (
   section,
   typoStyle,
   formatNumber,
-  handleNavigation,
   mpfData
 ) => {
   const investStyle = {

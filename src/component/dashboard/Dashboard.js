@@ -13,7 +13,6 @@ import { SidebarItems } from "../common/Sidebar";
 import { global } from "../../constant/global";
 import { usePush } from "../../hooks/usePush";
 import { Upload } from "../common/Upload";
-import { db } from "../../config/db";
 import { saveMpfData } from "../../store/mpfData/mpfSlicer";
 import { useDispatch } from "react-redux";
 import MPFDialog from "../common/Dialog";
@@ -21,6 +20,8 @@ import { openLoader } from "../../store/loader/loaderSlicer";
 import { MpfButton } from "../common/Button";
 import { useLoginData } from "../../hooks/useSelector";
 import { useNavigate } from "react-router-dom";
+import { apiService } from "../../api/apiService";
+
 export const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,15 +38,11 @@ export const Dashboard = () => {
 
   async function getAllMPFData() {
     try {
-      const tableName = process.env.REACT_APP_PERSONAL_FINANCE_TABLE_NAME;
-      const { data, error } = await db
-        .from(tableName)
-        .select("*")
-        .order("sectionName", { ascending: true });
+      const { data, error } = await apiService.getMPFData();
       dispatch(saveMpfData(data));
       if (error) {
         console.error("Error updating data:");
-      } 
+      }
     } catch (err) {
       console.error("Unexpected error:");
     } finally {
@@ -54,8 +51,8 @@ export const Dashboard = () => {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem('persist:root')
-    if (!localStorage.getItem('persist:root')) {
+    localStorage.removeItem("persist:root");
+    if (!localStorage.getItem("persist:root")) {
       navigate("/login");
     }
   };

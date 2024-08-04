@@ -1,19 +1,15 @@
 import * as React from "react";
 import Checkbox from "@mui/material/Checkbox";
-import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 
-export const DeleteData = ({ formData }) => {
-  console.log("formData: ", formData);
-
+export const DeleteData = ({ formData,setCheckedItems ,checkedItems}) => {
   const typoStyle = {
     fontSize: "15px",
     fontWeight: "500",
   };
-
   const renderText = (section) => {
     const liabilityDeclare = `I have fully paid the ${section.sectionName} loan amount`;
     const savingDeclare = `I have widthdrawed full amount of ${section.sectionName}`;
@@ -27,23 +23,30 @@ export const DeleteData = ({ formData }) => {
       "Savings(PF+Bank)": savingDeclare,
       "Money Outflows": moDeclare,
     };
-
     if (section?.section) {
       return mapperObject[section?.section];
     } else {
       return "There is something went wrong";
     }
   };
+
+  const handleCheckboxChange = (event, itemId) => {
+    if (event.target.checked) {
+      setCheckedItems((prev) => [...prev, itemId]);
+    } else {
+      setCheckedItems((prev) => prev.filter((id) => id !== itemId));
+    }
+  };
   return (
     <>
       {formData.map((item, index) => (
-        <Box>
+        <Box key={index}>
           <Card variant="outlined" sx={{ marginTop: 2 }}>
             <CardContent>
               <Box display="flex" alignItems="center">
                 <Checkbox
-                  defaultChecked={item.defaultChecked}
-                  disabled={item.disabled}
+                  checked={checkedItems.includes(item.id)}
+                  onChange={(event) => handleCheckboxChange(event, item.id)}
                 />
                 <Typography sx={{...typoStyle, marginLeft: 1 }}>
                   {renderText(item)}

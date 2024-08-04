@@ -8,7 +8,6 @@ import {
 export const useEdit = () => {
   const dispatch = useDispatch();
   return (data, source) => {
-    console.log('pageSource: ', source);
     dispatch(openDialog({ isDialog: true }));
     dispatch(saveDialogData({ dialogData: data }));
     dispatch(pageSource({ pageSource: source }));

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 export const usePush = () => {
   const navigation = useNavigate();
   const goToPath = (path) => {
-    console.log('path: ', path);
     switch (path) {
       case "Home":
         navigation("/");

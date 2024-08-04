@@ -2,7 +2,7 @@ export const liabilityformFields = [
   { name: "sectionName", label: "Loan Provider Name", id: "LIA_0" },
   { name: "loanPrincipal", label: "Loan Amount", id: "LIA_1" },
   { name: "rateOfInterest", label: "Rate of Interest", id: "LIA_2" },
-  { name: "EMI", label: "EMI", id: "LIA_3" },
+  { name: "emi", label: "EMI", id: "LIA_3" },
   { name: "totalMonth", label: "Total Months", id: "LIA_4" },
   { name: "loanCategory", label: "Category", id: "LIA_5" },
 ];

@@ -11,8 +11,10 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { useLocation } from "react-router-dom";
 import { useMPFData } from "../../hooks/useSelector";
 
+// TODO : MOVE TO GLOBAL FILE
 const greenColor = "#086908";
 const redColor = "#D12F2E";
+const appColor = "#2364AD";
 
 const sideBarConfig = [
   {
@@ -20,7 +22,7 @@ const sideBarConfig = [
     id: 1,
     icon: <HomeIcon />,
     path: "/",
-    bg: "",
+    bg: appColor,
   },
   {
     name: "Liabilities",
@@ -57,7 +59,6 @@ const sideBarConfig = [
     path: "/money-out",
     bg: redColor,
   },
-
 ];
 
 export const SidebarItems = () => {
@@ -65,6 +66,8 @@ export const SidebarItems = () => {
   const location = useLocation();
   const bgColorBasedRoutes = (route) => {
     switch (route) {
+      case "/":
+        return appColor;
       case "/liability":
         return redColor;
       case "/invest":
@@ -81,19 +84,18 @@ export const SidebarItems = () => {
   };
 
   const isSameRoute = (sidebar) => location.pathname === sidebar.path;
-  const sideBarStyle=(sidebar)=>{
+  const sideBarStyle = (sidebar) => {
     return {
       backgroundColor:
         isSameRoute(sidebar) && bgColorBasedRoutes(location.pathname),
-      color: isSameRoute(sidebar) && location.pathname !== "/" && "white",
+      color: isSameRoute(sidebar) && "white",
       "&:hover": {
         backgroundColor:
-        isSameRoute(sidebar) && bgColorBasedRoutes(location.pathname),
-        color:
-          isSameRoute(sidebar) && location.pathname !== "/" && "white",
+          isSameRoute(sidebar) && bgColorBasedRoutes(location.pathname),
+        color: isSameRoute(sidebar) && "white",
       },
-    }
-  }
+    };
+  };
 
   return (
     <>
@@ -101,12 +103,11 @@ export const SidebarItems = () => {
         <ListItemButton
           key={sidebar.id}
           sx={sideBarStyle(sidebar)}
-          disabled={ isMPFData ? false : true}
+          disabled={isMPFData ? false : true}
         >
           <ListItemIcon
             sx={{
-              color:
-                isSameRoute(sidebar) && location.pathname !== "/" && "white",
+              color: isSameRoute(sidebar) && "white",
             }}
           >
             {sidebar.icon}

@@ -11,15 +11,15 @@ const getSection = (data, sName) => {
 };
 
 const calculateTotaLoanPrincipal = (data) => {
-  return data.reduce((init, loan) => init + loan.emi * loan.totalMonth, 0);
+  return data && data.reduce((init, loan) => init + loan.emi * loan.totalMonth, 0);
 };
 
 const calculateTotalLoanPaid = (data) => {
-  return data.reduce((init, loan) => init + loan.paidMonth * loan.emi, 0);
+  return data && data.reduce((init, loan) => init + loan.paidMonth * loan.emi, 0);
 };
 
 const calculateSum = (data, key) => {
-  return data.reduce((init, item) => init + item[key], 0);
+  return data && data.reduce((init, item) => init + item[key], 0);
 };
 
 const allLiability = (sectionData) => {
