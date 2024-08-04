@@ -11,8 +11,6 @@ export const SidebarItems = ({ sideBarConfig }) => {
   const location = useLocation();
   const bgColorBasedRoutes = (route) => {
     switch (route) {
-      case "/":
-        return color.TOP_SIDEBAR;
       case "/liability":
         return color.RED;
       case "/invest":
@@ -34,7 +32,7 @@ export const SidebarItems = ({ sideBarConfig }) => {
     }
   };
 
-  const isSameRoute = (sidebar) => location.pathname === sidebar.path;
+  const isSameRoute = (sidebar) => location.pathname !=="/" && location.pathname === sidebar.path;
   const sideBarStyle = (sidebar) => {
     if (isSameRoute(sidebar)) {
       const bgStyle = bgColorBasedRoutes(location.pathname);
