@@ -50,7 +50,7 @@ export const Saving = (
 
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total No of Savings </Typography>
-          <Typography sx={{ ...typoStyle, color: "green" }}>
+          <Typography sx={{ ...typoStyle }}>
             {getSavingData(mpfData).length}
           </Typography>
         </Typography>
