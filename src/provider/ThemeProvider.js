@@ -3,8 +3,8 @@ import { createTheme, ThemeProvider as MaterialThemeProvider } from "@mui/materi
 const defaultTheme = createTheme({
   typography: {
     fontFamily: [
-      'Inconsolata',
-      'Kanit',
+      '"Lato"',
+      // 'Kanit',
       'Roboto', // Fallback fonts
       'sans-serif',
     ].join(','),
