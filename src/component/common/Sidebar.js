@@ -22,17 +22,22 @@ export const SidebarItems = ({ sideBarConfig }) => {
       case "/money-in":
         return color.RED;
       case "/earned-money":
-        return color.GREEN;
+        return color.TOP_SIDEBAR;
       case "/insurance":
-        return color.GREEN;
+        return color.TOP_SIDEBAR
       case "/money-rule":
-        return color.GREEN;
+        return color.TOP_SIDEBAR
+      case "/vehicles":
+        return color.TOP_SIDEBAR
+      case "/documents":
+        return color.TOP_SIDEBAR
       default:
         break;
     }
   };
 
-  const isSameRoute = (sidebar) => location.pathname !=="/" && location.pathname === sidebar.path;
+  const isSameRoute = (sidebar) =>
+    location.pathname !== "/" && location.pathname === sidebar.path;
   const sideBarStyle = (sidebar) => {
     if (isSameRoute(sidebar)) {
       const bgStyle = bgColorBasedRoutes(location.pathname);
@@ -62,7 +67,7 @@ export const SidebarItems = ({ sideBarConfig }) => {
           >
             {sidebar.icon}
           </ListItemIcon>
-          <ListItemText primary={sidebar.name} />
+          <ListItemText primary={sidebar.name} sx={{ marginLeft: -2 }} />
         </ListItemButton>
       ))}
     </>

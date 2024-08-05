@@ -19,13 +19,13 @@ const MPFTable = ({ tableData, tableHeader ,section}) => {
           <>
             <TableCell>{formatNumber(row.loanPrincipal)}</TableCell>
             <TableCell>{formatNumber(row.emi)}</TableCell>
+            <TableCell>{row.paidMonth}</TableCell>
+            <TableCell>{row.remainMonth}</TableCell>
             <TableCell>{formatNumber(row.totalLoanPaid)}</TableCell>
             <TableCell>{formatNumber(row.totalInterest)}</TableCell>
             <TableCell>{formatNumber(row.remainPrincipal)}</TableCell>
             <TableCell>{row.rateOfInterest}</TableCell>
             <TableCell>{row.totalMonth}</TableCell>
-            <TableCell>{row.paidMonth}</TableCell>
-            <TableCell>{row.remainMonth}</TableCell>
             <TableCell>{row.endYear}</TableCell>
           </>
         );

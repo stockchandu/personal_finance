@@ -288,50 +288,44 @@ export default function MPFDialog() {
         Object.entries(formValue).map(([key, value]) => [key, parseInt(value)])
       );
       const sectionUpdateData = updateFormBasedSection(dialogData, updateData);
-      const operations = {
+      const mapperObject = {
         Liabilities: {
-          create: createDataDB,
-          update: updateDataDB,
-          delete: deleteDataDB,
+          create: async() => await createDataDB(formValue),
+          update: async() => await updateDataDB(sectionUpdateData),
+          delete: async() => await deleteDataDB(checkedItems),
         },
         Investment: {
-          create: createDataDB,
-          update: updateDataDB,
-          delete: deleteDataDB,
+          create: async() => await createDataDB(formValue),
+          update: async() => await updateDataDB(sectionUpdateData),
+          delete: async() => await deleteDataDB(checkedItems),
         },
         MoneyInflow: {
-          create: createDataDB,
-          update: updateDataDB,
-          delete: deleteDataDB,
+          create: async() => await createDataDB(formValue),
+          update: async() => await updateDataDB(sectionUpdateData),
+          delete: async() => await deleteDataDB(checkedItems),
         },
         MoneyOutflow: {
-          create: createDataDB,
-          update: updateDataDB,
-          delete: deleteDataDB,
+          create: async() => await createDataDB(formValue),
+          update: async() => await updateDataDB(sectionUpdateData),
+          delete: async() => await deleteDataDB(checkedItems),
         },
         Savings: {
-          create: createDataDB,
-          update: updateDataDB,
-          delete: deleteDataDB,
+          create: createDataDB(formValue),
+          update: updateDataDB(sectionUpdateData),
+          delete: deleteDataDB(checkedItems),
         },
       };
-
-      if (
-        sectionName &&
-        operation &&
-        operations[sectionName] &&
-        operations[sectionName][operation]
-      ) {
+      if (sectionName && operation && mapperObject[sectionName] && mapperObject[sectionName][operation]) {
         try {
-          await operations[sectionName][operation](sectionUpdateData);
+            await mapperObject[sectionName][operation]();
         } catch (error) {
-          console.error(`Error executing `);
+            console.error(`Error executing operation for:`,);
         }
-      } else {
-        console.warn(`Invalid sectionName`);
-      }
+    } else {
+        console.warn(`Invalid sectionName  or operation.`);
     }
   };
+  }
 
   const handleClose = () => {
     dispatch(openDialog({ isDialog: false }));

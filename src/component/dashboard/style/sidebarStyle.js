@@ -2,6 +2,6 @@ export const toolbarStyle ={
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#303134",
+    backgroundColor: "#1B263B",
     color: "white",
   }

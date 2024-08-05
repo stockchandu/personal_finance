@@ -31,6 +31,13 @@ export const usePush = () => {
       case "Money Rules":
         navigation("/money-rule");
         break;
+      case "Vehicle Details":
+        navigation("/vehicles");
+        break;
+      case "Documents":
+        navigation("/documents");
+        break;
+
       default:
         console.warn(`Unknown path: ${path}`);
         break;

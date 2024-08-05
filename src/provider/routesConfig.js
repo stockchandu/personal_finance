@@ -8,6 +8,7 @@ import { MoneyIn } from "../component/moneyin/MoneyIn";
 import { MoneyOut } from "../component/moneyout/MoneyOut";
 import { RouteGuard } from "./routeGuard";
 import Login from "../component/login/Login";
+import { MoneyRule } from "../component/moneyrule/MoneyRule";
 
 export const router = createBrowserRouter([
   {
@@ -70,7 +71,7 @@ export const router = createBrowserRouter([
         path: "earned-money",
         element: (
           <RouteGuard>
-             <h1>Earned money</h1>
+            <h1>Earned money</h1>
           </RouteGuard>
         ),
       },
@@ -78,7 +79,7 @@ export const router = createBrowserRouter([
         path: "insurance",
         element: (
           <RouteGuard>
-             <h1>insurance</h1>
+            <h1>insurance</h1>
           </RouteGuard>
         ),
       },
@@ -86,7 +87,23 @@ export const router = createBrowserRouter([
         path: "money-rule",
         element: (
           <RouteGuard>
-            <h1>Money rule</h1>
+            <MoneyRule />
+          </RouteGuard>
+        ),
+      },
+      {
+        path: "vehicles",
+        element: (
+          <RouteGuard>
+            <h1>vehicles</h1>
+          </RouteGuard>
+        ),
+      },
+      {
+        path: "documents",
+        element: (
+          <RouteGuard>
+            <h1>documents</h1>
           </RouteGuard>
         ),
       },
@@ -94,6 +111,6 @@ export const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login/>,
+    element: <Login />,
   },
 ]);

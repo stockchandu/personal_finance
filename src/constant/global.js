@@ -5,8 +5,11 @@ export const global = {
 export const color = {
   RED: "#D12F2E",
   GREEN: "#086908",
-  TOP_SIDEBAR: "#2364AD",
-  APP_BAR : "#2364AD"
+  SIDE_ITEMS : "#2364AD",
+  TOP_SIDEBAR: "#1B263B",
+  APP_BAR : "#2364AD",
+  BLUE:"#136CFB",
+  YELLOW:"#F8EF19"
 };
 
 // All key that match to DB section name

@@ -82,14 +82,14 @@ export const Sidebar = ({handleNavigation}) => {
       name: "Vehicle Details",
       id: 10,
       icon: <DirectionsCarIcon />,
-      path: "/money-rule",
+      path: "/vehicles",
       bg: color.GREEN,
     },
     {
       name: "Documents",
       id: 13,
       icon: <DocumentScannerIcon />,
-      path: "/money-rule",
+      path: "/documents",
       bg: color.GREEN,
     },
     {
