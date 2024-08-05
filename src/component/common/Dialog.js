@@ -94,6 +94,7 @@ export default function MPFDialog() {
         }
       case "Investment":
         if (formValue?.investAmount) {
+          // if same investamount put then add logic to check if its same then keep prev current 
           const prevInvestAmt = formValue?.investAmount - data?.investAmount;
           const newCurrInvest = prevInvestAmt + data?.currentInvest;
           const profit = newCurrInvest - formValue?.investAmount;

@@ -6,6 +6,7 @@ export const color = {
   RED: "#D12F2E",
   GREEN: "#086908",
   TOP_SIDEBAR: "#2364AD",
+  APP_BAR : "#2364AD"
 };
 
 // All key that match to DB section name

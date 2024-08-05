@@ -52,9 +52,10 @@ const allMoneyInflow = (sectionData) => {
 
 const allMoneyOutflow = (sectionData) => {
   const moneyOutflow = getSection(sectionData, constant.MO);
-  const totalMO = calculateSum(moneyOutflow, "outMoney");
+  // const totalMO = calculateSum(moneyOutflow, "outMoney");
   const receivedMO = calculateSum(moneyOutflow, "outPaidMoney");
-  return totalMO - receivedMO
+  // return totalMO - receivedMO
+  return receivedMO
 };
 
 export const calculateNetworth = (data) => {
@@ -68,7 +69,7 @@ export const calculateNetworth = (data) => {
     const moValue = allMoneyOutflow(sectionData);
     const totalLiabilities = liabilityValue + miValue;
     const totalSaving = investValue + savingValue + moValue
-    const myNetWorth = totalLiabilities - totalSaving
+    const myNetWorth = totalSaving - totalLiabilities
     return [totalSaving,totalLiabilities,myNetWorth]
   }
 };

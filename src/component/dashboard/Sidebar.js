@@ -7,6 +7,8 @@ import ShowChartIcon from "@mui/icons-material/ShowChart";
 import MoneyOffIcon from "@mui/icons-material/MoneyOff";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 import RuleIcon from '@mui/icons-material/Rule';
 import { toolbarStyle } from "./style/sidebarStyle";
 import { Drawer } from "../common/Drawer";
@@ -79,6 +81,20 @@ export const Sidebar = ({handleNavigation}) => {
       name: "Money Rules",
       id: 3,
       icon: <RuleIcon />,
+      path: "/money-rule",
+      bg: color.GREEN,
+    },
+    {
+      name: "Vehicle Details",
+      id: 10,
+      icon: <DirectionsCarIcon />,
+      path: "/money-rule",
+      bg: color.GREEN,
+    },
+    {
+      name: "Documents",
+      id: 13,
+      icon: <DocumentScannerIcon />,
       path: "/money-rule",
       bg: color.GREEN,
     }

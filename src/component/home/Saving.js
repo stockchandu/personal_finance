@@ -26,7 +26,7 @@ export const Saving = (
         <Typography sx={{ fontSize: "24px", fontWeight: "600" }}>
           {section?.sectionName}
         </Typography>
-        <Divider sx={{ marginBottom: 1 }} />
+        <Divider sx={{ marginBottom: 1,marginTop:1 }} />
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total Saving Amount</Typography>
           <Typography sx={{ ...typoStyle, color: "green" }}>

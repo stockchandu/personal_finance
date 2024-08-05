@@ -8,7 +8,7 @@ import { myNetworthParentStyle } from "./style/myNetworthStyle";
 export const MyNetworth = ({section}) =>{
     const [totalSaving , totalLiabilities,myNetWorth] = calculateNetworth(section);
     const myNetworthTitle = "My Networth";
-    const netWorthFormulaTitle = "All Oustanding Liabilities - Cash in Hand + Savings + Investment";
+    const netWorthFormulaTitle = "Cash in Hand + Savings + Investment - Liabilities";
     const nwColor = () => {
       return totalSaving > totalLiabilities ? "green" : "red";
     };
