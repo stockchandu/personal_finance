@@ -77,13 +77,7 @@ export const Sidebar = ({handleNavigation}) => {
       path: "/insurance",
       bg: color.GREEN,
     },
-    {
-      name: "Money Rules",
-      id: 3,
-      icon: <RuleIcon />,
-      path: "/money-rule",
-      bg: color.GREEN,
-    },
+    
     {
       name: "Vehicle Details",
       id: 10,
@@ -97,7 +91,14 @@ export const Sidebar = ({handleNavigation}) => {
       icon: <DocumentScannerIcon />,
       path: "/money-rule",
       bg: color.GREEN,
-    }
+    },
+    {
+      name: "Money Rules",
+      id: 3,
+      icon: <RuleIcon />,
+      path: "/money-rule",
+      bg: color.GREEN,
+    },
   ];
   return (
     <Drawer variant="permanent" open={true}>
