@@ -42,7 +42,8 @@ export const disabledFields = [
   "partPayment",
   "profit",
   "outRemain",
-  "inRemainAmount"
+  "inRemainAmount",
+  "remainAmount"
 ];
 
 // Textfiled remove

@@ -4,8 +4,7 @@ const defaultTheme = createTheme({
   typography: {
     fontFamily: [
       '"Lato"',
-      // 'Kanit',
-      'Roboto', // Fallback fonts
+      'Roboto',
       'sans-serif',
     ].join(','),
   },

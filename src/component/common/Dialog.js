@@ -94,7 +94,7 @@ export default function MPFDialog() {
         }
       case "Investment":
         if (formValue?.investAmount) {
-          // if same investamount put then add logic to check if its same then keep prev current 
+          // if same investamount put then add logic to check if its same then keep prev current
           const prevInvestAmt = formValue?.investAmount - data?.investAmount;
           const newCurrInvest = prevInvestAmt + data?.currentInvest;
           const profit = newCurrInvest - formValue?.investAmount;
@@ -165,6 +165,23 @@ export default function MPFDialog() {
           return {
             outRemain,
             outMoney: formValue?.outMoney,
+          };
+        } else {
+          return formValue;
+        }
+      case "Savings(PF+Bank)":
+        if (formValue?.redeem) {
+          const remainAmount = data?.totalAmount - formValue?.redeem;
+          return {
+            remainAmount,
+            redeem: formValue?.redeem,
+          };
+        } else if (formValue?.totalAmount) {
+          const totalAmount = formValue?.totalAmount;
+          const remainAmount = formValue?.totalAmount - data?.redeem;
+          return {
+            totalAmount,
+            remainAmount,
           };
         } else {
           return formValue;
@@ -264,7 +281,6 @@ export default function MPFDialog() {
       }
     }
   };
-
   const handleEdit = async () => {
     dispatch(openLoader(true));
     if (isFormValue || checkedItems) {
@@ -272,40 +288,47 @@ export default function MPFDialog() {
         Object.entries(formValue).map(([key, value]) => [key, parseInt(value)])
       );
       const sectionUpdateData = updateFormBasedSection(dialogData, updateData);
-      const mapperObject = {
+      const operations = {
         Liabilities: {
-          create: () => createDataDB(formValue),
-          update: () => updateDataDB(sectionUpdateData),
-          delete: () => deleteDataDB(checkedItems),
+          create: createDataDB,
+          update: updateDataDB,
+          delete: deleteDataDB,
         },
         Investment: {
-          create: () => createDataDB(formValue),
-          update: () => updateDataDB(sectionUpdateData),
-          delete: () => deleteDataDB(checkedItems),
+          create: createDataDB,
+          update: updateDataDB,
+          delete: deleteDataDB,
         },
         MoneyInflow: {
-          create: () => createDataDB(formValue),
-          update: () => updateDataDB(sectionUpdateData),
-          delete: () => deleteDataDB(checkedItems),
+          create: createDataDB,
+          update: updateDataDB,
+          delete: deleteDataDB,
         },
         MoneyOutflow: {
-          create: () => createDataDB(formValue),
-          update: () => updateDataDB(sectionUpdateData),
-          delete: () => deleteDataDB(checkedItems),
+          create: createDataDB,
+          update: updateDataDB,
+          delete: deleteDataDB,
         },
         Savings: {
-          create: createDataDB(formValue),
-          update: updateDataDB(sectionUpdateData),
-          delete: deleteDataDB(checkedItems),
+          create: createDataDB,
+          update: updateDataDB,
+          delete: deleteDataDB,
         },
       };
+
       if (
         sectionName &&
         operation &&
-        mapperObject[sectionName] &&
-        mapperObject[sectionName][operation]
+        operations[sectionName] &&
+        operations[sectionName][operation]
       ) {
-        mapperObject[sectionName][operation]();
+        try {
+          await operations[sectionName][operation](sectionUpdateData);
+        } catch (error) {
+          console.error(`Error executing `);
+        }
+      } else {
+        console.warn(`Invalid sectionName`);
       }
     }
   };
