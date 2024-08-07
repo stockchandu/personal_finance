@@ -15,98 +15,78 @@ const MPFTable = ({ tableData, tableHeader ,section}) => {
   const getValueBySection = (row, name) => {
     switch (name) {
       case "Liabilities":
-        return (
-          <>
-            <TableCell>{formatNumber(row.loanPrincipal)}</TableCell>
-            <TableCell>{formatNumber(row.emi)}</TableCell>
-            <TableCell>{row.paidMonth}</TableCell>
-            <TableCell>{row.remainMonth}</TableCell>
-            <TableCell>{formatNumber(row.totalLoanPaid)}</TableCell>
-            <TableCell>{formatNumber(row.totalInterest)}</TableCell>
-            <TableCell>{formatNumber(row.remainPrincipal)}</TableCell>
-            <TableCell>{row.rateOfInterest}</TableCell>
-            <TableCell>{row.totalMonth}</TableCell>
-            <TableCell>{row.endYear}</TableCell>
-          </>
-        );
+        return [
+          { header: "Loan Principal", value: formatNumber(row.loanPrincipal) },
+          { header: "EMI", value: formatNumber(row.emi) },
+          { header: "Paid Month", value: row.paidMonth },
+          { header: "Remain Month", value: row.remainMonth },
+          { header: "Total Loan Paid", value: formatNumber(row.totalLoanPaid) },
+          { header: "Total Interest", value: formatNumber(row.totalInterest) },
+          { header: "Remain Principal", value: formatNumber(row.remainPrincipal) },
+          { header: "Rate Of Interest", value: row.rateOfInterest },
+          { header: "Total Month", value: row.totalMonth },
+          { header: "End Year", value: row.endYear },
+        ];
       case "Investment":
-        return (
-          <>
-            <TableCell>{row.year}</TableCell>
-            <TableCell>{formatNumber(row.investAmount)}</TableCell>
-            <TableCell>{formatNumber(row.currentInvest)}</TableCell>
-            <TableCell>{formatNumber(row.profit)}</TableCell>
-            <TableCell>{formatNumber(row.investRedeem)}</TableCell>
-          </>
-        );
+        return [
+          { header: "Year", value: row.year },
+          { header: "Invest Amount", value: formatNumber(row.investAmount) },
+          { header: "Current Invest", value: formatNumber(row.currentInvest) },
+          { header: "Profit", value: formatNumber(row.profit) },
+          { header: "Invest Redeem", value: formatNumber(row.investRedeem) },
+        ];
       case "Savings(PF+Bank)":
-        return (
-          <>
-            <TableCell>{formatNumber(row.totalAmount)}</TableCell>
-            <TableCell>{formatNumber(row.redeem)}</TableCell>
-            <TableCell>{formatNumber(row.remainAmount)}</TableCell>
-          </>
-        );
+        return [
+          { header: "Total Amount", value: formatNumber(row.totalAmount) },
+          { header: "Redeem", value: formatNumber(row.redeem) },
+          { header: "Remain Amount", value: formatNumber(row.remainAmount) },
+        ];
       case "Money Outflows":
-        return (
-          <>
-            <TableCell>{row.outMoneyDate}</TableCell>
-            <TableCell>{row.outMoney}</TableCell>
-            <TableCell>{row.outPaidMoney}</TableCell>
-            <TableCell>{row.outRemain}</TableCell>
-          </>
-        );
+        return [
+          { header: "Out Money Date", value: row.outMoneyDate },
+          { header: "Out Money", value: row.outMoney },
+          { header: "Out Paid Money", value: row.outPaidMoney },
+          { header: "Out Remain", value: row.outRemain },
+        ];
       case "Money Inflows":
-        return (
-          <>
-            <TableCell>{row.inDate}</TableCell>
-            <TableCell>{row.inReceiveAmount}</TableCell>
-            <TableCell>{row.inPaidAmount}</TableCell>
-            <TableCell>{row.inRemainAmount}</TableCell>
-          </>
-        );
-        case "EarnedMoney":
-          return (
-            <>
-              <TableCell>{row.companyJoinDate}</TableCell>
-              <TableCell>{formatNumber(row.totalCTC)}</TableCell>
-              <TableCell>{formatNumber(row.monthSalary)}</TableCell>
-              <TableCell>{row.existDate}</TableCell>
-              <TableCell>{formatNumber(row.totalEarn)}</TableCell>
-            </>
-          );
-          case "Insurance":
-            return (
-              <>
-                <TableCell>{row.insuranceDate}</TableCell>
-                <TableCell>{row.policyNumber}</TableCell>
-                <TableCell>{row.policyPaidMonth}</TableCell>
-                {/* <TableCell>{formatNumber(row.monthSalary)}</TableCell>
-                <TableCell>{row.existDate}</TableCell>
-                <TableCell>{formatNumber(row.totalEarn)}</TableCell> */}
-              </>
-            );
+        return [
+          { header: "In Date", value: row.inDate },
+          { header: "In Receive Amount", value: row.inReceiveAmount },
+          { header: "In Paid Amount", value: row.inPaidAmount },
+          { header: "In Remain Amount", value: row.inRemainAmount },
+        ];
+      case "EarnedMoney":
+        return [
+          { header: "Company Join Date", value: row.companyJoinDate },
+          { header: "Total CTC", value: formatNumber(row.totalCTC) },
+          { header: "Month Salary", value: formatNumber(row.monthSalary) },
+          { header: "Exist Date", value: row.existDate },
+          { header: "Total Earn", value: formatNumber(row.totalEarn) },
+        ];
+      case "Insurance":
+        return [
+          { header: "Insurance Date", value: row.insuranceDate },
+          { header: "Policy Number", value: row.policyNumber },
+          { header: "Policy Paid Month", value: row.policyPaidMonth },
+        ];
       default:
-        console.warn(`Unknown`);
-        break;
+        console.warn(`Unknown section: ${name}`);
+        return [];
     }
   };
+
+  const sectionData = getValueBySection(row, section);
 
   return (
     <TableContainer component={Paper} elevation={0}>
       <Table>
-        <TableHead>
-          <TableRow>
-            {tableHeader &&
-              tableHeader.map((header) => {
-                return <TableCell key={header.id}>{header.name}</TableCell>;
-              })}
-          </TableRow>
-        </TableHead>
         <TableBody>
-          <TableRow key={row.id}>
-            {getValueBySection(row,section)}
-          </TableRow>
+          {sectionData.map((item, index) => (
+            <TableRow key={index}>
+              <TableCell>{item.header}</TableCell>
+              <TableCell>{item.value}</TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </TableContainer>
