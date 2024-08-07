@@ -65,6 +65,27 @@ const MPFTable = ({ tableData, tableHeader ,section}) => {
             <TableCell>{row.inRemainAmount}</TableCell>
           </>
         );
+        case "EarnedMoney":
+          return (
+            <>
+              <TableCell>{row.companyJoinDate}</TableCell>
+              <TableCell>{formatNumber(row.totalCTC)}</TableCell>
+              <TableCell>{formatNumber(row.monthSalary)}</TableCell>
+              <TableCell>{row.existDate}</TableCell>
+              <TableCell>{formatNumber(row.totalEarn)}</TableCell>
+            </>
+          );
+          case "Insurance":
+            return (
+              <>
+                <TableCell>{row.insuranceDate}</TableCell>
+                <TableCell>{row.policyNumber}</TableCell>
+                <TableCell>{row.policyPaidMonth}</TableCell>
+                {/* <TableCell>{formatNumber(row.monthSalary)}</TableCell>
+                <TableCell>{row.existDate}</TableCell>
+                <TableCell>{formatNumber(row.totalEarn)}</TableCell> */}
+              </>
+            );
       default:
         console.warn(`Unknown`);
         break;

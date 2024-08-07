@@ -19,6 +19,8 @@ export const mpfKey = {
   SAVING: "Savings(PF+Bank)",
   MONEYOUT: "Money Outflows",
   MONEYIN: "Money Inflows",
+  EARNEDMONEY:'EarnedMoney',
+  INSURANCE : 'Insurance'
 };
 
 export const disabledFields = [

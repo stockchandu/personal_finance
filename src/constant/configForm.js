@@ -33,3 +33,10 @@ export const moneyInflowformFields = [
   { name: "inDate", label: "In Date", id: "MI_2" },
   { name: "expectedPaymentDate", label: "Expected InMoney Payment Date", id: "MI_4" },
 ];
+
+export const earnedMoneyformFields = [
+  { name: "sectionName", label: "Name", id: "EM_0" },
+  { name: "companyJoinDate", label: "Join Date", id: "EM_1" },
+  { name: "totalCTC", label: "Total Package", id: "EM_2" },
+  { name: "monthSalary", label: "Monthly Salary", id: "EM_4" },
+];

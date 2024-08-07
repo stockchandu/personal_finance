@@ -38,3 +38,26 @@ export const tableCellMoneyIn = [
   { name: "Paid", id: "Mi_2" },
   { name: "Remain", id: "Mi_2" },
 ];
+
+
+export const tableCellEarnedMoney = [
+  { name: "Date", id: "EM_1" },
+  { name: "CTC", id: "EM_2" },
+  { name: "Salary", id: "EM_2" },
+  { name: "Exist", id: "EM_2" },
+  { name: "TotalEarned", id: "EM_2" },
+];
+
+export const tableCellInsurance = [
+  { name: "Date", id: "INS_1" },
+  { name: "Policy Number", id: "INS_2" },
+  { name: "Paid Month", id: "INS_2" },
+  { name: "Paid Premium", id: "INS_2" },
+  { name: "Sum Assured", id: "INS_2" },
+  { name: "Premium", id: "INS_2" },
+  { name: "Total Month", id: "INS_2" },
+  { name: "Remain Month", id: "INS_2" },
+  { name: "MaturityDate", id: "INS_2" },
+  { name: "Maturity Value", id: "INS_2" },
+];
+
