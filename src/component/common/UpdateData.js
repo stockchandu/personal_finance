@@ -1,21 +1,24 @@
 import { removeFields } from "../../constant/global";
 import MPFTextField from "./TextField";
 export const UpdateData = ({ formData, setFormValue, formValue }) => {
-  const checkNullValue = (key)=>{
+  const checkNullValue = (key) => {
     const mapperObject = {
       Liabilities: ["partPayment"].includes(key),
       "Money Inflows": ["inPaidAmount"].includes(key),
       Investment: ["investRedeem"].includes(key),
-      "Savings(PF+Bank)": ["redeem"].includes(key),
+      "Savings(PF+Bank)":
+        formData?.sectionName === "PF"
+          ? ["redeem", "monthlyPFShare"].includes(key)
+          : ["redeem"].includes(key),
       "Money Outflows": ["outPaidMoney"].includes(key),
     };
 
-    if(mapperObject[formData?.section]){
-      return mapperObject[formData?.section]
-    }else{
-      return false
+    if (mapperObject[formData?.section]) {
+      return mapperObject[formData?.section];
+    } else {
+      return false;
     }
-  }
+  };
   return (
     <>
       {formData &&

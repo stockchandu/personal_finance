@@ -44,11 +44,16 @@ export const disabledFields = [
   "totalLoanPaid",
   "rateOfInterest",
   //   TODO : ENABLE after talk with bank how part payment works
+  // HDFC Bank - upto 25% with 2 payment during whole tenure and 1 time only financial year
+  // 
   "partPayment",
   "profit",
   "outRemain",
   "inRemainAmount",
-  "remainAmount"
+  "remainAmount",
+  "myPFShare",
+  "companyPFShare",
+  "monthlyShare"
 ];
 
 // Textfiled remove

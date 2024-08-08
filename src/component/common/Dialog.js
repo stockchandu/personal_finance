@@ -181,9 +181,22 @@ export default function MPFDialog() {
         } else if (formValue?.totalAmount) {
           const totalAmount = formValue?.totalAmount;
           const remainAmount = formValue?.totalAmount - data?.redeem;
+          // TODO : add company month and my month
           return {
             totalAmount,
             remainAmount,
+          };
+        } else if (formValue?.monthlyPFShare) {
+          const monthPF = formValue?.monthlyPFShare * 2;
+          const totalAmount = data?.totalAmount + monthPF;
+          const remainAmount = totalAmount - data?.redeem;
+          const myPFShare = data?.myPFShare + formValue?.monthlyPFShare
+          const companyPFShare = data?.companyPFShare + formValue?.monthlyPFShare
+          return {
+            totalAmount,
+            remainAmount,
+            companyPFShare,
+            myPFShare
           };
         } else {
           return formValue;
@@ -296,66 +309,12 @@ export default function MPFDialog() {
         Object.entries(formValue).map(([key, value]) => [key, parseInt(value)])
       );
       const sectionUpdateData = updateFormBasedSection(dialogData, updateData);
-      // TODO : create dynamic 
-
       const OPERATION = {
         create: async () => await createDataDB(formValue),
         update: async () => await updateDataDB(sectionUpdateData),
         delete: async () => await deleteDataDB(checkedItems),
-      }
-
-      OPERATION[operation]()
-      // const mapperObject = {
-      //   [mpfKey?.LIABILITY]: {
-      //     create: async () => await createDataDB(formValue),
-      //     update: async () => await updateDataDB(sectionUpdateData),
-      //     delete: async () => await deleteDataDB(checkedItems),
-      //   },
-      //   [mpfKey?.INVESTMENT]: {
-      //     create: async () => await createDataDB(formValue),
-      //     update: async () => await updateDataDB(sectionUpdateData),
-      //     delete: async () => await deleteDataDB(checkedItems),
-      //   },
-      //   [mpfKey?.MONEYIN]: {
-      //     create: async () => await createDataDB(formValue),
-      //     update: async () => await updateDataDB(sectionUpdateData),
-      //     delete: async () => await deleteDataDB(checkedItems),
-      //   },
-      //   [[mpfKey?.MONEYOUT]]: {
-      //     create: async () => await createDataDB(formValue),
-      //     update: async () => await updateDataDB(sectionUpdateData),
-      //     delete: async () => await deleteDataDB(checkedItems),
-      //   },
-      //   [mpfKey?.SAVING]: {
-      //     create: createDataDB(formValue),
-      //     update: updateDataDB(sectionUpdateData),
-      //     delete: deleteDataDB(checkedItems),
-      //   },
-      //   [mpfKey?.EARNEDMONEY]: {
-      //     create: createDataDB(formValue),
-      //     update: updateDataDB(sectionUpdateData),
-      //     delete: deleteDataDB(checkedItems),
-      //   },
-      //   [mpfKey?.INSURANCE]: {
-      //     create: createDataDB(formValue),
-      //     update: updateDataDB(sectionUpdateData),
-      //     delete: deleteDataDB(checkedItems),
-      //   },
-      // };
-      // if (
-      //   sectionName &&
-      //   operation &&
-      //   mapperObject[sectionName] &&
-      //   mapperObject[sectionName][operation]
-      // ) {
-      //   try {
-      //     await mapperObject[sectionName][operation]();
-      //   } catch (error) {
-      //     console.error(`Error executing operation for:`);
-      //   }
-      // } else {
-      //   console.warn(`Invalid sectionName  or operation.`);
-      // }
+      };
+      OPERATION[operation]();
     }
   };
 
