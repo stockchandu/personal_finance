@@ -6,8 +6,6 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Box from "@mui/material/Box";
 import { MpfButton } from "./Button";
-// import MPFDialog from "./Dialog";
-
 
 export default function MPFAccordion({ children, title,edit }) {
   return (
@@ -16,7 +14,6 @@ export default function MPFAccordion({ children, title,edit }) {
         border: "1px solid",
         borderColor: "grey.300",
         margin: 2,
-        borderRadius: 1,
       }}
     >
       <Accordion defaultExpanded>

@@ -27,6 +27,7 @@ import {
 import { UpdateData } from "./UpdateData";
 import { DeleteData } from "./DeleteData";
 import { apiService } from "../../api/apiService";
+import { mpfKey } from "../../constant/global";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -46,8 +47,6 @@ export default function MPFDialog() {
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const isFormValue = formValue && Object.keys(formValue).length > 0;
   const { sectionName, operation } = pageSource || {};
-  console.log("sectionName: ", sectionName);
-  console.log("operation: ", operation);
   const [checkedItems, setCheckedItems] = useState([]);
   const [isBtnDisable, setIsBtnDisable] = useState(true);
   const isCheckedValue = checkedItems && checkedItems.length > 0;
@@ -193,8 +192,8 @@ export default function MPFDialog() {
       case "EarnedMoney":
         return formValue;
 
-        case "Insurance":
-          return formValue;
+      case "Insurance":
+        return formValue;
 
       default:
         break;
@@ -297,57 +296,66 @@ export default function MPFDialog() {
         Object.entries(formValue).map(([key, value]) => [key, parseInt(value)])
       );
       const sectionUpdateData = updateFormBasedSection(dialogData, updateData);
-      const mapperObject = {
-        Liabilities: {
-          create: async () => await createDataDB(formValue),
-          update: async () => await updateDataDB(sectionUpdateData),
-          delete: async () => await deleteDataDB(checkedItems),
-        },
-        Investment: {
-          create: async () => await createDataDB(formValue),
-          update: async () => await updateDataDB(sectionUpdateData),
-          delete: async () => await deleteDataDB(checkedItems),
-        },
-        MoneyInflow: {
-          create: async () => await createDataDB(formValue),
-          update: async () => await updateDataDB(sectionUpdateData),
-          delete: async () => await deleteDataDB(checkedItems),
-        },
-        MoneyOutflow: {
-          create: async () => await createDataDB(formValue),
-          update: async () => await updateDataDB(sectionUpdateData),
-          delete: async () => await deleteDataDB(checkedItems),
-        },
-        Savings: {
-          create: createDataDB(formValue),
-          update: updateDataDB(sectionUpdateData),
-          delete: deleteDataDB(checkedItems),
-        },
-        EarnedMoney: {
-          create: createDataDB(formValue),
-          update: updateDataDB(sectionUpdateData),
-          delete: deleteDataDB(checkedItems),
-        },
-        Insurance: {
-          create: createDataDB(formValue),
-          update: updateDataDB(sectionUpdateData),
-          delete: deleteDataDB(checkedItems),
-        },
-      };
-      if (
-        sectionName &&
-        operation &&
-        mapperObject[sectionName] &&
-        mapperObject[sectionName][operation]
-      ) {
-        try {
-          await mapperObject[sectionName][operation]();
-        } catch (error) {
-          console.error(`Error executing operation for:`);
-        }
-      } else {
-        console.warn(`Invalid sectionName  or operation.`);
+      // TODO : create dynamic 
+
+      const OPERATION = {
+        create: async () => await createDataDB(formValue),
+        update: async () => await updateDataDB(sectionUpdateData),
+        delete: async () => await deleteDataDB(checkedItems),
       }
+
+      OPERATION[operation]()
+      // const mapperObject = {
+      //   [mpfKey?.LIABILITY]: {
+      //     create: async () => await createDataDB(formValue),
+      //     update: async () => await updateDataDB(sectionUpdateData),
+      //     delete: async () => await deleteDataDB(checkedItems),
+      //   },
+      //   [mpfKey?.INVESTMENT]: {
+      //     create: async () => await createDataDB(formValue),
+      //     update: async () => await updateDataDB(sectionUpdateData),
+      //     delete: async () => await deleteDataDB(checkedItems),
+      //   },
+      //   [mpfKey?.MONEYIN]: {
+      //     create: async () => await createDataDB(formValue),
+      //     update: async () => await updateDataDB(sectionUpdateData),
+      //     delete: async () => await deleteDataDB(checkedItems),
+      //   },
+      //   [[mpfKey?.MONEYOUT]]: {
+      //     create: async () => await createDataDB(formValue),
+      //     update: async () => await updateDataDB(sectionUpdateData),
+      //     delete: async () => await deleteDataDB(checkedItems),
+      //   },
+      //   [mpfKey?.SAVING]: {
+      //     create: createDataDB(formValue),
+      //     update: updateDataDB(sectionUpdateData),
+      //     delete: deleteDataDB(checkedItems),
+      //   },
+      //   [mpfKey?.EARNEDMONEY]: {
+      //     create: createDataDB(formValue),
+      //     update: updateDataDB(sectionUpdateData),
+      //     delete: deleteDataDB(checkedItems),
+      //   },
+      //   [mpfKey?.INSURANCE]: {
+      //     create: createDataDB(formValue),
+      //     update: updateDataDB(sectionUpdateData),
+      //     delete: deleteDataDB(checkedItems),
+      //   },
+      // };
+      // if (
+      //   sectionName &&
+      //   operation &&
+      //   mapperObject[sectionName] &&
+      //   mapperObject[sectionName][operation]
+      // ) {
+      //   try {
+      //     await mapperObject[sectionName][operation]();
+      //   } catch (error) {
+      //     console.error(`Error executing operation for:`);
+      //   }
+      // } else {
+      //   console.warn(`Invalid sectionName  or operation.`);
+      // }
     }
   };
 
@@ -389,37 +397,37 @@ export default function MPFDialog() {
   const renderForm = (pageSource) => {
     const { sectionName, operation } = pageSource || {};
     const mapperObject = {
-      Liabilities: {
+      [mpfKey?.LIABILITY]: {
         create: getCreateForm(liabilityformFields),
         update: getUpdateForm(dialogData),
         delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
       },
-      Investment: {
+      [mpfKey?.INVESTMENT]: {
         create: getCreateForm(investmentformFields),
         update: getUpdateForm(dialogData),
         delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
       },
-      MoneyInflow: {
+      [mpfKey?.MONEYIN]: {
         create: getCreateForm(moneyInflowformFields),
         update: getUpdateForm(dialogData),
         delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
       },
-      MoneyOutflow: {
+      [mpfKey?.MONEYOUT]: {
         create: getCreateForm(moneyOutflowformFields),
         update: getUpdateForm(dialogData),
         delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
       },
-      Savings: {
+      [mpfKey?.SAVING]: {
         create: getCreateForm(savingformFields),
         update: getUpdateForm(dialogData),
         delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
       },
-      EarnedMoney: {
+      [mpfKey?.EARNEDMONEY]: {
         create: getCreateForm(earnedMoneyformFields),
         update: getUpdateForm(dialogData),
         delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
       },
-      Insurance: {
+      [mpfKey?.INSURANCE]: {
         create: getCreateForm(earnedMoneyformFields),
         update: getUpdateForm(dialogData),
         delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
