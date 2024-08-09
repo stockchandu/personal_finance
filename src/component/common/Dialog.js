@@ -23,6 +23,7 @@ import {
   moneyOutflowformFields,
   savingformFields,
   earnedMoneyformFields,
+  insuranceformFields
 } from "../../constant/configForm";
 import { UpdateData } from "./UpdateData";
 import { DeleteData } from "./DeleteData";
@@ -190,13 +191,14 @@ export default function MPFDialog() {
           const monthPF = formValue?.monthlyPFShare * 2;
           const totalAmount = data?.totalAmount + monthPF;
           const remainAmount = totalAmount - data?.redeem;
-          const myPFShare = data?.myPFShare + formValue?.monthlyPFShare
-          const companyPFShare = data?.companyPFShare + formValue?.monthlyPFShare
+          const myPFShare = data?.myPFShare + formValue?.monthlyPFShare;
+          const companyPFShare =
+            data?.companyPFShare + formValue?.monthlyPFShare;
           return {
             totalAmount,
             remainAmount,
             companyPFShare,
-            myPFShare
+            myPFShare,
           };
         } else {
           return formValue;
@@ -206,7 +208,18 @@ export default function MPFDialog() {
         return formValue;
 
       case "Insurance":
-        return formValue;
+        if (formValue?.policyPaidMonth) {
+          const paidPolicyPremium = formValue?.policyPaidMonth * data?.premiumAmount;
+          const remainPolicyMonth =
+            data?.totalPolicyMonth - formValue?.policyPaidMonth;
+          return {
+            paidPolicyPremium,
+            remainPolicyMonth,
+            policyPaidMonth: formValue?.policyPaidMonth,
+          };
+        } else {
+          return formValue;
+        }
 
       default:
         break;
@@ -387,7 +400,7 @@ export default function MPFDialog() {
         delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
       },
       [mpfKey?.INSURANCE]: {
-        create: getCreateForm(earnedMoneyformFields),
+        create: getCreateForm(insuranceformFields),
         update: getUpdateForm(dialogData),
         delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
       },

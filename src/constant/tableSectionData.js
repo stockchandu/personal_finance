@@ -57,7 +57,7 @@ export const tableCellInsurance = [
   { name: "Premium", id: "INS_2" },
   { name: "Total Month", id: "INS_2" },
   { name: "Remain Month", id: "INS_2" },
-  { name: "MaturityDate", id: "INS_2" },
-  { name: "Maturity Value", id: "INS_2" },
+  { name: "Maturity Date", id: "INS_2" },
+  { name: "Maturity Amount", id: "INS_2" },
 ];
 

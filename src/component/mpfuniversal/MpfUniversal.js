@@ -99,9 +99,20 @@ export const MpfUniversal = ({ sectionKey, addLabel, removeLabel ,bgColor}) => {
         ];
       case "Insurance":
         return [
-          { header: "Insurance Date", value: row.insuranceDate },
-          { header: "Policy Number", value: row.policyNumber },
-          { header: "Policy Paid Month", value: row.policyPaidMonth },
+          { header: "Date", value: row.insuranceDate },
+          { header: "Policy Id", value: row.policyNumber },
+          { header: "Paid Month", value: row.policyPaidMonth },
+          { header: "Remain Policy Month", value: row.remainPolicyMonth },
+          { header: "Total Policy Month", value: row.totalPolicyMonth },
+
+          { header: "Paid Premium Amount", value: formatNumber(row.paidPolicyPremium) },
+
+          { header: "Sum Assured", value: formatNumber(row.sumAssured) },
+
+          { header: "Monthly Premium", value: formatNumber(row.premiumAmount) },
+
+          { header: "Maturity Date", value: row.policyMaturityDate },
+          { header: "Maturity Amount", value: formatNumber(row.policyMaturityAmount) },
         ];
       default:
         console.warn(`Unknown section: ${name}`);

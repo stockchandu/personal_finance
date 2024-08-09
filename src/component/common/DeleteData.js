@@ -16,12 +16,14 @@ export const DeleteData = ({ formData,setCheckedItems ,checkedItems}) => {
     const investDeclare = `I have redeem  full amount of ${section.sectionName} investment fund`;
     const moDeclare = ` ${section.sectionName} taken  ₹${section.outMoney} on ${section.outMoneyDate} and i received all money`;
     const miDeclare = `I have fully paid the ${section.sectionName} amount`;
+    const insuranceDeclare = `The entire premium for ${section.sectionName} paid successfully and maturity amount ₹${section.policyMaturityAmount} received`;
     const mapperObject = {
       Liabilities: liabilityDeclare,
       "Money Inflows": miDeclare,
       Investment: investDeclare,
       "Savings(PF+Bank)": savingDeclare,
       "Money Outflows": moDeclare,
+      "Insurance": insuranceDeclare,
     };
     if (section?.section) {
       return mapperObject[section?.section];

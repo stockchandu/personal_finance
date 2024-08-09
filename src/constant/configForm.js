@@ -40,3 +40,13 @@ export const earnedMoneyformFields = [
   { name: "totalCTC", label: "Total Package", id: "EM_2" },
   { name: "monthSalary", label: "Monthly Salary", id: "EM_4" },
 ];
+
+export const insuranceformFields = [
+  { name: "sectionName", label: "Name", id: "EM_0" },
+  { name: "insuranceDate", label: "Date", id: "EM_1" },
+  { name: "policyNumber", label: "Policy ID", id: "EM_2" },
+  { name: "sumAssured", label: "Sum Assured", id: "EM_4" },
+  { name: "premiumAmount", label: "Premium Amount", id: "EM_4" },
+  { name: "totalPolicyMonth", label: "Sum Assured", id: "EM_4" },
+];
+

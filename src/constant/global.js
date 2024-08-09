@@ -53,7 +53,16 @@ export const disabledFields = [
   "remainAmount",
   "myPFShare",
   "companyPFShare",
-  "monthlyShare"
+  "monthlyShare",
+  "insuranceDate",
+  "policyNumber",
+  "sumAssured",
+  "paidPolicyPremium",
+  "premiumAmount",
+  "totalPolicyMonth",
+  "remainPolicyMonth",
+  "policyMaturityDate",
+  "policyMaturityAmount"
 ];
 
 // Textfiled remove
