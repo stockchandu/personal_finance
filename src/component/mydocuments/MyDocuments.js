@@ -1,11 +1,13 @@
 import Box from "@mui/material/Box";
 import { StickyBox } from "../common/StickyBox";
 import Typography from "@mui/material/Typography";
-import { myDocumentsData } from "../../constant/myDocumentsData";
+import {
+  documentMapper,
+  myDocumentsData,
+} from "../../constant/myDocumentsData";
 import Paper from "@mui/material/Paper";
 import { MpfButton } from "../common/Button";
 import { db } from "../../config/db";
-
 
 export const MyDocuments = () => {
   const typoStyle = {
@@ -14,39 +16,33 @@ export const MyDocuments = () => {
     // marginTop: 3,
   };
 
-  const getPdfUrl = async (bucketName, fileName) => {
-    const { data, error } = await db
-    .storage
-    .from("mpf")
-    .getPublicUrl("chandan_kumar_malik_aadhar.pdf");
-    
-    console.log('getPdfUrl: ', data);
-  
-    if (error) {
-      console.error('Error fetching file URL:', error);
-      return null;
+  const getPdfUrl = async (name, fileName) => {
+    const documentsName = documentMapper[name][fileName];
+    if(documentsName){
+        const { data, error } = await db.storage
+        .from("mpf")
+        .getPublicUrl(documentsName);
+      if (error) {
+        console.error("Error fetching file URL:", error);
+        return null;
+      }
+      return data.publicUrl;
     }
-    return data.publicUrl;
   };
-  
 
-  const handleDownload = async(name, documents) => {
-    const getDocumentUrl = await getPdfUrl()
-    console.log('getDocumentUrl: ', getDocumentUrl);
+  const handleDownload = async (name, documents) => {
+
+    const getDocumentUrl = await getPdfUrl(name, documents);
     if (getDocumentUrl) {
-        const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = getDocumentUrl;
-      link.download = "chandan_kumar_malik_aadhar.pdf" 
-      link.target = '_blank'; // Optional: Open in a new tab; remove if not needed
-      link.rel = 'noopener noreferrer'; // Security best practice
-
-      // Append the link to the body
+      link.download = documentMapper[name][documents];
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
       document.body.appendChild(link);
       link.click();
-
-      // Clean up the DOM
       document.body.removeChild(link);
-      }
+    }
   };
   return (
     <>

@@ -19,10 +19,10 @@ export const MoneyRule = () => {
           return (
             <>
               <Typography sx={typoStyle} key={rule.id}>
-                Rule No {rule?.id} : {rule?.title}
+               {rule?.id} : {rule?.title}
               </Typography>
               <Typography
-                sx={{ border: "0.5px solid #1B263B", marginTop: 1 }}
+                sx={{ border: "0.5px solid #C7C7C7", marginTop: 1 }}
                 p={1}
               >
                 {rule?.description}

@@ -9,13 +9,11 @@ import { Saving } from "./Saving";
 import { MoneyOutFlow } from "./MoneyOutFlow";
 import { MoneyInflow } from "./MoneyInFlow";
 import { Typography } from "@mui/material";
-import { MyNetworth } from "./MyNetworth";
 import { formatNumber } from "../../utils/formatNumber";
-import { Welcome } from "./Welcome";
 import { checkData } from "../../utils/checkData";
 import { typoStyle } from "./style/home";
 import { sortHomeTiles } from "../../constant/global";
-
+import { MpfPieChart } from "../common/PieChart";
 
 export const Home = () => {
   const { mpfData, isMPFData } = useMPFData();
@@ -73,8 +71,7 @@ export const Home = () => {
   const netWorthDetailsTile = () => {
     return (
       <>
-        {/* <Welcome /> */}
-        <MyNetworth section={mpfData} />
+        <MpfPieChart section={mpfData}/>
         <Grid container spacing={2}>
           {sortedSection.map((section) => {
             if (section.sectionParent)

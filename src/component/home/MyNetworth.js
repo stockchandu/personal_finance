@@ -1,5 +1,4 @@
 import React from "react";
-import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 import { calculateNetworth } from "../../utils/calcNetworth";
@@ -13,12 +12,12 @@ export const MyNetworth = ({section}) =>{
       return totalSaving > totalLiabilities ? "green" : "red";
     };
     return (
-        <Grid item xs={12} md={4} lg={4} mb={2}>
         <Paper
           sx={myNetworthParentStyle}
+          elevation={0}
         >
           <Typography
-            sx={{ fontSize: "18px", fontWeight: "700"}}
+            sx={{ fontSize: "20px", fontWeight: "700"}}
           >
             {myNetworthTitle}
           </Typography>
@@ -33,6 +32,5 @@ export const MyNetworth = ({section}) =>{
             {netWorthFormulaTitle}
           </Typography>
         </Paper>
-      </Grid>
     )
 }
