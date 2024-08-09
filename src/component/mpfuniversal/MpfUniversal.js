@@ -76,7 +76,7 @@ export const MpfUniversal = ({ sectionKey, addLabel, removeLabel ,bgColor}) => {
         return [
           { header: "Date", value: row.outMoneyDate },
           { header: "Amount", value: row.outMoney },
-          { header: "Received Amount", value: row.outPaidMoney },
+          { header: "Received Amount", value: row.outReceivedMoney },
           { header: "Remain Amount", value: row.outRemain },
         ];
       case "Money Inflows":

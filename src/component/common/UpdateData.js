@@ -10,7 +10,7 @@ export const UpdateData = ({ formData, setFormValue, formValue }) => {
         formData?.sectionName === "PF"
           ? ["redeem", "monthlyPFShare"].includes(key)
           : ["redeem"].includes(key),
-      "Money Outflows": ["outPaidMoney"].includes(key),
+      "Money Outflows": ["outReceivedMoney"].includes(key),
     };
 
     if (mapperObject[formData?.section]) {

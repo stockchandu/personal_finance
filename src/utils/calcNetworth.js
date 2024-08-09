@@ -53,7 +53,7 @@ const allMoneyInflow = (sectionData) => {
 const allMoneyOutflow = (sectionData) => {
   const moneyOutflow = getSection(sectionData, constant.MO);
   // const totalMO = calculateSum(moneyOutflow, "outMoney");
-  const receivedMO = calculateSum(moneyOutflow, "outPaidMoney");
+  const receivedMO = calculateSum(moneyOutflow, "outReceivedMoney");
   // return totalMO - receivedMO
   return receivedMO
 };

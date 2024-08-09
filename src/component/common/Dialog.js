@@ -157,14 +157,14 @@ export default function MPFDialog() {
         }
 
       case "Money Outflows":
-        if (formValue?.outPaidMoney) {
-          const outRemain = data?.outMoney - formValue?.outPaidMoney;
+        if (formValue?.outReceivedMoney) {
+          const outRemain = data?.outMoney - formValue?.outReceivedMoney;
           return {
             outRemain,
-            outPaidMoney: formValue?.outPaidMoney,
+            outReceivedMoney: formValue?.outReceivedMoney,
           };
         } else if (formValue?.outMoney) {
-          const outRemain = formValue?.outMoney - data?.outPaidMoney;
+          const outRemain = formValue?.outMoney - data?.outReceivedMoney;
           return {
             outRemain,
             outMoney: formValue?.outMoney,

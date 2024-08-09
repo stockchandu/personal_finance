@@ -19,7 +19,7 @@ export const MoneyOutFlow = (
     return filterMO.reduce((init, item) => init + item[key], 0);
   };
   const remainMO =
-    calculateMO(mpfData, "outMoney") - calculateMO(mpfData, "outPaidMoney");
+    calculateMO(mpfData, "outMoney") - calculateMO(mpfData, "outReceivedMoney");
   return (
     <>
       <Typography sx={{ height: 260 }}>
@@ -37,7 +37,7 @@ export const MoneyOutFlow = (
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total Outflow Received </Typography>
           <Typography sx={{ ...typoStyle, color: "green" }}>
-            {formatNumber(calculateMO(mpfData, "outPaidMoney"))}
+            {formatNumber(calculateMO(mpfData, "outReceivedMoney"))}
           </Typography>
         </Typography>
 
