@@ -6,6 +6,8 @@ import Login from "../component/login/Login";
 import { MoneyRule } from "../component/moneyrule/MoneyRule";
 import { MpfUniversal } from "../component/mpfuniversal/MpfUniversal";
 import { mpfKey } from "../constant/global";
+import { MyDocuments } from "../component/mydocuments/MyDocuments";
+
 
 const individualRoutes = [
   {
@@ -36,7 +38,7 @@ const individualRoutes = [
     path: "documents",
     element: (
       <RouteGuard>
-        <h1>documents</h1>
+        <MyDocuments/>
       </RouteGuard>
     ),
   },
