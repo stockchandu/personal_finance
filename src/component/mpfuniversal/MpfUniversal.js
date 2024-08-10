@@ -9,7 +9,12 @@ import { StickyBox } from "../common/StickyBox";
 import Box from "@mui/material/Box";
 import { formatNumber } from "../../utils/formatNumber";
 
-export const MpfUniversal = ({ sectionKey, addLabel, removeLabel ,bgColor}) => {
+export const MpfUniversal = ({
+  sectionKey,
+  addLabel,
+  removeLabel,
+  bgColor,
+}) => {
   const updateData = useEdit();
   const createData = useCreate();
   const deleteData = useDelete();
@@ -104,15 +109,40 @@ export const MpfUniversal = ({ sectionKey, addLabel, removeLabel ,bgColor}) => {
           { header: "Paid Month", value: row.policyPaidMonth },
           { header: "Remain Policy Month", value: row.remainPolicyMonth },
           { header: "Total Policy Month", value: row.totalPolicyMonth },
-
-          { header: "Paid Premium Amount", value: formatNumber(row.paidPolicyPremium) },
-
+          {
+            header: "Paid Premium Amount",
+            value: formatNumber(row.paidPolicyPremium),
+          },
           { header: "Sum Assured", value: formatNumber(row.sumAssured) },
-
           { header: "Monthly Premium", value: formatNumber(row.premiumAmount) },
-
           { header: "Maturity Date", value: row.policyMaturityDate },
-          { header: "Maturity Amount", value: formatNumber(row.policyMaturityAmount) },
+          {
+            header: "Maturity Amount",
+            value: formatNumber(row.policyMaturityAmount),
+          },
+        ];
+      case "Vehicles":
+        return [
+          { header: "Date Of Purchased", value: row.vehiclePurchasedDate },
+          { header: "Type", value: row.vehicleType },
+          { header: "Owner Name", value: row.vehicleOwnerName },
+          { header: "Purchased Value", value: formatNumber(row.vehiclePurchasedValue) },
+          { header: "No Of Years ", value: row.vehicleYears },
+          { header: "Registration Number", value: row.vehicleRCNumber },
+          { header: "Owner Sno", value: row.vehicleOwnerNo },
+          { header: "Chasis Number", value: row.chasisNumber },
+          { header: "Engine Number", value: row.engineNumber },
+          { header: "Insurance Name", value: row.vehicleInsuranceName },
+          { header: "Insurance Valid Upto", value: row.vehicleInsuranceValid },
+          {
+            header: "PUC Certificate Number",
+            value: row.vehiclePUCNumber,
+          },
+          {
+            header: "PUC Certificate Valid Upto",
+            value: row.vehiclePUCValid,
+          },
+          { header: "Fitness Certficate Valid Upto", value: row.vehicleFitnessValid },
         ];
       default:
         console.warn(`Unknown section: ${name}`);
@@ -144,6 +174,7 @@ export const MpfUniversal = ({ sectionKey, addLabel, removeLabel ,bgColor}) => {
                 title={data.sectionName}
                 edit={() => handleUpdate(data)}
                 key={data?.id}
+                isActive={data.isActive}
               >
                 <MPFTable data={getRowBySection(data, sectionKey)} />
               </MPFAccordion>

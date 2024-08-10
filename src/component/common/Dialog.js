@@ -23,7 +23,8 @@ import {
   moneyOutflowformFields,
   savingformFields,
   earnedMoneyformFields,
-  insuranceformFields
+  insuranceformFields,
+  vehicleformFields
 } from "../../constant/configForm";
 import { UpdateData } from "./UpdateData";
 import { DeleteData } from "./DeleteData";
@@ -225,7 +226,6 @@ export default function MPFDialog() {
         break;
     }
   };
-
   // TODO : check why 2 column created in DB
   const createDataDB = async (formData) => {
     // dispatch(openDialog({ isDialog: true }));
@@ -401,6 +401,11 @@ export default function MPFDialog() {
       },
       [mpfKey?.INSURANCE]: {
         create: getCreateForm(insuranceformFields),
+        update: getUpdateForm(dialogData),
+        delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
+      },
+      [mpfKey?.VEHICLE]: {
+        create: getCreateForm(vehicleformFields),
         update: getUpdateForm(dialogData),
         delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
       },

@@ -31,7 +31,11 @@ export const moneyInflowformFields = [
   { name: "sectionName", label: "Name", id: "MI_0" },
   { name: "inReceiveAmount", label: "In Money Amount ", id: "MI_1" },
   { name: "inDate", label: "In Date", id: "MI_2" },
-  { name: "expectedPaymentDate", label: "Expected InMoney Payment Date", id: "MI_4" },
+  {
+    name: "expectedPaymentDate",
+    label: "Expected InMoney Payment Date",
+    id: "MI_4",
+  },
 ];
 
 export const earnedMoneyformFields = [
@@ -50,3 +54,11 @@ export const insuranceformFields = [
   { name: "totalPolicyMonth", label: "Sum Assured", id: "EM_4" },
 ];
 
+export const vehicleformFields = [
+  { name: "sectionName", label: "Name", id: "EM_0" },
+  { name: "purchasedDate", label: "Date", id: "EM_1" },
+  { name: "policyNumber", label: "Policy ID", id: "EM_2" },
+  { name: "sumAssured", label: "Sum Assured", id: "EM_4" },
+  { name: "premiumAmount", label: "Premium Amount", id: "EM_4" },
+  { name: "totalPolicyMonth", label: "Sum Assured", id: "EM_4" },
+];

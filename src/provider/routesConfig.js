@@ -26,14 +26,14 @@ const individualRoutes = [
       </RouteGuard>
     ),
   },
-  {
-    path: "vehicles",
-    element: (
-      <RouteGuard>
-        <h1>vehicles</h1>
-      </RouteGuard>
-    ),
-  },
+  // {
+  //   path: "vehicles",
+  //   element: (
+  //     <RouteGuard>
+  //       <h1>vehicles</h1>
+  //     </RouteGuard>
+  //   ),
+  // },
   {
     path: "documents",
     element: (
@@ -126,6 +126,13 @@ const childrenRoutes = [
     sectionKey: mpfKey.INSURANCE,
     addLabel: "Add Insurance",
     removeLabel: "Close Insurance",
+    bgColor: color.insurance,
+  },
+  {
+    path: "vehicles",
+    sectionKey: mpfKey.VEHICLE,
+    addLabel: "Add Vehicle",
+    removeLabel: "Close Vehicle",
     bgColor: color.insurance,
   },
 ];

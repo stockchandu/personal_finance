@@ -7,7 +7,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Box from "@mui/material/Box";
 import { MpfButton } from "./Button";
 
-export default function MPFAccordion({ children, title,edit }) {
+export default function MPFAccordion({ children, title, edit, isActive }) {
   return (
     <Box
       sx={{
@@ -21,14 +21,47 @@ export default function MPFAccordion({ children, title,edit }) {
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
           id="panel1-header"
+          sx={{
+            "& .MuiAccordionSummary-content": {
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "100%",
+            },
+          }}
         >
           <Typography sx={{ fontSize: "1.2rem", fontWeight: "600" }}>
             {title && title.toUpperCase()}
           </Typography>
+
+          {isActive ? (
+            <Typography
+              sx={{
+                fontWeight: "600",
+                color: "#6AA84F",
+              }}
+            >
+              Active
+            </Typography>
+          ) : (
+            <Typography
+              sx={{
+                fontWeight: "600",
+                color: "#D12F2E",
+              }}
+            >
+              Closed
+            </Typography>
+          )}
         </AccordionSummary>
         <AccordionDetails>{children}</AccordionDetails>
         <AccordionDetails sx={{ display: "flex", justifyContent: "end" }}>
-          <MpfButton label="Edit" sx={{ backgroundColor: "#3A87B3" }} click={edit} disable={false}/>
+          <MpfButton
+            label="Edit"
+            sx={{ backgroundColor: "#3A87B3" }}
+            click={edit}
+            disable={false}
+          />
         </AccordionDetails>
       </Accordion>
     </Box>

@@ -20,7 +20,8 @@ export const mpfKey = {
   MONEYOUT: "Money Outflows",
   MONEYIN: "Money Inflows",
   EARNEDMONEY:'EarnedMoney',
-  INSURANCE : 'Insurance'
+  INSURANCE : 'Insurance',
+  VEHICLE : 'Vehicles'
 };
 
 export const disabledFields = [
@@ -62,7 +63,14 @@ export const disabledFields = [
   "totalPolicyMonth",
   "remainPolicyMonth",
   "policyMaturityDate",
-  "policyMaturityAmount"
+  "policyMaturityAmount",
+  "vehicleRCNumber",
+  "vehiclePurchasedValue",
+  "vehicleType",
+  "vehiclePurchasedDate",
+  "engineNumber",
+  "chasisNumber",
+  "vehicleOwnerName"
 ];
 
 // Textfiled remove
