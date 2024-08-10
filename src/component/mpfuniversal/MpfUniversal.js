@@ -21,28 +21,28 @@ export const MpfUniversal = ({
   const { mpfData, isMPFData } = useMPFData();
   const sectionData = filterMPFData(isMPFData, mpfData, sectionKey);
 
-  const handleRemove = (moneyInflow) => {
-    const data = {
+  const handleRemove = (data) => {
+    const mapper = {
       sectionName: sectionKey,
       operation: "delete",
     };
-    deleteData(data, moneyInflow);
+    deleteData(mapper, data);
   };
 
   const handleAdd = () => {
-    const data = {
+    const mapper = {
       sectionName: sectionKey,
       operation: "create",
     };
-    createData(data);
+    createData(mapper);
   };
 
-  const handleUpdate = (mi) => {
-    const operationMapper = {
+  const handleUpdate = (data) => {
+    const mapper = {
       sectionName: sectionKey,
       operation: "update",
     };
-    updateData(mi, operationMapper);
+    updateData(data, mapper);
   };
 
   const getRowBySection = (row, name) => {

@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 
-export const DeleteData = ({ formData,setCheckedItems ,checkedItems}) => {
+export const DeleteData = ({ formData, setCheckedItems, checkedItems }) => {
   const typoStyle = {
     fontSize: "15px",
     fontWeight: "500",
@@ -16,6 +16,7 @@ export const DeleteData = ({ formData,setCheckedItems ,checkedItems}) => {
     const investDeclare = `I have redeem  full amount of ${section.sectionName} investment fund`;
     const moDeclare = ` ${section.sectionName} taken  ₹${section.outMoney} on ${section.outMoneyDate} and i received all money`;
     const miDeclare = `I have fully paid the ${section.sectionName} amount`;
+    const earnedMoneyDeclare = `I left the ${section.sectionName} company`;
     const insuranceDeclare = `The entire premium for ${section.sectionName} paid successfully and maturity amount ₹${section.policyMaturityAmount} received`;
     const mapperObject = {
       Liabilities: liabilityDeclare,
@@ -23,7 +24,8 @@ export const DeleteData = ({ formData,setCheckedItems ,checkedItems}) => {
       Investment: investDeclare,
       "Savings(PF+Bank)": savingDeclare,
       "Money Outflows": moDeclare,
-      "Insurance": insuranceDeclare,
+      Insurance: insuranceDeclare,
+      EarnedMoney: earnedMoneyDeclare,
     };
     if (section?.section) {
       return mapperObject[section?.section];
@@ -41,7 +43,7 @@ export const DeleteData = ({ formData,setCheckedItems ,checkedItems}) => {
   };
   return (
     <>
-      {formData.map((item, index) => (
+      {formData?.map((item, index) => (
         <Box key={index}>
           <Card variant="outlined" sx={{ marginTop: 2 }}>
             <CardContent>
@@ -49,8 +51,9 @@ export const DeleteData = ({ formData,setCheckedItems ,checkedItems}) => {
                 <Checkbox
                   checked={checkedItems.includes(item.id)}
                   onChange={(event) => handleCheckboxChange(event, item.id)}
+                  disabled={item.isActive ? false : true}
                 />
-                <Typography sx={{...typoStyle, marginLeft: 1 }}>
+                <Typography sx={{ ...typoStyle, marginLeft: 1 }}>
                   {renderText(item)}
                 </Typography>
               </Box>

@@ -24,7 +24,7 @@ import {
   savingformFields,
   earnedMoneyformFields,
   insuranceformFields,
-  vehicleformFields
+  vehicleformFields,
 } from "../../constant/configForm";
 import { UpdateData } from "./UpdateData";
 import { DeleteData } from "./DeleteData";
@@ -206,11 +206,18 @@ export default function MPFDialog() {
         }
 
       case "EarnedMoney":
-        return formValue;
-
+        if (formValue?.isActive) {
+          const isActive = formValue?.isActive;
+          return {
+            isActive,
+          };
+        } else {
+          return formValue;
+        }
       case "Insurance":
         if (formValue?.policyPaidMonth) {
-          const paidPolicyPremium = formValue?.policyPaidMonth * data?.premiumAmount;
+          const paidPolicyPremium =
+            formValue?.policyPaidMonth * data?.premiumAmount;
           const remainPolicyMonth =
             data?.totalPolicyMonth - formValue?.policyPaidMonth;
           return {
@@ -273,25 +280,52 @@ export default function MPFDialog() {
   };
 
   const updateDataDB = async (sectionUpdateData) => {
-    dispatch(saveDialogData({ dialogData: dialogData }));
-    if (sectionUpdateData && Object.keys(sectionUpdateData).length > 0) {
-      try {
-        const { error } = await apiService.updateMPFData(
-          sectionUpdateData,
-          dialogData.id
-        );
-        if (error) {
-          console.error("Error updating data:", error);
-        } else {
-          const { data } = await apiService.getMPFData();
-          dispatch(saveMpfData(data));
-          dispatch(openDialog({ isDialog: false }));
-          setFormValue({});
+    if (sectionName === "EarnedMoney" && operation === "delete") {
+      if (sectionUpdateData.length > 0) {
+        const updateData = {
+          isActive: false,
+        };
+        try {
+          const { error } = await apiService.updateMPFData(
+            updateData,
+            sectionUpdateData[0]
+          );
+          if (error) {
+            console.error("Error updating data:", error);
+          } else {
+            const { data } = await apiService.getMPFData();
+            dispatch(saveMpfData(data));
+            dispatch(openDialog({ isDialog: false }));
+            setFormValue({});
+            setCheckedItems([]);
+          }
+        } catch (err) {
+          console.error("Unexpected error:", err);
+        } finally {
+          dispatch(openLoader(false));
         }
-      } catch (err) {
-        console.error("Unexpected error:", err);
-      } finally {
-        dispatch(openLoader(false));
+      }
+    } else {
+      dispatch(saveDialogData({ dialogData: dialogData }));
+      if (sectionUpdateData && Object.keys(sectionUpdateData).length > 0) {
+        try {
+          const { error } = await apiService.updateMPFData(
+            sectionUpdateData,
+            dialogData.id
+          );
+          if (error) {
+            console.error("Error updating data:", error);
+          } else {
+            const { data } = await apiService.getMPFData();
+            dispatch(saveMpfData(data));
+            dispatch(openDialog({ isDialog: false }));
+            setFormValue({});
+          }
+        } catch (err) {
+          console.error("Unexpected error:", err);
+        } finally {
+          dispatch(openLoader(false));
+        }
       }
     }
   };
@@ -307,6 +341,7 @@ export default function MPFDialog() {
           dispatch(saveMpfData(data));
           dispatch(openDialog({ isDialog: false }));
           setFormValue({});
+          setCheckedItems([]);
         }
       } catch (err) {
         console.error("Unexpected error:", err);
@@ -319,13 +354,19 @@ export default function MPFDialog() {
     dispatch(openLoader(true));
     if (isFormValue || checkedItems) {
       const updateData = Object.fromEntries(
-        Object.entries(formValue).map(([key, value]) => [key, parseInt(value)])
+        Object.entries(formValue).map(([key, value]) => [
+          key,
+          key === "isActive" ? value : parseInt(value),
+        ])
       );
       const sectionUpdateData = updateFormBasedSection(dialogData, updateData);
       const OPERATION = {
         create: async () => await createDataDB(formValue),
         update: async () => await updateDataDB(sectionUpdateData),
-        delete: async () => await deleteDataDB(checkedItems),
+        delete: async () =>
+          sectionName === "EarnedMoney"
+            ? await updateDataDB(checkedItems)
+            : await deleteDataDB(checkedItems),
       };
       OPERATION[operation]();
     }
@@ -368,51 +409,30 @@ export default function MPFDialog() {
   };
   const renderForm = (pageSource) => {
     const { sectionName, operation } = pageSource || {};
-    const mapperObject = {
-      [mpfKey?.LIABILITY]: {
-        create: getCreateForm(liabilityformFields),
-        update: getUpdateForm(dialogData),
-        delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
-      },
-      [mpfKey?.INVESTMENT]: {
-        create: getCreateForm(investmentformFields),
-        update: getUpdateForm(dialogData),
-        delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
-      },
-      [mpfKey?.MONEYIN]: {
-        create: getCreateForm(moneyInflowformFields),
-        update: getUpdateForm(dialogData),
-        delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
-      },
-      [mpfKey?.MONEYOUT]: {
-        create: getCreateForm(moneyOutflowformFields),
-        update: getUpdateForm(dialogData),
-        delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
-      },
-      [mpfKey?.SAVING]: {
-        create: getCreateForm(savingformFields),
-        update: getUpdateForm(dialogData),
-        delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
-      },
-      [mpfKey?.EARNEDMONEY]: {
-        create: getCreateForm(earnedMoneyformFields),
-        update: getUpdateForm(dialogData),
-        delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
-      },
-      [mpfKey?.INSURANCE]: {
-        create: getCreateForm(insuranceformFields),
-        update: getUpdateForm(dialogData),
-        delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
-      },
-      [mpfKey?.VEHICLE]: {
-        create: getCreateForm(vehicleformFields),
-        update: getUpdateForm(dialogData),
-        delete: getDeleteForm(deleteData, setCheckedItems, checkedItems),
-      },
+    const renderSection = (operation, form) => {
+      switch (operation) {
+        case "create":
+          return getCreateForm(form);
+        case "update":
+          return getUpdateForm(dialogData);
+        case "delete":
+          return getDeleteForm(deleteData, setCheckedItems, checkedItems);
+        default:
+          break;
+      }
     };
-
+    const formFieldMapper = {
+      [mpfKey?.LIABILITY]: liabilityformFields,
+      [mpfKey?.INVESTMENT]: investmentformFields,
+      [mpfKey?.MONEYIN]: moneyInflowformFields,
+      [mpfKey?.MONEYOUT]: moneyOutflowformFields,
+      [mpfKey?.SAVING]: savingformFields,
+      [mpfKey?.EARNEDMONEY]: earnedMoneyformFields,
+      [mpfKey?.INSURANCE]: insuranceformFields,
+      [mpfKey?.VEHICLE]: vehicleformFields,
+    };
     if (sectionName && operation) {
-      return mapperObject[sectionName][operation];
+      return renderSection(operation, formFieldMapper[sectionName]);
     } else {
       return null;
     }
