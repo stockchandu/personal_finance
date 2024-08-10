@@ -45,12 +45,5 @@ export const moneyRules = [
     `,
     id: 6,
   },
-  {
-    title: "Use 72 rule to check when your money will double",
-    description: `
-     For a example , on an average market gives 12% return so 72/12 = 6 years , it will take 6 years to double your money 
-    `,
-    id: 6,
-  },
 ]
 

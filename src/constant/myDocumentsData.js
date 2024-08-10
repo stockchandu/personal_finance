@@ -22,24 +22,32 @@ export const myDocumentsData = {
     },
     {
       title: "Car Insurance",
-      id: 5,
-    },
-    {
-      title: "Bullet RC",
       id: 6,
     },
     {
-      title: "Bullet Insurance",
+      title: "Car PUC Certificate",
       id: 7,
     },
     {
-      title: "HDFC Account",
+      title: "Bullet RC",
       id: 8,
     },
     {
-      title: "IDFC Account",
+      title: "Bullet Insurance",
       id: 9,
     },
+    {
+      title: "Bullet PUC Certificate",
+      id: 10,
+    },
+    {
+      title: "HDFC Account",
+      id: 11,
+    },
+    // {
+    //   title: "IDFC Account",
+    //   id: 10,
+    // },
   ],
   //   "Sudarshan Malik": [
   //     {
@@ -70,8 +78,14 @@ export const documentMapper = {
   "Chandan Kumar Malik": {
     "Aadhar Card": "chandan_kumar_malik_aadhar.pdf",
     "Pan Card": "pancard-chandankumar.pdf",
+    "Voter Card": "chandan_kumar_malik_voter_id.pdf",
+    "Driving Licence": "chandan_kumar_malik_dl.pdf",
+    "Car RC": "car_rc.pdf",
+    "Car Insurance": "car_insurance.pdf",
+    "Car PUC Certificate": "car_pollution_certificate.pdf",
     "Bullet RC": "bullect_rc.pdf",
     "Bullet Insurance": "insurance_bullet.pdf",
+    "Bullet PUC Certificate": "bullet_puc_certificate.pdf",
     "HDFC Account": "chandan_kumar_malik_hdfc_account.pdf",
   },
 };

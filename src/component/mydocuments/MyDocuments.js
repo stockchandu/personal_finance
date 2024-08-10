@@ -8,20 +8,31 @@ import {
 import Paper from "@mui/material/Paper";
 import { MpfButton } from "../common/Button";
 import { db } from "../../config/db";
+import { apiService } from "../../api/apiService";
 
 export const MyDocuments = () => {
   const typoStyle = {
     fontSize: "17px",
     fontWeight: "500",
-    // marginTop: 3,
+  };
+  const signInUser = async (email, password) => {
+    const { data, error } = await apiService.getToken(email, password);
+
+    if (error) {
+      console.error("Error during sign in:", error.message);
+      return null;
+    }
+
+    return data.session.access_token;
   };
 
   const getPdfUrl = async (name, fileName) => {
     const documentsName = documentMapper[name][fileName];
-    if(documentsName){
-        const { data, error } = await db.storage
-        .from("mpf")
-        .getPublicUrl(documentsName);
+    if (documentsName) {
+      const { data, error } = await apiService.downloadDocument(
+        "mpf_private",
+        documentsName
+      );
       if (error) {
         console.error("Error fetching file URL:", error);
         return null;
@@ -31,7 +42,6 @@ export const MyDocuments = () => {
   };
 
   const handleDownload = async (name, documents) => {
-
     const getDocumentUrl = await getPdfUrl(name, documents);
     if (getDocumentUrl) {
       const link = document.createElement("a");
@@ -55,19 +65,13 @@ export const MyDocuments = () => {
             <Paper sx={{ marginTop: 2, p: 2 }}>
               <Typography sx={typoStyle}> {key}</Typography>
               {value.map((docu) => {
-                {
-                  /* return <Typography sx={typoStyle}>{docu.title}</Typography>; */
-                }
                 return (
                   <Paper
                     sx={{
                       marginTop: 1,
-                      // marginLeft: 2,
-                      // border: "1px solid grey", // Adding a border
-                      display: "flex", // Ensuring the Box is a flex container
+                      display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
-                      // padding:1
                     }}
                     elevation={0}
                   >
