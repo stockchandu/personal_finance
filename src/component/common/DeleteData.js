@@ -17,6 +17,7 @@ export const DeleteData = ({ formData, setCheckedItems, checkedItems }) => {
     const moDeclare = ` ${section.sectionName} taken  ₹${section.outMoney} on ${section.outMoneyDate} and i received all money`;
     const miDeclare = `I have fully paid the ${section.sectionName} amount`;
     const earnedMoneyDeclare = `I left the ${section.sectionName} company`;
+    const vehicleDeclare = `I sold/transferred the ${section.sectionName} ${section.vehicleType}`;
     const insuranceDeclare = `The entire premium for ${section.sectionName} paid successfully and maturity amount ₹${section.policyMaturityAmount} received`;
     const mapperObject = {
       Liabilities: liabilityDeclare,
@@ -26,6 +27,7 @@ export const DeleteData = ({ formData, setCheckedItems, checkedItems }) => {
       "Money Outflows": moDeclare,
       Insurance: insuranceDeclare,
       EarnedMoney: earnedMoneyDeclare,
+      Vehicles: vehicleDeclare,
     };
     if (section?.section) {
       return mapperObject[section?.section];
@@ -33,7 +35,6 @@ export const DeleteData = ({ formData, setCheckedItems, checkedItems }) => {
       return "There is something went wrong";
     }
   };
-
   const handleCheckboxChange = (event, itemId) => {
     if (event.target.checked) {
       setCheckedItems((prev) => [...prev, itemId]);
@@ -48,11 +49,18 @@ export const DeleteData = ({ formData, setCheckedItems, checkedItems }) => {
           <Card variant="outlined" sx={{ marginTop: 2 }}>
             <CardContent>
               <Box display="flex" alignItems="center">
-                <Checkbox
-                  checked={checkedItems.includes(item.id)}
-                  onChange={(event) => handleCheckboxChange(event, item.id)}
-                  disabled={item.isActive ? false : true}
-                />
+                {item.isActive ? (
+                  <Checkbox
+                    checked={checkedItems.includes(item.id)}
+                    onChange={(event) => handleCheckboxChange(event, item.id)}
+                    disabled={item.isActive ? false : true}
+                  />
+                ) : (
+                  <Checkbox
+                    checked={true}
+                    disabled={item.isActive ? false : true}
+                  />
+                )}
                 <Typography sx={{ ...typoStyle, marginLeft: 1 }}>
                   {renderText(item)}
                 </Typography>

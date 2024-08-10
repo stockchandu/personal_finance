@@ -204,8 +204,16 @@ export default function MPFDialog() {
         } else {
           return formValue;
         }
-
       case "EarnedMoney":
+        if (formValue?.isActive) {
+          const isActive = formValue?.isActive;
+          return {
+            isActive,
+          };
+        } else {
+          return formValue;
+        }
+      case "Vehicles":
         if (formValue?.isActive) {
           const isActive = formValue?.isActive;
           return {
@@ -280,7 +288,10 @@ export default function MPFDialog() {
   };
 
   const updateDataDB = async (sectionUpdateData) => {
-    if (sectionName === "EarnedMoney" && operation === "delete") {
+    if (
+      sectionName === "EarnedMoney" ||
+      (sectionName === "Vehicles" && operation === "delete")
+    ) {
       if (sectionUpdateData.length > 0) {
         const updateData = {
           isActive: false,
@@ -364,7 +375,7 @@ export default function MPFDialog() {
         create: async () => await createDataDB(formValue),
         update: async () => await updateDataDB(sectionUpdateData),
         delete: async () =>
-          sectionName === "EarnedMoney"
+          sectionName === "EarnedMoney" || sectionName === "Vehicles"
             ? await updateDataDB(checkedItems)
             : await deleteDataDB(checkedItems),
       };

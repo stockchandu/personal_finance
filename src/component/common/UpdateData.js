@@ -12,6 +12,7 @@ export const UpdateData = ({ formData, setFormValue, formValue }) => {
           : ["redeem"].includes(key),
       "Money Outflows": ["outReceivedMoney", "isActive"].includes(key),
       EarnedMoney: ["isActive"].includes(key),
+      Vehicles: ["isActive"].includes(key),
     };
 
     if (mapperObject[formData?.section]) {
