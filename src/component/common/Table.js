@@ -5,18 +5,22 @@ import {
   TableCell,
   TableContainer,
   TableRow,
-  Paper
+  Paper,
 } from "@mui/material";
 
-const MPFTable = ({ data}) => {
+const MPFTable = ({ data }) => {
   return (
     <TableContainer component={Paper} elevation={0}>
       <Table>
         <TableBody>
           {data?.map((item, index) => (
-            <TableRow key={index} >
-              <TableCell>{item.header}</TableCell>
-              <TableCell>{item.value}</TableCell>
+            <TableRow key={index}>
+              <TableCell
+                style={{ display: "flex", justifyContent: "space-between"}}
+              >
+                <div>{item.header}</div>
+                <div>{item.value}</div>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -60,7 +60,7 @@ export const MpfUniversal = ({
             header: "O/S Principal + Interest",
             value: formatNumber(row.remainPrincipal),
           },
-          { header: "Rate Of Interest", value: row.rateOfInterest },
+          { header: "Rate Of Interest", value: `${row.rateOfInterest} %` },
           { header: "Total EMI", value: row.totalMonth },
           { header: "End EMI", value: row.endYear },
         ];
@@ -81,16 +81,16 @@ export const MpfUniversal = ({
       case "Money Outflows":
         return [
           { header: "Date", value: row.outMoneyDate },
-          { header: "Amount", value: row.outMoney },
-          { header: "Received Amount", value: row.outReceivedMoney },
-          { header: "Remain Amount", value: row.outRemain },
+          { header: "Amount", value: formatNumber(row.outMoney) },
+          { header: "Received Amount", value: formatNumber(row.outReceivedMoney) },
+          { header: "Remain Amount", value: formatNumber(row.outRemain) },
         ];
       case "Money Inflows":
         return [
           { header: "Date", value: row.inDate },
-          { header: "Amount", value: row.inReceiveAmount },
-          { header: "Paid", value: row.inPaidAmount },
-          { header: "Remain Amount", value: row.inRemainAmount },
+          { header: "Amount", value: formatNumber(row.inReceiveAmount) },
+          { header: "Paid", value: formatNumber(row.inPaidAmount) },
+          { header: "Remain Amount", value: formatNumber(row.inRemainAmount) },
         ];
       case "EarnedMoney":
         return [

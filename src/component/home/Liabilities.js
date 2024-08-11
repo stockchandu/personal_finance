@@ -41,28 +41,28 @@ export const Liabilities = (
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Fixed Loan Principal </Typography>
           <Typography sx={{ ...typoStyle, color: "red" }}>
-            {formatNumber(calculateLiability(mpfData, "loanPrincipal"))}
+          {formatNumber(calculateLiability(mpfData, "loanPrincipal"))}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Fixed Loan Interest </Typography>
           <Typography sx={{ ...typoStyle, color: "red" }}>
-            {formatNumber(loanInterest)}
+           {formatNumber(loanInterest)}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Principal + Interest Paid</Typography>
           <Typography sx={{ ...typoStyle, color: "green" }}>
-            {formatNumber(calculateTotalPaid(mpfData))}
+           {formatNumber(calculateTotalPaid(mpfData))}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Remain Principal + Interest</Typography>
           <Typography sx={{ ...typoStyle, color: "red" }}>
-            {formatNumber(remainPI)}
+           {formatNumber(remainPI)}
           </Typography>
         </Typography>
 

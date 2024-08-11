@@ -22,7 +22,7 @@ export const MyNetworth = ({section}) =>{
             {myNetworthTitle}
           </Typography>
           <Typography
-            sx={{ fontSize: "20px", fontWeight: "600" ,color:nwColor()}}
+            sx={{ fontSize: "18px", fontWeight: "600" ,color:nwColor()}}
           >
             {formatNumber(myNetWorth)}
           </Typography>

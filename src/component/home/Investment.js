@@ -42,27 +42,27 @@ export const Investment = (
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total Invest </Typography>
           <Typography sx={typoStyle}>
-            {formatNumber(calculateInvestment(mpfData, "investAmount"))}
+           {formatNumber(calculateInvestment(mpfData, "investAmount"))}
           </Typography>
         </Typography>
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total Current Invest</Typography>
           <Typography sx={typoStyle}>
-            {formatNumber(calculateInvestment(mpfData, "currentInvest"))}
+         {formatNumber(calculateInvestment(mpfData, "currentInvest"))}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total P/L </Typography>
           <Typography sx={{ ...typoStyle, color: colorBasedPL() }}>
-            {formatNumber(totalPL)}
+           {formatNumber(totalPL)}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total ROI </Typography>
           <Typography sx={{ ...typoStyle, color: colorBasedPL() }}>
-            {totalROI.toFixed(2)}%
+            {totalROI.toFixed(2)} %
           </Typography>
         </Typography>
 

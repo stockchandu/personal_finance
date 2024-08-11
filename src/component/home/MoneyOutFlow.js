@@ -30,21 +30,21 @@ export const MoneyOutFlow = (
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total OutFlow Amount</Typography>
           <Typography sx={{ ...typoStyle, color: "red" }}>
-            {formatNumber(calculateMO(mpfData, "outMoney"))}
+           {formatNumber(calculateMO(mpfData, "outMoney"))}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total Outflow Received </Typography>
           <Typography sx={{ ...typoStyle, color: "green" }}>
-            {formatNumber(calculateMO(mpfData, "outReceivedMoney"))}
+           {formatNumber(calculateMO(mpfData, "outReceivedMoney"))}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Remain Outflow </Typography>
           <Typography sx={{ ...typoStyle, color: "red" }}>
-            {formatNumber(remainMO)}
+           {formatNumber(remainMO)}
           </Typography>
         </Typography>
 

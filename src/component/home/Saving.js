@@ -30,21 +30,21 @@ export const Saving = (
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total Saving Amount</Typography>
           <Typography sx={{ ...typoStyle, color: "green" }}>
-            {formatNumber(calculateSaving(mpfData, "totalAmount"))}
+          {formatNumber(calculateSaving(mpfData, "totalAmount"))}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total Withdrawal Amount</Typography>
           <Typography sx={{ ...typoStyle, color: "red" }}>
-            {formatNumber(calculateSaving(mpfData, "redeem"))}
+          {formatNumber(calculateSaving(mpfData, "redeem"))}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total Remain </Typography>
           <Typography sx={{ ...typoStyle, color: "green" }}>
-            {formatNumber(remainSaving)}
+          {formatNumber(remainSaving)}
           </Typography>
         </Typography>
 
