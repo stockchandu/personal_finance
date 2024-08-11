@@ -15,9 +15,9 @@ export default function MPFTextField({
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormVal(value);
-    setFormValue(prevFormValue => ({ ...prevFormValue, [name]: value }));
+    setFormValue((prevFormValue) => ({ ...prevFormValue, [name]: value }));
   };
-  const isDisabled = operation !=="create" && disabledFields.includes(label);
+  const isDisabled = operation !== "create" && disabledFields.includes(label);
   return (
     <Grid item xs={12} md={4} sm={6}>
       <TextField

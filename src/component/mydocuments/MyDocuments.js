@@ -8,6 +8,7 @@ import {
 import Paper from "@mui/material/Paper";
 import { MpfButton } from "../common/Button";
 import { apiService } from "../../api/apiService";
+import DownloadIcon from '@mui/icons-material/Download';
 
 export const MyDocuments = () => {
   const typoStyle = {
@@ -60,6 +61,8 @@ export const MyDocuments = () => {
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
+                      backgroundColor:"#FAFAFA",
+                      padding:1
                     }}
                     elevation={0}
                   >
@@ -67,8 +70,8 @@ export const MyDocuments = () => {
                       {docu.id} - {docu.title}
                     </Typography>
                     <MpfButton
-                      label="DOWNLOAD"
-                      sx={{ backgroundColor: "#6AA84F" }}
+                      label={<DownloadIcon/>}
+                      sx={{ backgroundColor: "#2364AD" }}
                       click={() => handleDownload(key, docu.title)}
                     />
                   </Paper>

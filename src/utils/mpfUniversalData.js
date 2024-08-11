@@ -2,9 +2,13 @@ import { formatNumber } from "./formatNumber";
 export const getMpfUniversalData = (row) => {
   return {
     Liabilities: [
+      { header: "Loan Category", value:row.loanCategory },
       { header: "Principal", value: formatNumber(row.loanPrincipal) },
       { header: "EMI", value: formatNumber(row.emi) },
       { header: "Paid EMI", value: row.paidMonth },
+      { header: "EMI Date", value: `${row.emiDate} of every month` },
+      { header: "Previous EMI Date", value: row.prevEMIDate },
+      { header: "Next EMI Date", value: row.nextEMIDate },
       { header: "O/S EMI", value: row.remainMonth },
       { header: "Total Loan Paid", value: formatNumber(row.totalLoanPaid) },
       { header: "Total Interest", value: formatNumber(row.totalInterest) },

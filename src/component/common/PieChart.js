@@ -40,7 +40,7 @@ export const MpfPieChart = ({ section }) => {
             fill: "#ffff",
           }}
           label={(props) => `${props.dataEntry.title} `}
-          style={{ width: "600px", height: "200px" }}
+          style={{ height: "150px" }}
         />
       </Paper>
     </Grid>

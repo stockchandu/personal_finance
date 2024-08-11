@@ -31,7 +31,7 @@ export default function MPFAccordion({ children, title, edit, isActive }) {
           }}
         >
           <Typography sx={{ fontSize: "1.2rem", fontWeight: "600" }}>
-            {title && title.toUpperCase()}
+          { title}
           </Typography>
 
           {isActive ? (
@@ -41,7 +41,7 @@ export default function MPFAccordion({ children, title, edit, isActive }) {
                 color: "#00D26A",
               }}
             >
-              Active🟢
+              Active
             </Typography>
           ) : (
             <Typography
@@ -50,7 +50,7 @@ export default function MPFAccordion({ children, title, edit, isActive }) {
                 color: "#F8312F",
               }}
             >
-              Closed🔴
+              Closed
             </Typography>
           )}
         </AccordionSummary>

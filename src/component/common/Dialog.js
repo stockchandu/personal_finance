@@ -78,7 +78,7 @@ export default function MPFDialog() {
       sectionName === "Vehicles" ||
       sectionName === "Liabilities" ||
       sectionName === "Investment" ||
-      sectionName === "Savings(PF+Bank)" || 
+      sectionName === "Savings(PF+Bank)" ||
       sectionName === "Insurance"
     );
   };
@@ -503,7 +503,7 @@ export default function MPFDialog() {
         </DialogContent>
         <DialogActions>
           <MpfButton
-            label={operation}
+            label={isSection() ? "Close" : operation}
             sx={{ backgroundColor: btnBgColor(operation) }}
             click={handleEdit}
             disable={isBtnDisable}

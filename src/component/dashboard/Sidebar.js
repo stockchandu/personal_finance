@@ -19,7 +19,7 @@ import Divider from "@mui/material/Divider";
 export const Sidebar = ({handleNavigation}) => {
   const sideMainList = [
     {
-      name: "Home",
+      name: "Overview",
       id: 1,
       icon: <HomeIcon />,
       path: "/",
@@ -47,7 +47,7 @@ export const Sidebar = ({handleNavigation}) => {
       bg: color.GREEN,
     },
     {
-      name: "Savings(PF+Bank)",
+      name: "Savings",
       id: 4,
       icon: <SavingsIcon />,
       path: "/saving",
@@ -64,7 +64,7 @@ export const Sidebar = ({handleNavigation}) => {
 
   const sideSubList = [
     {
-      name: "Total Earned Money",
+      name: "Earned Money",
       id: 2,
       icon: <AttachMoneyIcon />,
       path: "/earned-money",

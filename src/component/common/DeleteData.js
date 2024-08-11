@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import { formatNumber } from "../../utils/formatNumber";
 
 export const DeleteData = ({ formData, setCheckedItems, checkedItems }) => {
   const typoStyle = {
@@ -14,8 +15,8 @@ export const DeleteData = ({ formData, setCheckedItems, checkedItems }) => {
     const liabilityDeclare = `I have fully paid the ${section.sectionName} loan amount`;
     const savingDeclare = `I have widthdrawed full amount of ${section.sectionName}`;
     const investDeclare = `I have redeem  full amount of ${section.sectionName} investment fund`;
-    const moDeclare = ` ${section.sectionName} taken  ₹${section.outMoney} on ${section.outMoneyDate} and i received all money`;
-    const miDeclare = `I have fully paid the ${section.sectionName} amount`;
+    const moDeclare = ` ${section.sectionName} taken  ${formatNumber(section.outMoney)} on ${section.outMoneyDate} and i received all money`;
+    const miDeclare = `I have fully paid the ${formatNumber(section.inReceiveAmount)} amount to ${section.sectionName}`;
     const earnedMoneyDeclare = `I left the ${section.sectionName} company`;
     const vehicleDeclare = `I sold/transferred the ${section.sectionName} ${section.vehicleType}`;
     const insuranceDeclare = `The entire premium for ${section.sectionName} paid successfully and maturity amount ₹${section.policyMaturityAmount} received`;

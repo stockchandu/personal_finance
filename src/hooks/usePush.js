@@ -4,7 +4,7 @@ export const usePush = () => {
   const navigation = useNavigate();
   const goToPath = (path) => {
     switch (path) {
-      case "Home":
+      case "Overview":
         navigation("/");
         break;
       case "Liabilities":
@@ -13,7 +13,7 @@ export const usePush = () => {
       case "Investment":
         navigation("/invest");
         break;
-      case "Savings(PF+Bank)":
+      case "Savings":
         navigation("/saving");
         break;
       case "Money Outflows":
@@ -22,7 +22,7 @@ export const usePush = () => {
       case "Money Inflows":
         navigation("/money-in");
         break;
-      case "Total Earned Money":
+      case "Earned Money":
         navigation("/earned-money");
         break;
       case "Insurance":
