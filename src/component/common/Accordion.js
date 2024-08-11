@@ -41,7 +41,7 @@ export default function MPFAccordion({ children, title, edit, isActive }) {
                 color: "#6AA84F",
               }}
             >
-              Active
+              Active🟢
             </Typography>
           ) : (
             <Typography
@@ -50,7 +50,7 @@ export default function MPFAccordion({ children, title, edit, isActive }) {
                 color: "#D12F2E",
               }}
             >
-              Closed
+              Closed🔴
             </Typography>
           )}
         </AccordionSummary>
