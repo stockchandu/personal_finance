@@ -9,7 +9,7 @@ export const UpdateData = ({ formData, setFormValue, formValue }) => {
       "Savings(PF+Bank)":
         formData?.sectionName === "PF"
           ? ["redeem", "monthlyPFShare", "isActive"].includes(key)
-          : ["redeem"].includes(key),
+          : ["redeem" , "isActive"].includes(key),
       "Money Outflows": ["outReceivedMoney", "isActive"].includes(key),
       EarnedMoney: ["isActive"].includes(key),
       Vehicles: ["isActive"].includes(key),

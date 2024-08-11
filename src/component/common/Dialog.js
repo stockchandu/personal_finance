@@ -72,6 +72,17 @@ export default function MPFDialog() {
     setIsBtnDisable(isBtnDisable);
   }, [formValue, isCheckedValue]);
 
+  const isSection = () => {
+    return (
+      sectionName === "EarnedMoney" ||
+      sectionName === "Vehicles" ||
+      sectionName === "Liabilities" ||
+      sectionName === "Investment" ||
+      sectionName === "Savings(PF+Bank)" || 
+      sectionName === "Insurance"
+    );
+  };
+
   const updateFormBasedSection = (data, formValue) => {
     // TODO : think how to handle mutiple edit values Object.entries([])
     switch (data?.section) {
@@ -236,9 +247,8 @@ export default function MPFDialog() {
         } else {
           return formValue;
         }
-
       default:
-        break;
+        return formValue;
     }
   };
   // TODO : check why 2 column created in DB
@@ -288,10 +298,7 @@ export default function MPFDialog() {
   };
 
   const updateDataDB = async (sectionUpdateData) => {
-    if (
-      sectionName === "EarnedMoney" ||
-      (sectionName === "Vehicles" && operation === "delete")
-    ) {
+    if (isSection() && operation === "delete") {
       if (sectionUpdateData.length > 0) {
         const updateData = {
           isActive: false,
@@ -361,6 +368,7 @@ export default function MPFDialog() {
       }
     }
   };
+
   const handleEdit = async () => {
     dispatch(openLoader(true));
     if (isFormValue || checkedItems) {
@@ -375,7 +383,7 @@ export default function MPFDialog() {
         create: async () => await createDataDB(formValue),
         update: async () => await updateDataDB(sectionUpdateData),
         delete: async () =>
-          sectionName === "EarnedMoney" || sectionName === "Vehicles"
+          isSection()
             ? await updateDataDB(checkedItems)
             : await deleteDataDB(checkedItems),
       };
