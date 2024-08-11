@@ -1,6 +1,7 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
+import { mpfKey } from "../../constant/global";
 export const Liabilities = (
   section,
   typoStyle,
@@ -13,7 +14,7 @@ export const Liabilities = (
   };
 
   const getLiabilityData=(data)=> data?.filter(
-    (item) => item.section === "Liabilities"
+    (item) => item.section === mpfKey.LIABILITY
   );
   const calculateLiability = (data, key) => {
     const filterLiability = getLiabilityData(data)

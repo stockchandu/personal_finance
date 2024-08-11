@@ -11,9 +11,10 @@ import { MoneyInflow } from "./MoneyInFlow";
 import { formatNumber } from "../../utils/formatNumber";
 import { checkData } from "../../utils/checkData";
 import { typoStyle } from "./style/home";
-import { sortHomeTiles } from "../../constant/global";
+import { mpfKey, sortHomeTiles } from "../../constant/global";
 import { MpfPieChart } from "../common/PieChart";
 import { HomeSkeleton } from "../common/HomeSkeleton";
+
 
 export const Home = () => {
   const { mpfData, isMPFData } = useMPFData();
@@ -24,15 +25,15 @@ export const Home = () => {
 
   const renderSection = (section, mpfData) => {
     switch (section.sectionName) {
-      case "Liabilities":
+      case mpfKey.LIABILITY:
         return Liabilities(section, typoStyle, formatNumber, mpfData);
-      case "Investment":
+      case mpfKey.INVESTMENT:
         return Investment(section, typoStyle, formatNumber, mpfData);
-      case "Savings(PF+Bank)":
+      case mpfKey.SAVING:
         return Saving(section, typoStyle, formatNumber, mpfData);
-      case "Money Outflows":
+      case mpfKey.MONEYOUT:
         return MoneyOutFlow(section, typoStyle, formatNumber, mpfData);
-      case "Money Inflows":
+      case mpfKey.MONEYIN:
         return MoneyInflow(section, typoStyle, formatNumber, mpfData);
       default:
         break;

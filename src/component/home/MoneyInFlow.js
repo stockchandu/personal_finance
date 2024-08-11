@@ -1,7 +1,7 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-
+import { mpfKey } from "../../constant/global";
 export const MoneyInflow = (
   section,
   typoStyle,
@@ -14,7 +14,7 @@ export const MoneyInflow = (
   };
 
   const getMIData = (data) =>
-    data?.filter((item) => item.section === "Money Inflows");
+    data?.filter((item) => item.section === mpfKey.MONEYIN);
   const calculateMI = (data, key) => {
     const filterMI = getMIData(data);
     return filterMI.reduce((init, item) => init + item[key], 0);

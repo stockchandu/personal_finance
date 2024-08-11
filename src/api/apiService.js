@@ -1,7 +1,12 @@
-import { db } from "../config/db";
+import { db } from "./db";
 const tableName = process.env.REACT_APP_PERSONAL_FINANCE_TABLE_NAME;
-
+const masterTableName = process.env.REACT_APP_MASTERKEY_TABLE_NAME;
 export const apiService = {
+  getMasterKey : async(masterKey)=>await db
+  .from(masterTableName)
+  .select("*")
+  .eq(masterTableName, masterKey)
+  .single(),
   getToken: async (email, password) =>
     await db.auth.signInWithPassword({
       email: email,

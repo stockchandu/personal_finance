@@ -1,6 +1,7 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
+import { mpfKey } from "../../constant/global";
 
 export const Investment = (
   section,
@@ -13,7 +14,7 @@ export const Investment = (
     justifyContent: "space-between",
   };
   const getInvestData = (data) =>
-    data?.filter((item) => item.section === "Investment");
+    data?.filter((item) => item.section === mpfKey.INVESTMENT);
   const calculateInvestment = (data, key) => {
     const filterInvest = getInvestData(data);
     return filterInvest.reduce((init, item) => init + item[key], 0);

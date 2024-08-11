@@ -1,6 +1,8 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
+import { mpfKey } from "../../constant/global";
+
 export const Saving = (
   section,
   typoStyle,
@@ -12,7 +14,7 @@ export const Saving = (
     justifyContent: "space-between",
   };
   const getSavingData = (data) =>
-    data?.filter((item) => item.section === "Savings(PF+Bank)");
+    data?.filter((item) => item.section === mpfKey.SAVING);
   const calculateSaving = (data, key) => {
     const filterSaving = getSavingData(data);
     return filterSaving.reduce((init, item) => init + item[key], 0);

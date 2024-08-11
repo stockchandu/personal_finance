@@ -1,7 +1,7 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-
+import { mpfKey } from "../../constant/global";
 export const MoneyOutFlow = (
   section,
   typoStyle,
@@ -13,7 +13,7 @@ export const MoneyOutFlow = (
     justifyContent: "space-between",
   };
   const getMOData = (data) =>
-    data?.filter((item) => item.section === "Money Outflows");
+    data?.filter((item) => item.section === mpfKey.MONEYOUT);
   const calculateMO = (data, key) => {
     const filterMO = getMOData(data);
     return filterMO.reduce((init, item) => init + item[key], 0);

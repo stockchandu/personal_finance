@@ -7,23 +7,12 @@ import {
 } from "../../constant/myDocumentsData";
 import Paper from "@mui/material/Paper";
 import { MpfButton } from "../common/Button";
-import { db } from "../../config/db";
 import { apiService } from "../../api/apiService";
 
 export const MyDocuments = () => {
   const typoStyle = {
     fontSize: "17px",
     fontWeight: "500",
-  };
-  const signInUser = async (email, password) => {
-    const { data, error } = await apiService.getToken(email, password);
-
-    if (error) {
-      console.error("Error during sign in:", error.message);
-      return null;
-    }
-
-    return data.session.access_token;
   };
 
   const getPdfUrl = async (name, fileName) => {
@@ -34,7 +23,6 @@ export const MyDocuments = () => {
         documentsName
       );
       if (error) {
-        console.error("Error fetching file URL:", error);
         return null;
       }
       return data.publicUrl;

@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
@@ -12,29 +10,25 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { login } from "../../store/login/loginSlicer";
 import { useDispatch } from "react-redux";
-import { db } from "../../config/db";
 import { openLoader } from "../../store/loader/loaderSlicer";
 import { useNavigate } from "react-router-dom";
 import { encryptData } from "../../utils/encrypt";
-
+import { apiService } from "../../api/apiService";
+const secretKey = process.env.REACT_APP_SECRET_KEY;
 const defaultTheme = createTheme();
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isMasterErr, setIsMasterErr] = useState(false);
-
   const getMasterKey = async (masterKey) => {
     try {
-      const tableName = process.env.REACT_APP_MASTERKEY_TABLE_NAME;
-      const secretKey = process.env.REACT_APP_SECRET_KEY
-      const { data: masterKeyData, error: masterKeyError } = await db
-        .from(tableName)
-        .select("*")
-        .eq(tableName, masterKey)
-        .single();
-
+      const { data: masterKeyData, error: masterKeyError } =
+        await apiService.getMasterKey(masterKey);
       if (masterKeyData && Object.keys(masterKeyData).length > 0) {
-        const encryptValue = encryptData(JSON.stringify(masterKeyData) , secretKey)
+        const encryptValue = encryptData(
+          JSON.stringify(masterKeyData),
+          secretKey
+        );
         dispatch(login({ isAuthenticated: true, userInfo: encryptValue }));
         dispatch(openLoader(false));
         navigate("/");
@@ -74,9 +68,6 @@ export default function Login() {
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Please enter the MPF master key
-          </Typography>
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -88,19 +79,25 @@ export default function Login() {
               required
               fullWidth
               name="masterkey"
-              label="master key"
+              label="Please enter the MPF master key"
               type="password"
               id="password"
               autoComplete="current-password"
             />
 
-            <Button type="submit" fullWidth variant="contained">
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                backgroundColor: "#2364AD",
+                "&:hover": {
+                  backgroundColor: "#2364AD",
+                },
+              }}
+            >
               SUBMIT
             </Button>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remind me"
-            />
             {isMasterErr && (
               <Typography component="h1" variant="h5" sx={{ color: "red" }}>
                 Please enter valid master key

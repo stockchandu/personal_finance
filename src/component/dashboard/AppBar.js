@@ -3,6 +3,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { AppBar } from "../common/AppBar";
 import { MpfButton } from "../common/Button";
+import { color } from "../../constant/global";
 
 export const MPFAppBar = ({isAuthenticated,handleLogout}) => {
   return (
@@ -29,7 +30,7 @@ export const MPFAppBar = ({isAuthenticated,handleLogout}) => {
           <MpfButton
             label="Logout"
             disable={false}
-            sx={{ backgroundColor: "#2364AD" }}
+            sx={{ backgroundColor: color.RED }}
             click={() => {
               handleLogout();
             }}
