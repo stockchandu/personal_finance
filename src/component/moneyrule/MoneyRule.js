@@ -14,10 +14,20 @@ const boxStyle = {
 };
 
 const listStyle = {
-  listStyleType: "disc",
-  display: "list-item",
-  fontWeight: "400",
-};
+  display: "flex",
+  alignItems: "flex-start", 
+  paddingLeft: 0,
+  marginLeft: 2,
+}
+
+const listBoxStyle = {
+  width: "8px", 
+  height: "8px", 
+  borderRadius: "50%", 
+  backgroundColor: "black", 
+  marginRight: "8px",
+  marginTop: "6px", 
+}
 export const MoneyRule = () => {
   return (
     <>
@@ -33,8 +43,20 @@ export const MoneyRule = () => {
               </Typography>
               {Object.keys(rule?.description).map((key) => {
                 return (
-                  <ListItem key={key} sx={listStyle}>
-                    {rule?.description[key]}
+                  <ListItem
+                    key={key}
+                    sx={listStyle}
+                  >
+                    <Box
+                      sx={listBoxStyle}
+                    />
+                    <Box
+                      sx={{
+                        flexGrow: 1,
+                      }}
+                    >
+                      {rule?.description[key]}
+                    </Box>
                   </ListItem>
                 );
               })}
