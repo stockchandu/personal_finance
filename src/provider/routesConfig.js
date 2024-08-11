@@ -7,6 +7,7 @@ import { MoneyRule } from "../component/moneyrule/MoneyRule";
 import { MpfUniversal } from "../component/mpfuniversal/MpfUniversal";
 import { mpfKey } from "../constant/global";
 import { MyDocuments } from "../component/mydocuments/MyDocuments";
+import ErrorLogSystem from "../component/logs/ErrorLog";
 
 
 const individualRoutes = [
@@ -26,14 +27,14 @@ const individualRoutes = [
       </RouteGuard>
     ),
   },
-  // {
-  //   path: "vehicles",
-  //   element: (
-  //     <RouteGuard>
-  //       <h1>vehicles</h1>
-  //     </RouteGuard>
-  //   ),
-  // },
+  {
+    path: "logs",
+    element: (
+      <RouteGuard>
+        <ErrorLogSystem/>
+      </RouteGuard>
+    ),
+  },
   {
     path: "documents",
     element: (
