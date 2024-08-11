@@ -9,7 +9,8 @@ import loginSlicer from "./login/loginSlicer";
 const persistConfig = {
   key : 'root',
   storage,
-  whitelist: ['mpfData','loginData'],
+  // 'mpfData',
+  whitelist: ['loginData'],
   blacklist:['dialogData']
 }
 

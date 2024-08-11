@@ -5,7 +5,6 @@ import { usePush } from "../../hooks/usePush";
 import { saveMpfData } from "../../store/mpfData/mpfSlicer";
 import { useDispatch } from "react-redux";
 import MPFDialog from "../common/Dialog";
-import { openLoader } from "../../store/loader/loaderSlicer";
 import { useLoginData } from "../../hooks/useSelector";
 import { useNavigate } from "react-router-dom";
 import { apiService } from "../../api/apiService";
@@ -23,7 +22,6 @@ export const Dashboard = () => {
   };
 
   useEffect(() => {
-    dispatch(openLoader(true));
     getAllMPFData();
   }, []);
 
@@ -36,9 +34,7 @@ export const Dashboard = () => {
       }
     } catch (err) {
       console.error("Unexpected error:");
-    } finally {
-      dispatch(openLoader(false));
-    }
+    } 
   };
 
   const handleLogout = () => {

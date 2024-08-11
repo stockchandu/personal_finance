@@ -8,12 +8,12 @@ import { Investment } from "./Investment";
 import { Saving } from "./Saving";
 import { MoneyOutFlow } from "./MoneyOutFlow";
 import { MoneyInflow } from "./MoneyInFlow";
-import { Typography } from "@mui/material";
 import { formatNumber } from "../../utils/formatNumber";
 import { checkData } from "../../utils/checkData";
 import { typoStyle } from "./style/home";
 import { sortHomeTiles } from "../../constant/global";
 import { MpfPieChart } from "../common/PieChart";
+import { HomeSkeleton } from "../common/HomeSkeleton";
 
 export const Home = () => {
   const { mpfData, isMPFData } = useMPFData();
@@ -22,56 +22,36 @@ export const Home = () => {
     navigation(path);
   };
 
-  const renderSection = (section,mpfData) => {
+  const renderSection = (section, mpfData) => {
     switch (section.sectionName) {
       case "Liabilities":
-        return Liabilities(
-          section,
-          typoStyle,
-          formatNumber,
-          mpfData
-        );
+        return Liabilities(section, typoStyle, formatNumber, mpfData);
       case "Investment":
-        return Investment(
-          section,
-          typoStyle,
-          formatNumber,
-          mpfData
-        );
+        return Investment(section, typoStyle, formatNumber, mpfData);
       case "Savings(PF+Bank)":
-        return Saving(
-          section,
-          typoStyle,
-          formatNumber,
-          mpfData
-        );
+        return Saving(section, typoStyle, formatNumber, mpfData);
       case "Money Outflows":
-        return MoneyOutFlow(
-          section,
-          typoStyle,
-          formatNumber,
-          mpfData
-        );
+        return MoneyOutFlow(section, typoStyle, formatNumber, mpfData);
       case "Money Inflows":
-        return MoneyInflow(
-          section,
-          typoStyle,
-          formatNumber,
-          mpfData
-        );
+        return MoneyInflow(section, typoStyle, formatNumber, mpfData);
       default:
         break;
     }
   };
 
-  const sortedSection = checkData(mpfData) && [...mpfData].sort((a, b) => {
-    return sortHomeTiles.indexOf(a.sectionName) - sortHomeTiles.indexOf(b.sectionName);
-  });
+  const sortedSection =
+    checkData(mpfData) &&
+    [...mpfData].sort((a, b) => {
+      return (
+        sortHomeTiles.indexOf(a.sectionName) -
+        sortHomeTiles.indexOf(b.sectionName)
+      );
+    });
 
-  const netWorthDetailsTile = () => {
+  const sectionsTile = () => {
     return (
       <>
-        <MpfPieChart section={mpfData}/>
+        <MpfPieChart section={mpfData} />
         <Grid container spacing={2}>
           {sortedSection.map((section) => {
             if (section.sectionParent)
@@ -88,7 +68,7 @@ export const Home = () => {
                     }}
                     sx={{
                       "&:hover": {
-                        cursor: "pointer", 
+                        cursor: "pointer",
                       },
                     }}
                   >
@@ -100,7 +80,7 @@ export const Home = () => {
                         height: 350,
                       }}
                     >
-                      {renderSection(section , mpfData)}
+                      {renderSection(section, mpfData)}
                     </Paper>
                   </Grid>
                 </>
@@ -110,29 +90,5 @@ export const Home = () => {
       </>
     );
   };
-
-  const uploadError = () => {
-    return (
-      <Grid
-        item
-        xs={12}
-        md={4}
-        lg={4}
-        sx={{
-          p: 2,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: 290,
-        }}
-      >
-        <Typography sx={{ fontSize: "24px", fontWeight: "500" }}>
-          Something Went Wrong ! . Please Upload Excel File 
-          , Refresh Page
-        </Typography>
-      </Grid>
-    );
-  };
-
-  return <>{isMPFData ? netWorthDetailsTile() : uploadError()}</>;
+  return <>{isMPFData ? sectionsTile() : <HomeSkeleton/>}</>;
 };

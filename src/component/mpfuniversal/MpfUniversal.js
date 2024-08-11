@@ -8,6 +8,7 @@ import { AddRemove } from "../common/AddRemove";
 import { StickyBox } from "../common/StickyBox";
 import Box from "@mui/material/Box";
 import { formatNumber } from "../../utils/formatNumber";
+import { MpfUniversalSkeleton } from "../common/MpfUniversalSkeleton";
 
 export const MpfUniversal = ({
   sectionKey,
@@ -126,7 +127,10 @@ export const MpfUniversal = ({
           { header: "Date Of Purchased", value: row.vehiclePurchasedDate },
           { header: "Type", value: row.vehicleType },
           { header: "Owner Name", value: row.vehicleOwnerName },
-          { header: "Purchased Value", value: formatNumber(row.vehiclePurchasedValue) },
+          {
+            header: "Purchased Value",
+            value: formatNumber(row.vehiclePurchasedValue),
+          },
           { header: "No Of Years ", value: row.vehicleYears },
           { header: "Registration Number", value: row.vehicleRCNumber },
           { header: "Owner Sno", value: row.vehicleOwnerNo },
@@ -142,7 +146,10 @@ export const MpfUniversal = ({
             header: "PUC Certificate Valid Upto",
             value: row.vehiclePUCValid,
           },
-          { header: "Fitness Certficate Valid Upto", value: row.vehicleFitnessValid },
+          {
+            header: "Fitness Certficate Valid Upto",
+            value: row.vehicleFitnessValid,
+          },
         ];
       default:
         console.warn(`Unknown section: ${name}`);
@@ -152,35 +159,41 @@ export const MpfUniversal = ({
 
   return (
     <>
-      <StickyBox>
-        <AddRemove
-          label={{ add: addLabel, remove: removeLabel }}
-          data={sectionData}
-          addClk={() => {
-            handleAdd(sectionData);
-          }}
-          removeClk={() => {
-            handleRemove(sectionData);
-          }}
-          addSX={{ backgroundColor: bgColor.addBG }}
-          removeSX={{ marginLeft: 1, backgroundColor: bgColor.removeBG }}
-        />
-      </StickyBox>
-      <Box sx={{ marginTop: 8 }}>
-        {isMPFData &&
-          sectionData.map((data) => {
-            return (
-              <MPFAccordion
-                title={data.sectionName}
-                edit={() => handleUpdate(data)}
-                key={data?.id}
-                isActive={data.isActive}
-              >
-                <MPFTable data={getRowBySection(data, sectionKey)} />
-              </MPFAccordion>
-            );
-          })}
-      </Box>
+      {!isMPFData ? (
+        <MpfUniversalSkeleton value={1}/>
+      ) : (
+        <>
+          <StickyBox>
+            <AddRemove
+              label={{ add: addLabel, remove: removeLabel }}
+              data={sectionData}
+              addClk={() => {
+                handleAdd(sectionData);
+              }}
+              removeClk={() => {
+                handleRemove(sectionData);
+              }}
+              addSX={{ backgroundColor: bgColor.addBG }}
+              removeSX={{ marginLeft: 1, backgroundColor: bgColor.removeBG }}
+            />
+          </StickyBox>
+          <Box sx={{ marginTop: 8 }}>
+            {isMPFData &&
+              sectionData.map((data) => {
+                return (
+                  <MPFAccordion
+                    title={data.sectionName}
+                    edit={() => handleUpdate(data)}
+                    key={data?.id}
+                    isActive={data.isActive}
+                  >
+                    <MPFTable data={getRowBySection(data, sectionKey)} />
+                  </MPFAccordion>
+                );
+              })}
+          </Box>
+        </>
+      )}
     </>
   );
 };
