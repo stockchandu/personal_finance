@@ -38,7 +38,7 @@ export default function MPFAccordion({ children, title, edit, isActive }) {
             <Typography
               sx={{
                 fontWeight: "600",
-                color: "#6AA84F",
+                color: "#00D26A",
               }}
             >
               Active🟢
@@ -47,7 +47,7 @@ export default function MPFAccordion({ children, title, edit, isActive }) {
             <Typography
               sx={{
                 fontWeight: "600",
-                color: "#D12F2E",
+                color: "#F8312F",
               }}
             >
               Closed🔴
