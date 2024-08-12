@@ -2,6 +2,8 @@ import { removeFields } from "../../constant/global";
 import MPFTextField from "./TextField";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 export const UpdateData = ({ formData, setFormValue, formValue }) => {
   const checkNullValue = (key) => {
@@ -33,17 +35,23 @@ export const UpdateData = ({ formData, setFormValue, formValue }) => {
               if (key === "isActive") {
                 return (
                   <Grid item xs={12} md={4} sm={6}>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      fullWidth
-                      value={formValue.isActive ?? value}
-                      onChange={(e) => setFormValue({...formValue , [key]:e.target.value})}
-                      name="isActive"
-                    >
-                      <MenuItem value={true}>Active</MenuItem>
-                      <MenuItem value={false}>Closed</MenuItem>
-                    </Select>
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">Status</InputLabel>
+                      <Select
+                        id="outlined-basic"
+                        variant="outlined"
+                        fullWidth
+                        value={formValue.isActive ?? value}
+                        onChange={(e) =>
+                          setFormValue({ ...formValue, [key]: e.target.value })
+                        }
+                        name="isActive"
+                        label="Status"
+                      >
+                        <MenuItem value={true}>Active</MenuItem>
+                        <MenuItem value={false}>Closed</MenuItem>
+                      </Select>
+                    </FormControl>
                   </Grid>
                 );
               }

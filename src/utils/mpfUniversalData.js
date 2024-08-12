@@ -1,14 +1,23 @@
 import { formatNumber } from "./formatNumber";
+import { getInstallmentDates } from "./getInstallmentDate";
+
+const getFormattedDate = (date) => {
+  if(date){
+    const [day, month, year] =  date.split("/");
+    const formattedDate = new Date(`${year}-${month}-${day}`);
+    return new Date() > formattedDate;
+  }
+};
 export const getMpfUniversalData = (row) => {
   return {
     Liabilities: [
-      { header: "Loan Category", value:row.loanCategory },
+      { header: "Loan Category", value: row.loanCategory },
       { header: "Principal", value: formatNumber(row.loanPrincipal) },
       { header: "EMI", value: formatNumber(row.emi) },
       { header: "Paid EMI", value: row.paidMonth },
       { header: "EMI Date", value: `${row.emiDate} of every month` },
-      { header: "Previous EMI Date", value: row.prevEMIDate },
-      { header: "Next EMI Date", value: row.nextEMIDate },
+      { header: "Current EMI Date", value: getInstallmentDates(row.emiDate).prevDate },
+      { header: "Next EMI Date", value: getInstallmentDates(row.emiDate).nextDate },
       { header: "O/S EMI", value: row.remainMonth },
       { header: "Total Loan Paid", value: formatNumber(row.totalLoanPaid) },
       { header: "Total Interest", value: formatNumber(row.totalInterest) },
@@ -24,7 +33,11 @@ export const getMpfUniversalData = (row) => {
       { header: "Date Of Investment", value: row.year },
       { header: "Invest Amount", value: formatNumber(row.investAmount) },
       { header: "Current Invest", value: formatNumber(row.currentInvest) },
-      { header: "Profit", value: formatNumber(row.profit) },
+      {
+        header: "P/L",
+        value: formatNumber(row.profit),
+        color: row.currentInvest > row.investAmount ? "green" : "red",
+      },
       { header: "Redeem", value: formatNumber(row.investRedeem) },
     ],
     "Savings(PF+Bank)": [
@@ -58,6 +71,8 @@ export const getMpfUniversalData = (row) => {
       { header: "Date", value: row.insuranceDate },
       { header: "Policy Id", value: row.policyNumber },
       { header: "Paid Month", value: row.policyPaidMonth },
+      { header: "Current Installment Date", value: getInstallmentDates(row.policyInstallmentDate).prevDate },
+      { header: "Next Installment Date", value: getInstallmentDates(row.policyInstallmentDate).nextDate },
       { header: "Remain Policy Month", value: row.remainPolicyMonth },
       { header: "Total Policy Month", value: row.totalPolicyMonth },
       {
@@ -86,7 +101,11 @@ export const getMpfUniversalData = (row) => {
       { header: "Chasis Number", value: row.chasisNumber },
       { header: "Engine Number", value: row.engineNumber },
       { header: "Insurance Name", value: row.vehicleInsuranceName },
-      { header: "Insurance Valid Upto", value: row.vehicleInsuranceValid },
+      {
+        header: "Insurance Valid Upto",
+        value: row.vehicleInsuranceValid,
+        isExpiry: (() => getFormattedDate(row.vehicleInsuranceValid))(),
+      },
       {
         header: "PUC Certificate Number",
         value: row.vehiclePUCNumber,
@@ -94,10 +113,12 @@ export const getMpfUniversalData = (row) => {
       {
         header: "PUC Certificate Valid Upto",
         value: row.vehiclePUCValid,
+        isExpiry: (() => getFormattedDate(row.vehiclePUCValid))(),
       },
       {
         header: "Fitness Certficate Valid Upto",
         value: row.vehicleFitnessValid,
+        isExpiry: (() => getFormattedDate(row.vehicleFitnessValid))(),
       },
     ],
   };

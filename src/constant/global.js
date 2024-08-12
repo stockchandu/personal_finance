@@ -70,7 +70,10 @@ export const disabledFields = [
   "vehiclePurchasedDate",
   "engineNumber",
   "chasisNumber",
-  "vehicleOwnerName"
+  "vehicleOwnerName",
+  "loanCategory",
+  "emiDate",
+  "nextEMIDate"
 ];
 
 // Textfiled remove
