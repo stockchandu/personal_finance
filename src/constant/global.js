@@ -73,7 +73,12 @@ export const disabledFields = [
   "vehicleOwnerName",
   "loanCategory",
   "emiDate",
-  "nextEMIDate"
+  "nextEMIDate",
+  "companyJoinDate",
+  "totalEarn",
+  "policyInstallmentDate",
+  "startEMIDate",
+  "totalServiceMonth"
 ];
 
 // Textfiled remove

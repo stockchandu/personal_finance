@@ -17,7 +17,12 @@ export default function MPFTextField({
     setFormVal(value);
     setFormValue((prevFormValue) => ({ ...prevFormValue, [name]: value }));
   };
-  const isDisabled = operation !== "create" && disabledFields.includes(label);
+
+  const fields =
+    label === "existDate" && value !== "continue"
+      ? [...disabledFields, "existDate"]
+      : disabledFields;
+  const isDisabled = operation !== "create" && fields.includes(label);
   return (
     <Grid item xs={12} md={4} sm={6}>
       <TextField
