@@ -80,7 +80,7 @@ export const MpfUniversal = ({
               label={{ add: addLabel, remove: removeLabel }}
               data={sectionData}
               addClk={() => {
-                handleAdd(sectionData);
+                handleAdd();
               }}
               removeClk={() => {
                 handleRemove(sectionData);

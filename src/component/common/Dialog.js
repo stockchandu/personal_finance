@@ -47,8 +47,8 @@ export default function MPFDialog() {
   const { isDialog, dialogData, pageSource, deleteData } = useDialogData();
   const [formValue, setFormValue] = useState({});
   const [section, setSection] = useState({});
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const themeResponsive = useTheme();
+  const fullScreen = useMediaQuery(themeResponsive.breakpoints.down("sm"));
   const isFormValue = formValue && Object.keys(formValue).length > 0;
   const { sectionName, operation } = pageSource || {};
   const [checkedItems, setCheckedItems] = useState([]);
@@ -343,7 +343,7 @@ export default function MPFDialog() {
     }
   };
 
-  const handleEdit = async () => {
+  const handleEdit =  () => {
     dispatch(openLoader(true));
     if (isFormValue || checkedItems) {
       const updateData = Object.fromEntries(

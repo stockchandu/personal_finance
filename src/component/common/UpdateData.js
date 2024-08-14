@@ -34,7 +34,7 @@ export const UpdateData = ({ formData, setFormValue, formValue }) => {
             if (value || checkNullValue(key)) {
               if (key === "isActive") {
                 return (
-                  <Grid item xs={12} md={4} sm={6}>
+                  <Grid item xs={12} md={4} sm={6} key={value}>
                     <FormControl fullWidth>
                       <InputLabel id="demo-simple-select-label">Status</InputLabel>
                       <Select

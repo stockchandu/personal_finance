@@ -37,7 +37,7 @@ export const MoneyRule = () => {
       <Box sx={boxStyle}>
         {moneyRules?.map((rule) => {
           return (
-            <Box sx={{ marginTop: 1, p: 1 }}>
+            <Box sx={{ marginTop: 1, p: 1 }} key={rule.title}>
               <Typography sx={typoStyle} key={rule.id}>
                 {rule?.id} : {rule?.title}
               </Typography>

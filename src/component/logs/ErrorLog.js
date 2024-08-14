@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import { db } from '../../api/db';
 import Typography  from '@mui/material/Typography';
 
 
 const ErrorLogSystem = () => {
   const [errorLogs, setErrorLogs] = useState([]);
 
-  useEffect(() => {
-    fetchErrorLogs();
-  }, []);
+
 
 //   const fetchErrorLogs = async () => {
 //     try {
@@ -36,7 +27,7 @@ const ErrorLogSystem = () => {
 //       console.error('Error fetching logs:', error.message);
 //     }
 //   };
-const fetchErrorLogs = async () => {
+const fetchErrorLogs =  () => {
     // Dummy data simulating error logs from a database
     const dummyData = [
         {
@@ -67,6 +58,10 @@ const fetchErrorLogs = async () => {
       setErrorLogs(dummyData);
     }, 500); // 500ms delay to simulate fetching
   };
+
+  useEffect(() => {
+    fetchErrorLogs();
+  }, []);
 
   return (
     <Box sx={{ marginTop: 2, padding: 2, backgroundColor: '#000', color: '#fff', borderRadius: 2 }}>

@@ -51,7 +51,7 @@ export const MyDocuments = () => {
       <Box sx={{ marginTop: 10, marginLeft: 2 }}>
         {Object.entries(myDocumentsData).map(([key, value]) => {
           return (
-            <Paper sx={{ marginTop: 2, p: 2 }}>
+            <Paper sx={{ marginTop: 2, p: 2 }} key={value}>
               <Typography sx={typoStyle}> {key}</Typography>
               {value.map((docu) => {
                 return (

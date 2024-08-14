@@ -21,9 +21,7 @@ export const Dashboard = () => {
     navigation(evt.target.innerText);
   };
 
-  useEffect(() => {
-    getAllMPFData();
-  }, []);
+
 
   const getAllMPFData = async () => {
     try {
@@ -43,6 +41,10 @@ export const Dashboard = () => {
       navigate("/login");
     }
   };
+
+  useEffect(() => {
+    getAllMPFData();
+  }, []);
 
   return (
     <Box sx={{ display: "flex" }}>

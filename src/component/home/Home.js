@@ -23,18 +23,18 @@ export const Home = () => {
     navigation(path);
   };
 
-  const renderSection = (section, mpfData) => {
+  const renderSection = (section, data) => {
     switch (section.sectionName) {
       case mpfKey.LIABILITY:
-        return Liabilities(section, typoStyle, formatNumber, mpfData);
+        return Liabilities(section, typoStyle, formatNumber, data);
       case mpfKey.INVESTMENT:
-        return Investment(section, typoStyle, formatNumber, mpfData);
+        return Investment(section, typoStyle, formatNumber, data);
       case mpfKey.SAVING:
-        return Saving(section, typoStyle, formatNumber, mpfData);
+        return Saving(section, typoStyle, formatNumber, data);
       case mpfKey.MONEYOUT:
-        return MoneyOutFlow(section, typoStyle, formatNumber, mpfData);
+        return MoneyOutFlow(section, typoStyle, formatNumber, data);
       case mpfKey.MONEYIN:
-        return MoneyInflow(section, typoStyle, formatNumber, mpfData);
+        return MoneyInflow(section, typoStyle, formatNumber, data);
       default:
         break;
     }

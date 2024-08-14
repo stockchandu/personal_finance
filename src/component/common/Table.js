@@ -39,7 +39,7 @@ const MPFTable = ({ data }) => {
       <Table>
         <TableBody>
           {data?.map((item, index) => (
-            <TableRow key={index}>
+            <TableRow key={item.value}>
               <TableCell
                 style={{ display: "flex", justifyContent: "space-between" }}
               >

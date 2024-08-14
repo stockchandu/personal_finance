@@ -13,9 +13,9 @@ export default function MPFTextField({
   const [formVal, setFormVal] = useState(value);
   const { sectionName, operation } = pageSource || {};
   const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormVal(value);
-    setFormValue((prevFormValue) => ({ ...prevFormValue, [name]: value }));
+    const { name, value:changeValue } = event.target;
+    setFormVal(changeValue);
+    setFormValue((prevFormValue) => ({ ...prevFormValue, [name]: changeValue }));
   };
 
   const fields =
