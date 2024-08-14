@@ -7,15 +7,24 @@ const constant = {
 };
 
 const getSection = (data, sName) => {
-  return data && data.filter((sec) => sec.section === sName);
+  return (
+    data &&
+    data
+      .filter((sec) => sec.section === sName)
+      .filter((item) => item.isActive === true)
+  );
 };
 
 const calculateTotaLoanPrincipal = (data) => {
-  return data && data.reduce((init, loan) => init + loan.emi * loan.totalMonth, 0);
+  return (
+    data && data.reduce((init, loan) => init + loan.emi * loan.totalMonth, 0)
+  );
 };
 
 const calculateTotalLoanPaid = (data) => {
-  return data && data.reduce((init, loan) => init + loan.paidMonth * loan.emi, 0);
+  return (
+    data && data.reduce((init, loan) => init + loan.paidMonth * loan.emi, 0)
+  );
 };
 
 const calculateSum = (data, key) => {
@@ -47,7 +56,7 @@ const allMoneyInflow = (sectionData) => {
   const moneyInflow = getSection(sectionData, constant.MI);
   const totalMI = calculateSum(moneyInflow, "inReceiveAmount");
   const paidMI = calculateSum(moneyInflow, "inPaidAmount");
-  return totalMI - paidMI
+  return totalMI - paidMI;
 };
 
 const allMoneyOutflow = (sectionData) => {
@@ -55,7 +64,7 @@ const allMoneyOutflow = (sectionData) => {
   // const totalMO = calculateSum(moneyOutflow, "outMoney");
   const receivedMO = calculateSum(moneyOutflow, "outReceivedMoney");
   // return totalMO - receivedMO
-  return receivedMO
+  return receivedMO;
 };
 
 export const calculateNetworth = (data) => {
@@ -68,8 +77,8 @@ export const calculateNetworth = (data) => {
     const miValue = allMoneyInflow(sectionData);
     const moValue = allMoneyOutflow(sectionData);
     const totalLiabilities = liabilityValue + miValue;
-    const totalSaving = investValue + savingValue + moValue
-    const myNetWorth = totalSaving - totalLiabilities
-    return [totalSaving,totalLiabilities,myNetWorth]
+    const totalSaving = investValue + savingValue + moValue;
+    const myNetWorth = totalSaving - totalLiabilities;
+    return [totalSaving, totalLiabilities, myNetWorth];
   }
 };

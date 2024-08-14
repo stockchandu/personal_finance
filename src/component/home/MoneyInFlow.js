@@ -2,19 +2,16 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { mpfKey } from "../../constant/global";
-export const MoneyInflow = (
-  section,
-  typoStyle,
-  formatNumber,
-  mpfData
-) => {
+export const MoneyInflow = (section, typoStyle, formatNumber, mpfData) => {
   const investStyle = {
     display: "flex",
     justifyContent: "space-between",
   };
 
   const getMIData = (data) =>
-    data?.filter((item) => item.section === mpfKey.MONEYIN);
+    data
+      ?.filter((item) => item.section === mpfKey.MONEYIN)
+      .filter((item) => item.isActive === true);
   const calculateMI = (data, key) => {
     const filterMI = getMIData(data);
     return filterMI.reduce((init, item) => init + item[key], 0);
@@ -28,25 +25,25 @@ export const MoneyInflow = (
         <Typography sx={{ fontSize: "24px", fontWeight: "600" }}>
           {section?.sectionName}
         </Typography>
-        <Divider sx={{ marginBottom: 1 ,marginTop:1}} />
+        <Divider sx={{ marginBottom: 1, marginTop: 1 }} />
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total Inflow Amount</Typography>
           <Typography sx={{ ...typoStyle, color: "red" }}>
-          {formatNumber(calculateMI(mpfData, "inReceiveAmount"))}
+            {formatNumber(calculateMI(mpfData, "inReceiveAmount"))}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total Inflow Paid</Typography>
           <Typography sx={{ ...typoStyle, color: "green" }}>
-           {formatNumber(calculateMI(mpfData, "inPaidAmount"))}
+            {formatNumber(calculateMI(mpfData, "inPaidAmount"))}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Remain Inflow Amount</Typography>
           <Typography sx={{ ...typoStyle, color: "red" }}>
-           {formatNumber(remainMI)}
+            {formatNumber(remainMI)}
           </Typography>
         </Typography>
 

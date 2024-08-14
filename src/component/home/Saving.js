@@ -3,18 +3,15 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { mpfKey } from "../../constant/global";
 
-export const Saving = (
-  section,
-  typoStyle,
-  formatNumber,
-  mpfData
-) => {
+export const Saving = (section, typoStyle, formatNumber, mpfData) => {
   const investStyle = {
     display: "flex",
     justifyContent: "space-between",
   };
   const getSavingData = (data) =>
-    data?.filter((item) => item.section === mpfKey.SAVING);
+    data
+      ?.filter((item) => item.section === mpfKey.SAVING)
+      .filter((item) => item.isActive === true);
   const calculateSaving = (data, key) => {
     const filterSaving = getSavingData(data);
     return filterSaving.reduce((init, item) => init + item[key], 0);
@@ -28,25 +25,25 @@ export const Saving = (
         <Typography sx={{ fontSize: "24px", fontWeight: "600" }}>
           {section?.sectionName}
         </Typography>
-        <Divider sx={{ marginBottom: 1,marginTop:1 }} />
+        <Divider sx={{ marginBottom: 1, marginTop: 1 }} />
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total Saving Amount</Typography>
           <Typography sx={{ ...typoStyle, color: "green" }}>
-          {formatNumber(calculateSaving(mpfData, "totalAmount"))}
+            {formatNumber(calculateSaving(mpfData, "totalAmount"))}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total Withdrawal Amount</Typography>
           <Typography sx={{ ...typoStyle, color: "red" }}>
-          {formatNumber(calculateSaving(mpfData, "redeem"))}
+            {formatNumber(calculateSaving(mpfData, "redeem"))}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total Remain </Typography>
           <Typography sx={{ ...typoStyle, color: "green" }}>
-          {formatNumber(remainSaving)}
+            {formatNumber(remainSaving)}
           </Typography>
         </Typography>
 

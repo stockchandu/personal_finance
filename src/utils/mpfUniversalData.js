@@ -50,6 +50,10 @@ export const getMpfUniversalData = (row) => {
     ],
     "Savings(PF+Bank)": [
       { header: "Total Amount", value: formatNumber(row.totalAmount) },
+      {
+        header: "Category",
+        value: row.savingCategory,
+      },
       { header: "Withdrawal", value: formatNumber(row.redeem) },
       {
         header: "Remain Amount",

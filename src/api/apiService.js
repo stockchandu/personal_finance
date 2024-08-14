@@ -12,7 +12,9 @@ export const apiService = {
       email: email,
       password: password,
     }),
-  createMPFData: async () => {},
+  createMPFData: async (data) => await db
+  .from(tableName)
+  .insert([data]),
   updateMPFData: async (data, id) =>
     await db.from(tableName).update(data).eq("id", id).select(),
   getMPFData: async () =>

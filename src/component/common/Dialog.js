@@ -30,6 +30,8 @@ import { UpdateData } from "./UpdateData";
 import { DeleteData } from "./DeleteData";
 import { apiService } from "../../api/apiService";
 import { mpfKey } from "../../constant/global";
+import { btnBgColor } from "../../utils/btnBgColor";
+import { hasNonNullValue } from "../../utils/hasNonNullValue";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -52,11 +54,6 @@ export default function MPFDialog() {
   const [checkedItems, setCheckedItems] = useState([]);
   const [isBtnDisable, setIsBtnDisable] = useState(true);
   const isCheckedValue = checkedItems && checkedItems.length > 0;
-
-  // TODO : MOVE TO UTILS
-  const hasNonNullValue = (obj) => {
-    return Object.values(obj).some((value) => value !== null && value !== "");
-  };
 
   useEffect(() => {
     if (operation === "create" || operation === "delete") {
@@ -251,50 +248,27 @@ export default function MPFDialog() {
         return formValue;
     }
   };
-  // TODO : check why 2 column created in DB
   const createDataDB = async (formData) => {
-    // dispatch(openDialog({ isDialog: true }));
-
     const insertData = {
-      // id:nanoid(),
       section: sectionName,
       ...formData,
     };
-
-    // const a = [
-    //   {
-    //     section: "Liabilities",
-    //     sectionName: "bank",
-    //     year: "3",
-    //     loanPrincipal: 2000,
-    //     rateOfInterest: 22,
-    //     emi: 22,
-    //     totalMonth: 45,
-    //     loanCategory: "Personal"
-    //   }
-    // ]
-    // try {
-    //   const { data, error } = await db
-    //   .from(tableName)
-    //   .insert(a)
-    //   .select();
-    //   console.log('data: ', data);
-    //   if (error) {
-    //     console.error("Error updating data:", error);
-    //   } else {
-    //     const { data } = await db
-    //       .from(tableName)
-    //       .select("*")
-    //       .order("sectionName", { ascending: true });
-    //     dispatch(saveMpfData(data));
-    //     dispatch(openDialog({ isDialog: false }));
-    //     setFormValue({});
-    //   }
-    // } catch (err) {
-    //   console.error("Unexpected error:", err);
-    // } finally {
-    //   dispatch(openLoader(false));
-    // }
+    try {
+      const { data, error } = await apiService.createMPFData(insertData)
+      console.log('data: ', data);
+      if (error) {
+        console.error("Error updating data:", error);
+      } else {
+        const { data } = await apiService.getMPFData()
+        dispatch(saveMpfData(data));
+        dispatch(openDialog({ isDialog: false }));
+        setFormValue({});
+      }
+    } catch (err) {
+      console.error("Unexpected error:", err);
+    } finally {
+      dispatch(openLoader(false));
+    }
   };
 
   const updateDataDB = async (sectionUpdateData) => {
@@ -380,7 +354,7 @@ export default function MPFDialog() {
       );
       const sectionUpdateData = updateFormBasedSection(dialogData, updateData);
       const OPERATION = {
-        create: async () => await createDataDB(formValue),
+        create: ()=>createDataDB(formValue),
         update: async () => await updateDataDB(sectionUpdateData),
         delete: async () =>
           isSection()
@@ -454,19 +428,6 @@ export default function MPFDialog() {
       return renderSection(operation, formFieldMapper[sectionName]);
     } else {
       return null;
-    }
-  };
-
-  const btnBgColor = (operation) => {
-    switch (operation) {
-      case "create":
-        return "#6AA84F";
-      case "update":
-        return "#3A87B3";
-      case "delete":
-        return "#D12F2E";
-      default:
-        break;
     }
   };
 

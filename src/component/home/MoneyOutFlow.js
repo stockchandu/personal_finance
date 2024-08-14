@@ -2,18 +2,15 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { mpfKey } from "../../constant/global";
-export const MoneyOutFlow = (
-  section,
-  typoStyle,
-  formatNumber,
-  mpfData
-) => {
+export const MoneyOutFlow = (section, typoStyle, formatNumber, mpfData) => {
   const investStyle = {
     display: "flex",
     justifyContent: "space-between",
   };
   const getMOData = (data) =>
-    data?.filter((item) => item.section === mpfKey.MONEYOUT);
+    data
+      ?.filter((item) => item.section === mpfKey.MONEYOUT)
+      .filter((item) => item.isActive === true);
   const calculateMO = (data, key) => {
     const filterMO = getMOData(data);
     return filterMO.reduce((init, item) => init + item[key], 0);
@@ -26,25 +23,25 @@ export const MoneyOutFlow = (
         <Typography sx={{ fontSize: "24px", fontWeight: "600" }}>
           {section?.sectionName}
         </Typography>
-        <Divider sx={{ marginBottom: 1 ,marginTop:1}} />
+        <Divider sx={{ marginBottom: 1, marginTop: 1 }} />
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total OutFlow Amount</Typography>
           <Typography sx={{ ...typoStyle, color: "red" }}>
-           {formatNumber(calculateMO(mpfData, "outMoney"))}
+            {formatNumber(calculateMO(mpfData, "outMoney"))}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total Outflow Received </Typography>
           <Typography sx={{ ...typoStyle, color: "green" }}>
-           {formatNumber(calculateMO(mpfData, "outReceivedMoney"))}
+            {formatNumber(calculateMO(mpfData, "outReceivedMoney"))}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Remain Outflow </Typography>
           <Typography sx={{ ...typoStyle, color: "red" }}>
-           {formatNumber(remainMO)}
+            {formatNumber(remainMO)}
           </Typography>
         </Typography>
 

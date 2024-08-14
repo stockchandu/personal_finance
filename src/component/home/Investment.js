@@ -3,18 +3,15 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { mpfKey } from "../../constant/global";
 
-export const Investment = (
-  section,
-  typoStyle,
-  formatNumber,
-  mpfData
-) => {
+export const Investment = (section, typoStyle, formatNumber, mpfData) => {
   const investStyle = {
     display: "flex",
     justifyContent: "space-between",
   };
   const getInvestData = (data) =>
-    data?.filter((item) => item.section === mpfKey.INVESTMENT);
+    data
+      ?.filter((item) => item.section === mpfKey.INVESTMENT)
+      .filter((item) => item.isActive === true);
   const calculateInvestment = (data, key) => {
     const filterInvest = getInvestData(data);
     return filterInvest.reduce((init, item) => init + item[key], 0);
@@ -31,7 +28,7 @@ export const Investment = (
     calculateInvestment(mpfData, "investAmount");
 
   const totalROI =
-    ( totalPL/calculateInvestment(mpfData, "investAmount")) * 100;
+    (totalPL / calculateInvestment(mpfData, "investAmount")) * 100;
 
   return (
     <>
@@ -39,24 +36,24 @@ export const Investment = (
         <Typography sx={{ fontSize: "24px", fontWeight: "600" }}>
           {section?.sectionName}
         </Typography>
-        <Divider sx={{ marginBottom: 1 ,marginTop:1 }} />
+        <Divider sx={{ marginBottom: 1, marginTop: 1 }} />
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total Invest </Typography>
           <Typography sx={typoStyle}>
-           {formatNumber(calculateInvestment(mpfData, "investAmount"))}
+            {formatNumber(calculateInvestment(mpfData, "investAmount"))}
           </Typography>
         </Typography>
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total Current Invest</Typography>
           <Typography sx={typoStyle}>
-         {formatNumber(calculateInvestment(mpfData, "currentInvest"))}
+            {formatNumber(calculateInvestment(mpfData, "currentInvest"))}
           </Typography>
         </Typography>
 
         <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total P/L </Typography>
           <Typography sx={{ ...typoStyle, color: colorBasedPL() }}>
-           {formatNumber(totalPL)}
+            {formatNumber(totalPL)}
           </Typography>
         </Typography>
 
@@ -74,7 +71,6 @@ export const Investment = (
           </Typography>
         </Typography>
       </Typography>
-     
     </>
   );
 };
