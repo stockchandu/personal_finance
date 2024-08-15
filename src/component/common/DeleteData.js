@@ -1,4 +1,3 @@
-import * as React from "react";
 import Checkbox from "@mui/material/Checkbox";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
