@@ -1,4 +1,3 @@
-import React from "react";
 import { Typography } from "@mui/material";
 import { useLoginData } from "../../hooks/useSelector";
 import { decryptData } from "../../utils/decrypt";

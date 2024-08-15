@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-export const DetailsButton = styled(Button)(({ theme, text }) => ({
+export const DetailsButton = styled(Button)(() => ({
     backgroundColor: "#4F81BD",
     color: "#fff",
     "&:hover": {

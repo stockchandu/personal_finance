@@ -10,7 +10,7 @@ const Input = styled('input')({
   display: 'none',
 });
 
-const CustomButton = styled(Button)(({ theme }) => ({
+const CustomButton = styled(Button)(() => ({
   backgroundColor: '#2364AD',
   color: '#fff',
   borderRadius: '8px',

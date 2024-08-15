@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-export const MpfButton = ({ label, click, sx, color, disable }) => {
+export const MpfButton = ({ label, click, sx, disable }) => {
   return (
     <Button
       variant="contained"

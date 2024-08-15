@@ -1,4 +1,3 @@
-import React from "react";
 import { PieChart } from "react-minimal-pie-chart";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
