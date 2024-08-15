@@ -9,7 +9,7 @@ import { StickyBox } from "../common/StickyBox";
 import Box from "@mui/material/Box";
 import { MpfUniversalSkeleton } from "../common/MpfUniversalSkeleton";
 import { getMpfUniversalData } from "../../utils/mpfUniversalData";
-
+import { useCallback } from "react";
 export const MpfUniversal = ({
   sectionKey,
   addLabel,
@@ -22,15 +22,18 @@ export const MpfUniversal = ({
   const { mpfData, isMPFData } = useMPFData();
   const sectionData = filterMPFData(isMPFData, mpfData, sectionKey);
 
-  const handleRemove = (data) => {
-    const mapper = {
-      sectionName: sectionKey,
-      operation: "delete",
-    };
-    deleteData(mapper, data);
-  };
+  const handleRemoveCB = useCallback(
+    (data) => {
+      const mapper = {
+        sectionName: sectionKey,
+        operation: "delete",
+      };
+      deleteData(mapper, data);
+    },
+    [sectionKey]
+  );
 
-  const handleAdd = () => {
+  const handleAddCB = () => {
     const mapper = {
       sectionName: sectionKey,
       operation: "create",
@@ -38,13 +41,16 @@ export const MpfUniversal = ({
     createData(mapper);
   };
 
-  const handleUpdate = (data) => {
-    const mapper = {
-      sectionName: sectionKey,
-      operation: "update",
-    };
-    updateData(data, mapper);
-  };
+  const handleUpdateCB = useCallback(
+    (data) => {
+      const mapper = {
+        sectionName: sectionKey,
+        operation: "update",
+      };
+      updateData(data, mapper);
+    },
+    [sectionKey]
+  );
 
   const getRowBySection = (row, name) => {
     switch (name) {
@@ -79,11 +85,9 @@ export const MpfUniversal = ({
             <AddRemove
               label={{ add: addLabel, remove: removeLabel }}
               data={sectionData}
-              addClk={() => {
-                handleAdd();
-              }}
+              addClk={handleAddCB}
               removeClk={() => {
-                handleRemove(sectionData);
+                handleRemoveCB(sectionData);
               }}
               addSX={{ backgroundColor: bgColor.addBG }}
               removeSX={{ marginLeft: 1, backgroundColor: bgColor.removeBG }}
@@ -95,7 +99,7 @@ export const MpfUniversal = ({
                 return (
                   <MPFAccordion
                     title={data.sectionName}
-                    edit={() => handleUpdate(data)}
+                    edit={() => handleUpdateCB(data)}
                     key={data?.id}
                     isActive={data.isActive}
                   >
