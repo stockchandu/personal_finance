@@ -300,7 +300,7 @@ export default function MPFDialog() {
         }
       }
     } else {
-      dispatch(saveDialogData({ dialogData: dialogData }));
+      dispatch(saveDialogData({ dialogData }));
       if (sectionUpdateData && Object.keys(sectionUpdateData).length > 0) {
         try {
           const { error } = await apiService.updateMPFData(

@@ -10,8 +10,8 @@ export const apiService = {
       .single(),
   getToken: (email, password) =>
     db.auth.signInWithPassword({
-      email: email,
-      password: password,
+      email,
+      password,
     }),
   createMPFData: (data) => db.from(tableName).insert([data]),
   updateMPFData: (data, id) =>

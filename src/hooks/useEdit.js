@@ -27,6 +27,6 @@ export const useDelete = () => {
   return (data,deleteData) => {
     dispatch(openDialog({ isDialog: true }));
     dispatch(pageSource({ pageSource: data }));
-    dispatch(saveDeleteData({ deleteData: deleteData }));
+    dispatch(saveDeleteData({ deleteData }));
   };
 };
