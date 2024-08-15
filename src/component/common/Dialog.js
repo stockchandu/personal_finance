@@ -29,9 +29,11 @@ import {
 import { UpdateData } from "./UpdateData";
 import { DeleteData } from "./DeleteData";
 import { apiService } from "../../api/apiService";
-import { mpfKey } from "../../constant/global";
+import { mpfKey, TOAST_ERROR, TOAST_SUCCESS } from "../../constant/global";
 import { btnBgColor } from "../../utils/btnBgColor";
 import { hasNonNullValue } from "../../utils/hasNonNullValue";
+import { openToast } from "../../store/toast/toastSlicer";
+
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -254,18 +256,18 @@ export default function MPFDialog() {
       ...formData,
     };
     try {
-      const { data, error } = await apiService.createMPFData(insertData)
-      console.log('data: ', data);
+      const { data, error } = await apiService.createMPFData(insertData);
       if (error) {
-        console.error("Error updating data:", error);
+        dispatch(openToast({ open: true, ...TOAST_ERROR }));
       } else {
-        const { data } = await apiService.getMPFData()
+        const { data } = await apiService.getMPFData();
         dispatch(saveMpfData(data));
         dispatch(openDialog({ isDialog: false }));
+        dispatch(openToast({ open: true, ...TOAST_SUCCESS[operation] }));
         setFormValue({});
       }
     } catch (err) {
-      console.error("Unexpected error:", err);
+      dispatch(openToast({ open: true, ...TOAST_ERROR }));
     } finally {
       dispatch(openLoader(false));
     }
@@ -283,16 +285,17 @@ export default function MPFDialog() {
             sectionUpdateData[0]
           );
           if (error) {
-            console.error("Error updating data:", error);
+            dispatch(openToast({ open: true, ...TOAST_ERROR }));
           } else {
             const { data } = await apiService.getMPFData();
             dispatch(saveMpfData(data));
             dispatch(openDialog({ isDialog: false }));
+            dispatch(openToast({ open: true, ...TOAST_SUCCESS["update"] }));
             setFormValue({});
             setCheckedItems([]);
           }
         } catch (err) {
-          console.error("Unexpected error:", err);
+          dispatch(openToast({ open: true, ...TOAST_ERROR }));
         } finally {
           dispatch(openLoader(false));
         }
@@ -306,15 +309,16 @@ export default function MPFDialog() {
             dialogData.id
           );
           if (error) {
-            console.error("Error updating data:", error);
+            dispatch(openToast({ open: true, ...TOAST_ERROR }));
           } else {
             const { data } = await apiService.getMPFData();
             dispatch(saveMpfData(data));
             dispatch(openDialog({ isDialog: false }));
+            dispatch(openToast({ open: true, ...TOAST_SUCCESS[operation] }));
             setFormValue({});
           }
         } catch (err) {
-          console.error("Unexpected error:", err);
+          dispatch(openToast({ open: true, ...TOAST_ERROR }));
         } finally {
           dispatch(openLoader(false));
         }
@@ -327,23 +331,24 @@ export default function MPFDialog() {
       try {
         const { error } = await apiService.deleteMPFData(checkedItems);
         if (error) {
-          console.error("Error updating data:", error);
+          dispatch(openToast({ open: true, ...TOAST_ERROR }));
         } else {
           const { data } = await apiService.getMPFData();
           dispatch(saveMpfData(data));
           dispatch(openDialog({ isDialog: false }));
+          dispatch(openToast({ open: true, ...TOAST_SUCCESS[operation] }));
           setFormValue({});
           setCheckedItems([]);
         }
       } catch (err) {
-        console.error("Unexpected error:", err);
+        dispatch(openToast({ open: true, ...TOAST_ERROR }));
       } finally {
         dispatch(openLoader(false));
       }
     }
   };
 
-  const handleEdit =  () => {
+  const handleEdit = () => {
     dispatch(openLoader(true));
     if (isFormValue || checkedItems) {
       const updateData = Object.fromEntries(
@@ -354,12 +359,9 @@ export default function MPFDialog() {
       );
       const sectionUpdateData = updateFormBasedSection(dialogData, updateData);
       const OPERATION = {
-        create: ()=>createDataDB(formValue),
-        update: async () => await updateDataDB(sectionUpdateData),
-        delete: async () =>
-          isSection()
-            ? await updateDataDB(checkedItems)
-            : await deleteDataDB(checkedItems),
+        create: () => createDataDB(formValue),
+        update: () => updateDataDB(sectionUpdateData),
+        delete: () => isSection() ? updateDataDB(checkedItems) : deleteDataDB(checkedItems),
       };
       OPERATION[operation]();
     }
@@ -464,7 +466,7 @@ export default function MPFDialog() {
         </DialogContent>
         <DialogActions>
           <MpfButton
-            label={isSection() && operation==="delete" ? "Close" : operation}
+            label={isSection() && operation === "delete" ? "Close" : operation}
             sx={{ backgroundColor: btnBgColor(operation) }}
             click={handleEdit}
             disable={isBtnDisable}

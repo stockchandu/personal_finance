@@ -5,6 +5,7 @@ import mpfSlicer from "./mpfData/mpfSlicer";
 import dialogSlicer from "./dialog/dialogSlicer";
 import loaderSlicer from "./loader/loaderSlicer";
 import loginSlicer from "./login/loginSlicer";
+import toastSlicer from "./toast/toastSlicer";
 
 const persistConfig = {
   key : 'root',
@@ -18,7 +19,8 @@ const rootReducers = combineReducers({
   mpfData: mpfSlicer,
   dialogData : dialogSlicer,
   loaderData : loaderSlicer,
-  loginData : loginSlicer
+  loginData : loginSlicer,
+  toastData : toastSlicer
 });
 
 const persistedReducer  = persistReducer(persistConfig,rootReducers)

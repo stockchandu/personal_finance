@@ -1,13 +1,14 @@
 import Loader from "../component/common/Loader";
+import ToastMessage from "../component/common/ToastMessage";
 import { ReduxProvider } from "./ReduxProvider";
 import { ThemeProvider } from "./ThemeProvider";
-// Loader
 
 export const RootProvider = ({ children }) => {
   return (
     <ThemeProvider>
       <ReduxProvider>
-      <Loader />
+        <ToastMessage />
+        <Loader />
         {children}
       </ReduxProvider>
     </ThemeProvider>

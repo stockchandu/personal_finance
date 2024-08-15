@@ -11,7 +11,7 @@ export default function MPFTextField({
 }) {
   const { pageSource } = useDialogData();
   const [formVal, setFormVal] = useState(value);
-  const { sectionName, operation } = pageSource || {};
+  const { operation } = pageSource || {};
   const handleChange = (event) => {
     const { name, value:changeValue } = event.target;
     setFormVal(changeValue);
