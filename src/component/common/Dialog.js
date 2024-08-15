@@ -289,7 +289,7 @@ export default function MPFDialog() {
             const { data } = await apiService.getMPFData();
             dispatch(saveMpfData(data));
             dispatch(openDialog({ isDialog: false }));
-            dispatch(openToast({ open: true, ...TOAST_SUCCESS["update"] }));
+            dispatch(openToast({ open: true, ...TOAST_SUCCESS.update }));
             setFormValue({});
             setCheckedItems([]);
           }

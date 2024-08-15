@@ -27,6 +27,8 @@ export const MyDocuments = () => {
         return null;
       }
       return data.publicUrl;
+    }else{
+      return null
     }
   };
 

@@ -20,17 +20,11 @@ const MPFTable = ({ data }) => {
     if(item.isExpiry){
       return "table__invest--loss-red";
     }
-    else {
-      return;
-    }
   };
 
   const getText =(item)=>{
     if(item.isExpiry){
       return "Expired";
-    }
-    else {
-      return;
     }
   }
 
