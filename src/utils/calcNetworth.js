@@ -7,28 +7,21 @@ const constant = {
 };
 
 const getSection = (data, sName) => {
-  return (
-    data &&
-    data
-      .filter((sec) => sec.section === sName)
-      .filter((item) => item.isActive === true)
-  );
+  return data
+    .filter((sec) => sec.section === sName)
+    .filter((item) => item.isActive === true);
 };
 
 const calculateTotaLoanPrincipal = (data) => {
-  return (
-    data && data.reduce((init, loan) => init + loan.emi * loan.totalMonth, 0)
-  );
+  return data.reduce((init, loan) => init + loan.emi * loan.totalMonth, 0);
 };
 
 const calculateTotalLoanPaid = (data) => {
-  return (
-    data && data.reduce((init, loan) => init + loan.paidMonth * loan.emi, 0)
-  );
+  return data.reduce((init, loan) => init + loan.paidMonth * loan.emi, 0);
 };
 
 const calculateSum = (data, key) => {
-  return data && data.reduce((init, item) => init + item[key], 0);
+  return data.reduce((init, item) => init + item[key], 0);
 };
 
 const allLiability = (sectionData) => {
