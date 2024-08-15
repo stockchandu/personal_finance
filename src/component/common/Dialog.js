@@ -66,8 +66,8 @@ export default function MPFDialog() {
 
   useEffect(() => {
     const isFormNonEmpty = hasNonNullValue(formValue);
-    const isBtnDisable = !(isFormNonEmpty || isCheckedValue);
-    setIsBtnDisable(isBtnDisable);
+    const btnDisable = !(isFormNonEmpty || isCheckedValue);
+    setIsBtnDisable(btnDisable);
   }, [formValue, isCheckedValue]);
 
   const isSection = () => {
@@ -325,10 +325,10 @@ export default function MPFDialog() {
     }
   };
 
-  const deleteDataDB = async (checkedItems) => {
-    if (checkedItems && checkedItems.length > 0) {
+  const deleteDataDB = async (checkedValue) => {
+    if (checkedValue && checkedValue.length > 0) {
       try {
-        const { error } = await apiService.deleteMPFData(checkedItems);
+        const { error } = await apiService.deleteMPFData(checkedValue);
         if (error) {
           dispatch(openToast({ open: true, ...TOAST_ERROR }));
         } else {
@@ -390,21 +390,20 @@ export default function MPFDialog() {
       />
     );
   };
-  const getDeleteForm = (formdata, setCheckedItems, checkedItems) => {
+  const getDeleteForm = (formdata, setChecked, checkedValue) => {
     return (
       <DeleteData
         formData={formdata}
         setFormValue={setFormValue}
         formValue={formValue}
-        setCheckedItems={setCheckedItems}
-        checkedItems={checkedItems}
+        setCheckedItems={setChecked}
+        checkedItems={checkedValue}
       />
     );
   };
-  const renderForm = (pageSource) => {
-    const { sectionName, operation } = pageSource || {};
-    const renderSection = (operation, form) => {
-      switch (operation) {
+  const renderForm = () => {
+    const renderSection = (op, form) => {
+      switch (op) {
         case "create":
           return getCreateForm(form);
         case "update":
@@ -459,9 +458,9 @@ export default function MPFDialog() {
         </IconButton>
         <DialogContent dividers>
           <Grid container spacing={2}>
-            {operation !== "delete" && renderForm(pageSource)}
+            {operation !== "delete" && renderForm()}
           </Grid>
-          {operation === "delete" && renderForm(pageSource)}
+          {operation === "delete" && renderForm()}
         </DialogContent>
         <DialogActions>
           <MpfButton
