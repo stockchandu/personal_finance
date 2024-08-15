@@ -53,7 +53,7 @@ export const MyDocuments = () => {
       <Box sx={{ marginTop: 10, marginLeft: 2 }}>
         {Object.entries(myDocumentsData).map(([key, value]) => {
           return (
-            <Paper sx={{ marginTop: 2, p: 2 }} key={value}>
+            <Paper sx={{ marginTop: 2, p: 2 }} key={key}>
               <Typography sx={typoStyle}> {key}</Typography>
               {value.map((docu) => {
                 return (
@@ -67,9 +67,10 @@ export const MyDocuments = () => {
                       padding:1
                     }}
                     elevation={0}
+                    key={docu?.id}
                   >
                     <Typography sx={typoStyle}>
-                      {docu.id} - {docu.title}
+                      {docu?.id} - {docu?.title}
                     </Typography>
                     <MpfButton
                       label={<DownloadIcon/>}
