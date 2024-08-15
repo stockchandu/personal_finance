@@ -44,7 +44,7 @@ export const DeleteData = ({ formData, setCheckedItems, checkedItems }) => {
   };
   return (
     <>
-      {formData?.map((item, index) => (
+      {formData?.map((item) => (
         <Box key={item.id}>
           <Card variant="outlined" sx={{ marginTop: 2 }}>
             <CardContent>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { styled ,useTheme} from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -255,7 +255,7 @@ export default function MPFDialog() {
       ...formData,
     };
     try {
-      const { data, error } = await apiService.createMPFData(insertData);
+      const { error } = await apiService.createMPFData(insertData);
       if (error) {
         dispatch(openToast({ open: true, ...TOAST_ERROR }));
       } else {
