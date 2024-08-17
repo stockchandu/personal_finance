@@ -91,5 +91,5 @@ export const Home = () => {
       </>
     );
   };
-  return <>{isMPFData ? sectionsTile() : <HomeSkeleton />}</>;
+  return isMPFData ? sectionsTile() : <HomeSkeleton />;
 };
