@@ -31,10 +31,11 @@ const MPFTable = ({ data }) => {
     <TableContainer component={Paper} elevation={0}>
       <Table>
         <TableBody>
-          {data?.map((item) => (
-            <TableRow key={item.value}>
+          {data?.map((item,index) => (
+            <TableRow >
               <TableCell
                 style={{ display: "flex", justifyContent: "space-between" }}
+                key={item.value + index}
               >
                 <div>{item.header}</div>
                 <div className={getColorClassName(item)}>

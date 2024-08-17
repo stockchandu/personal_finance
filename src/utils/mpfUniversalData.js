@@ -8,13 +8,80 @@ const getFormattedDate = (date) => {
     return new Date() > formattedDate;
   }
 };
+
+const calculateOSInterest = (row) => {
+  if (row.totalLoanPaid >= row.loanPrincipal) {
+    const int = row.totalLoanPaid - row.loanPrincipal;
+    return row.totalInterest - int;
+  } else {
+    return row.totalInterest;
+  }
+};
+
+const calculateOSPrincipal = (row) => {
+  if (row.totalLoanPaid >= row.loanPrincipal) {
+    return 0;
+  } else {
+    return row.loanPrincipal - row.totalLoanPaid;
+  }
+};
+
+function checkMonthChange(value) {
+  let previousDate = new Date("2024-08-31");
+  const currentDate = new Date();
+  const previousMonth = previousDate.getMonth();
+  const currentMonth = currentDate.getMonth();
+  if (currentMonth !== previousMonth) {
+    value += 1;
+    previousDate = currentDate;
+  }
+  return value;
+}
+
 export const getMpfUniversalData = (row) => {
   return {
     Liabilities: [
       { header: "Loan Category", value: row.loanCategory },
-      { header: "Principal", value: formatNumber(row.loanPrincipal),color: "red"  },
+      {
+        header: "Principal",
+        value: formatNumber(row.loanPrincipal),
+        color: "red",
+      },
+      {
+        header: "Interest",
+        value: formatNumber(row.totalInterest),
+        color: "red",
+      },
+      {
+        header: "Total Principal + Interest",
+        value: formatNumber(row.emi * row.totalMonth),
+        color: "red",
+      },
+      {
+        header: "O/S Principal",
+        value: formatNumber(calculateOSPrincipal(row)),
+        color: "red",
+      },
+      {
+        header: "O/S Interest",
+        value: formatNumber(calculateOSInterest(row)),
+        color: "red",
+      },
+      {
+        header: "Total Loan Paid",
+        value: formatNumber(row.totalLoanPaid),
+        color: "green",
+      },
+
+      {
+        header: "O/S Principal + Interest",
+        value: formatNumber(row.remainPrincipal),
+        color: "red",
+      },
       { header: "EMI", value: formatNumber(row.emi) },
-      { header: "Paid EMI", value: row.paidMonth,color: "green"  },
+      { header: "Total EMI", value: row.totalMonth },
+      { header: "Paid EMI", value: row.paidMonth, color: "green" },
+      { header: "O/S EMI", value: row.remainMonth, color: "red" },
       { header: "EMI Date", value: `${row.emiDate} of every month` },
       {
         header: "Current EMI Date",
@@ -25,17 +92,12 @@ export const getMpfUniversalData = (row) => {
         value: getInstallmentDates(row.emiDate).nextDate,
         color: "red",
       },
-      { header: "O/S EMI", value: row.remainMonth,color: "red"  },
-      { header: "Total Loan Paid", value: formatNumber(row.totalLoanPaid),color: "green"  },
-      { header: "Total Interest", value: formatNumber(row.totalInterest),color: "red"  },
-      {
-        header: "O/S Principal + Interest",
-        value: formatNumber(row.remainPrincipal),
-        color: "red" 
-      },
       { header: "Rate Of Interest", value: `${row.rateOfInterest} %` },
-      { header: "Total EMI", value: row.totalMonth },
-      { header: "End EMI", value: row.endYear },
+      {
+        header: "End EMI",
+        value: `${(row.remainMonth / 12).toFixed(1)} Years , ${row.endYear}`,
+        color: "red",
+      },
     ],
     Investment: [
       { header: "Date Of Investment", value: row.year },
@@ -97,7 +159,13 @@ export const getMpfUniversalData = (row) => {
         value: formatNumber(row.monthSalary),
       },
       { header: "Exist Date", value: row.existDate, color: "red" },
-      { header: "Total Service Month", value: row.totalServiceMonth },
+      {
+        header: "Total Service Month",
+        value:
+          row.existDate === "continue"
+            ? checkMonthChange(row.totalServiceMonth)
+            : `${(row.totalServiceMonth / 12).toFixed(1)} Years`,
+      },
       {
         header: "Total Earned",
         value: formatNumber(row.totalEarn),
@@ -106,8 +174,25 @@ export const getMpfUniversalData = (row) => {
     ],
     Insurance: [
       { header: "Date", value: row.insuranceDate },
+      {
+        header: "Sum Assured",
+        value: formatNumber(row.sumAssured),
+        color: "green",
+      },
       { header: "Policy Id", value: row.policyNumber },
+      {
+        header: "Paid Premium Amount",
+        value: formatNumber(row.paidPolicyPremium),
+        color: "green",
+      },
+      {
+        header: "Monthly Premium",
+        value: formatNumber(row.premiumAmount),
+        color: "red",
+      },
+      { header: "Total Policy Month", value: row.totalPolicyMonth },
       { header: "Paid Month", value: row.policyPaidMonth },
+      { header: "Remain Policy Month", value: row.remainPolicyMonth },
       {
         header: "Current Installment Date",
         value: getInstallmentDates(row.policyInstallmentDate).prevDate,
@@ -117,14 +202,7 @@ export const getMpfUniversalData = (row) => {
         value: getInstallmentDates(row.policyInstallmentDate).nextDate,
         color: "red",
       },
-      { header: "Remain Policy Month", value: row.remainPolicyMonth },
-      { header: "Total Policy Month", value: row.totalPolicyMonth },
-      {
-        header: "Paid Premium Amount",
-        value: formatNumber(row.paidPolicyPremium),
-      },
-      { header: "Sum Assured", value: formatNumber(row.sumAssured) },
-      { header: "Monthly Premium", value: formatNumber(row.premiumAmount) },
+
       {
         header: "Maturity Date",
         value: row.policyMaturityDate,
@@ -143,7 +221,7 @@ export const getMpfUniversalData = (row) => {
       {
         header: "Purchased Value",
         value: formatNumber(row.vehiclePurchasedValue),
-        color: "red" 
+        color: "red",
       },
       { header: "No Of Years ", value: row.vehicleYears },
       { header: "Registration Number", value: row.vehicleRCNumber },

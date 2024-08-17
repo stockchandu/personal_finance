@@ -95,7 +95,8 @@ export const MpfUniversal = ({
           </StickyBox>
           <Box sx={{ marginTop: 8 }}>
             {isMPFData &&
-              sectionData.map((data) => {
+              sectionData?.map((data) => {
+                console.log('data: ', data);
                 return (
                   <MPFAccordion
                     title={data.sectionName}

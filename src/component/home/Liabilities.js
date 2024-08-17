@@ -74,6 +74,13 @@ export const Liabilities = (section, typoStyle, formatNumber, mpfData) => {
         </Typography>
 
         <Typography sx={investStyle}>
+          <Typography sx={typoStyle}>EMI Per Month</Typography>
+          <Typography sx={typoStyle}>
+            {formatNumber(calculateLiability(mpfData, "emi"))}
+          </Typography>
+        </Typography>
+
+        <Typography sx={investStyle}>
           <Typography sx={typoStyle}>Total EMI</Typography>
           <Typography sx={typoStyle}>
             {calculateLiability(mpfData, "totalMonth")}
