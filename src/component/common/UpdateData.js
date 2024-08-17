@@ -36,7 +36,9 @@ export const UpdateData = ({ formData, setFormValue, formValue }) => {
                 return (
                   <Grid item xs={12} md={4} sm={6} key={value}>
                     <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">Status</InputLabel>
+                      <InputLabel id="demo-simple-select-label">
+                        Status
+                      </InputLabel>
                       <Select
                         id="outlined-basic"
                         variant="outlined"

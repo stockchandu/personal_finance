@@ -4,16 +4,14 @@ import Typography from "@mui/material/Typography";
 import { AppBar } from "../common/AppBar";
 import { MpfButton } from "../common/Button";
 import { color } from "../../constant/global";
+import { appBarToolStyle } from "./style/appBarStyle";
+
 
 export const MPFAppBar = ({isAuthenticated,handleLogout}) => {
   return (
     <AppBar position="absolute" open={true}>
       <Toolbar
-        sx={{
-          pr: "24px",
-          display: "flex",
-          justifyContent: "space-between",
-        }}
+        sx={appBarToolStyle}
       >
         <Typography
           component="h1"

@@ -19,7 +19,8 @@ export const Home = () => {
   const { mpfData, isMPFData } = useMPFData();
   const navigation = usePush();
   const handleNavigation = (path) => {
-    navigation(path);
+    const newPath = path === "Savings(PF+Bank)" ? "Savings" : path
+    navigation(newPath);
   };
 
   const renderSection = (section, data) => {
