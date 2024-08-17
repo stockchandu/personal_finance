@@ -14,12 +14,11 @@ import { mpfKey, sortHomeTiles } from "../../constant/global";
 import { MpfPieChart } from "../common/PieChart";
 import { HomeSkeleton } from "../common/HomeSkeleton";
 
-
 export const Home = () => {
   const { mpfData, isMPFData } = useMPFData();
   const navigation = usePush();
   const handleNavigation = (path) => {
-    const newPath = path === "Savings(PF+Bank)" ? "Savings" : path
+    const newPath = path === "Savings(PF+Bank)" ? "Savings" : path;
     navigation(newPath);
   };
 
@@ -55,9 +54,9 @@ export const Home = () => {
         <MpfPieChart section={mpfData} />
         <Grid container spacing={2}>
           {sortedSection.map((section) => {
-            if (section.sectionParent)
-              return (
-                <>
+            return (
+              <>
+                {section.sectionParent && (
                   <Grid
                     item
                     xs={12}
@@ -84,12 +83,13 @@ export const Home = () => {
                       {renderSection(section, mpfData)}
                     </Paper>
                   </Grid>
-                </>
-              );
+                )}
+              </>
+            );
           })}
         </Grid>
       </>
     );
   };
-  return <>{isMPFData ? sectionsTile() : <HomeSkeleton/>}</>;
+  return <>{isMPFData ? sectionsTile() : <HomeSkeleton />}</>;
 };

@@ -34,7 +34,7 @@ export const UpdateData = ({ formData, setFormValue, formValue }) => {
             if (value || checkNullValue(key)) {
               if (key === "isActive") {
                 return (
-                  <Grid item xs={12} md={4} sm={6} key={value}>
+                  <Grid item xs={12} md={4} sm={6} key={key}>
                     <FormControl fullWidth>
                       <InputLabel id="demo-simple-select-label">
                         Status
@@ -50,7 +50,7 @@ export const UpdateData = ({ formData, setFormValue, formValue }) => {
                         name="isActive"
                         label="Status"
                       >
-                        <MenuItem value>Active</MenuItem>
+                        <MenuItem value={true}>Active</MenuItem>
                         <MenuItem value={false}>Closed</MenuItem>
                       </Select>
                     </FormControl>
@@ -68,6 +68,7 @@ export const UpdateData = ({ formData, setFormValue, formValue }) => {
               );
             }
           }
+          return null;
         })}
     </>
   );
