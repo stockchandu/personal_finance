@@ -50,7 +50,7 @@ export const UpdateData = ({ formData, setFormValue, formValue }) => {
                         name="isActive"
                         label="Status"
                       >
-                        <MenuItem value={true}>Active</MenuItem>
+                        <MenuItem value>Active</MenuItem>
                         <MenuItem value={false}>Closed</MenuItem>
                       </Select>
                     </FormControl>
