@@ -101,7 +101,7 @@ export const Sidebar = ({handleNavigation}) => {
     },
   ];
   return (
-    <Drawer variant="permanent" open={true}>
+    <Drawer variant="permanent" open>
       <Toolbar
         sx={toolbarStyle}
       >

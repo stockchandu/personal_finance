@@ -32,10 +32,9 @@ const MPFTable = ({ data }) => {
       <Table>
         <TableBody>
           {data?.map((item,index) => (
-            <TableRow >
+            <TableRow key={item.value + index}>
               <TableCell
                 style={{ display: "flex", justifyContent: "space-between" }}
-                key={item.value + index}
               >
                 <div>{item.header}</div>
                 <div className={getColorClassName(item)}>

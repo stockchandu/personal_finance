@@ -57,7 +57,7 @@ export const DeleteData = ({ formData, setCheckedItems, checkedItems }) => {
                   />
                 ) : (
                   <Checkbox
-                    checked={true}
+                    checked
                     disabled={item.isActive ? false : true}
                   />
                 )}

@@ -9,7 +9,7 @@ import { appBarToolStyle } from "./style/appBarStyle";
 
 export const MPFAppBar = ({isAuthenticated,handleLogout}) => {
   return (
-    <AppBar position="absolute" open={true}>
+    <AppBar position="absolute" open>
       <Toolbar
         sx={appBarToolStyle}
       >
