@@ -1,1 +1,6 @@
-# Welcome to the Circuit Breakers Analyzer WebApp
+# Personal Finance 
+# Requirements
+# Scoping Priotize
+# Tech Stack
+# Component Architecture
+# Data Api , Implementation
