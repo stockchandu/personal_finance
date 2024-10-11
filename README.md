@@ -3,6 +3,13 @@
 A personal finance application that helps users manage their net worth, liabilities, savings, investments, and insurance. Users can add, update, and track financial data through an intuitive dashboard, enabling personalized financial planning.
 
 ![image](https://github.com/user-attachments/assets/f9af4975-56a1-4a32-8409-795fb8b83d12)
+![image](https://github.com/user-attachments/assets/aa0cd84f-7c2d-4fe9-a648-3e5d0f77ef81)
+![image](https://github.com/user-attachments/assets/16c2be56-3d25-4b53-82f8-ab2800d386eb)
+![image](https://github.com/user-attachments/assets/6100dc76-d749-4aae-8215-7dff65e73a61)
+![image](https://github.com/user-attachments/assets/a95d66ea-472d-4858-9d49-013b57929baf)
+
+
+
 
 
 ## Requirements
